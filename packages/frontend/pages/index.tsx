@@ -24,6 +24,7 @@ import {
   swap,
 } from 'react-grid-dnd'
 import { Size, useWindowSize } from 'src/hooks/useWindowSize'
+import process from 'process'
 /**
  * Constants & Helpers
  */
@@ -104,7 +105,10 @@ function HomeIndex(): JSX.Element {
   const [blockList, { addBlock, removeBlock, clearAllBlocks, moveBlocks }] =
     useBlocks()
   const size: Size = useWindowSize()
-  console.log(size)
+  const url = `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`
+
+  const customHttpProvider = new ethers.providers.JsonRpcProvider(url)
+
   const isLocalChain =
     chainId === ChainId.Localhost || chainId === ChainId.Hardhat
 
@@ -153,13 +157,16 @@ function HomeIndex(): JSX.Element {
             rowHeight={400}
             // rowWidth={200}
             style={{
-              border: '1px solid red',
+              // border: '1px solid red',
               // position: 'relative',
               // height: 'auto',
-              minHeight: '80vh',
-              width: '80vw',
+              minHeight: '100vh',
+              width: '90vw',
               display: 'flex',
               flex: 1,
+              overflow: 'auto',
+              paddingLeft: '30px',
+
               // justifyContent: 'center',
               // alignItems: 'center',
             }}
@@ -172,7 +179,7 @@ function HomeIndex(): JSX.Element {
                     height: '100%',
                   }}
                 >
-                  {getBlockType(block)}
+                  {getBlockType(block, customHttpProvider)}
                 </div>
               </GridItem>
             ))}

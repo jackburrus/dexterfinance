@@ -14,4 +14,7 @@ module.exports = {
   images: {
     domains: ['https://ipfs.io', 'images.cryptocompare.com'],
   },
+  env: {
+    ALCHEMYAPIKEY: process.env.ALCHEMYAPIKEY,
+  },
 }

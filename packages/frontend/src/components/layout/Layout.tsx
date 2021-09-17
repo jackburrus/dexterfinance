@@ -144,7 +144,12 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
         </Container>
       </header>
       <main>
-        <Container maxWidth="container.xl">
+        <Container
+          maxWidth="fit-content"
+          // display={'flex'}
+          // flex={1}
+          // width={'100vw'}
+        >
           {children}
           {notifications.map((notification) => {
             if (notification.type === 'walletConnected') {
@@ -174,11 +179,11 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
           })}
         </Container>
       </main>
-      <footer>
-        <Container mt="8" py="8" maxWidth="container.xl">
+      {/* <footer>
+        <Container mt={2} maxWidth="container.xl">
           <Text>Made with ☕ in Boise, Idaho</Text>
         </Container>
-      </footer>
+      </footer> */}
     </>
   )
 }
