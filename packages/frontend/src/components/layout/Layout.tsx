@@ -21,8 +21,9 @@ import { useEthers, useNotifications } from '@usedapp/core'
 import blockies from 'blockies-ts'
 import NextLink from 'next/link'
 import React from 'react'
-import { getErrorMessage } from '../../lib/utils'
+import { getErrorMessage } from '../../../lib/utils'
 import { Balance } from '../Balance'
+import ModalSearch from '../BlockSearch/Modal'
 import { ConnectWallet } from '../ConnectWallet'
 import { Head, MetaProps } from './Head'
 
@@ -71,39 +72,54 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
   return (
     <>
       <Head customMeta={customMeta} />
-      <Heading>Dexter</Heading>
       <header>
         <Container maxWidth="container.xl">
           <SimpleGrid
             columns={[1, 1, 1, 2]}
             alignItems="center"
-            justifyContent="space-between"
+            // justifyContent="space-between"
+
             py="8"
           >
-            <Flex py={[4, null, null, 0]}>
-              <NextLink href="/" passHref>
+            <Flex
+            // justify="flex-start"
+            >
+              {/* <NextLink href="/" passHref>
                 <Link px="4" py="1">
-                  Home
+                  Block Buidler
                 </Link>
-              </NextLink>
-              <NextLink href="/graph-example" passHref>
-                <Link px="4" py="1">
-                  Graph Example
-                </Link>
-              </NextLink>
-              <NextLink href="/signature-example" passHref>
-                <Link px="4" py="1">
-                  Signature Example
-                </Link>
-              </NextLink>
+              </NextLink> */}
+              {/* <SearchButton /> */}
+              {/* <Button onClick={toggleColorMode}>
+                {colorMode == 'light' ? <MoonIcon /> : <SunIcon />}
+              </Button> */}
+              <Heading as="h2" mr={12} ml={12} fontWeight={500}>
+                Dexter
+              </Heading>
+              <ModalSearch />
             </Flex>
+
             {account ? (
               <Flex
                 order={[-1, null, null, 2]}
                 alignItems={'center'}
                 justifyContent={['flex-start', null, null, 'flex-end']}
               >
+                {/* <Button
+                  colorScheme="teal"
+                  onClick={sendFunds}
+                  mr={'12'}
+                  background={'green.600'}
+                  color={'whiteAlpha.900'}
+                >
+                  🤑
+                </Button> */}
+
+                {/* <Button onClick={clearAllBlocks} mr={'12'} colorScheme="blue">
+                  Clear
+                </Button> */}
                 <Balance />
+
                 <Image ml="4" src={blockieImageSrc} alt="blockie" />
                 <Menu placement="bottom-end">
                   <MenuButton as={Button} ml="4">
@@ -128,13 +144,6 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
       </header>
       <main>
         <Container maxWidth="container.xl">
-          {error && (
-            <Alert status="error" mb="8">
-              <AlertIcon />
-              <AlertTitle mr={2}>Error:</AlertTitle>
-              <AlertDescription>{getErrorMessage(error)}</AlertDescription>
-            </Alert>
-          )}
           {children}
           {notifications.map((notification) => {
             if (notification.type === 'walletConnected') {
@@ -166,10 +175,7 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
       </main>
       <footer>
         <Container mt="8" py="8" maxWidth="container.xl">
-          <Text>
-            Built by{' '}
-            <Link href="https://twitter.com/huntarosan">Hunter Chang</Link>
-          </Text>
+          <Text>Made with ☕ in Boise, Idaho</Text>
         </Container>
       </footer>
     </>

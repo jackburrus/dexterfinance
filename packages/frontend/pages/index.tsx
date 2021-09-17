@@ -1,10 +1,18 @@
-import { Box, Button, Divider, Heading, Input, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Divider,
+  Heading,
+  Input,
+  Text,
+  Flex,
+} from '@chakra-ui/react'
 import { ChainId, useEthers, useSendTransaction } from '@usedapp/core'
 import { ethers, providers, utils } from 'ethers'
 import React, { useReducer } from 'react'
 import { YourContract as LOCAL_CONTRACT_ADDRESS } from '../artifacts/contracts/contractAddress'
 import YourContract from '../artifacts/contracts/YourContract.sol/YourContract.json'
-import { Layout } from '../components/layout/Layout'
+import { Layout } from '../src/components/layout/Layout'
 import { YourContract as YourContractType } from '../types/typechain'
 
 /**
@@ -139,64 +147,9 @@ function HomeIndex(): JSX.Element {
 
   return (
     <Layout>
-      <Heading as="h1" mb="8">
-        Next.js Ethereum Starter
-      </Heading>
-      <Button
-        as="a"
-        size="lg"
-        colorScheme="teal"
-        variant="outline"
-        href="https://github.com/austintgriffith/scaffold-eth/tree/nextjs-typescript"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Get the source code!
-      </Button>
-      <Text mt="8" fontSize="xl">
-        This page only works on the ROPSTEN Testnet or on a Local Chain.
-      </Text>
-      <Box maxWidth="container.sm" p="8" mt="8" bg="gray.100">
-        <Text fontSize="xl">Contract Address: {CONTRACT_ADDRESS}</Text>
-        <Divider my="8" borderColor="gray.400" />
-        <Box>
-          <Text fontSize="lg">Greeting: {state.greeting}</Text>
-          <Button mt="2" colorScheme="teal" onClick={fetchContractGreeting}>
-            Fetch Greeting
-          </Button>
-        </Box>
-        <Divider my="8" borderColor="gray.400" />
-        <Box>
-          <Input
-            bg="white"
-            type="text"
-            placeholder="Enter a Greeting"
-            onChange={(e) => {
-              dispatch({
-                type: 'SET_INPUT_VALUE',
-                inputValue: e.target.value,
-              })
-            }}
-          />
-          <Button
-            mt="2"
-            colorScheme="teal"
-            isLoading={state.isLoading}
-            onClick={setContractGreeting}
-          >
-            Set Greeting
-          </Button>
-        </Box>
-        <Divider my="8" borderColor="gray.400" />
-        <Text mb="4">This button only works on a Local Chain.</Text>
-        <Button
-          colorScheme="teal"
-          onClick={sendFunds}
-          isDisabled={!isLocalChain}
-        >
-          Send Funds From Local Hardhat Chain
-        </Button>
-      </Box>
+      <Flex>
+        <h1>Hello</h1>
+      </Flex>
     </Layout>
   )
 }
