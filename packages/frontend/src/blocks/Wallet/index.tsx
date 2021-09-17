@@ -1,5 +1,5 @@
 import { Box, Center, Text } from '@chakra-ui/layout'
-import { useEthers } from '@usedapp/core'
+import { useConfig, useEthers } from '@usedapp/core'
 import { ethers } from '@usedapp/core/node_modules/ethers'
 import { utils } from 'ethers'
 import React, { useEffect, useState } from 'react'
@@ -28,20 +28,24 @@ async function postData(url = '', data = {}) {
 const Wallet = (props) => {
   const { provided } = props
   const [walletAmount, setWalletAmount] = useState(null)
-
-  const fetchData = async () => {
-    const data = await postData(provided.connection.url, {
-      jsonrpc: '2.0',
-      method: 'eth_getBalance',
-      params: ['0xE35ef95A80839C3c261197B6c93E5765C9A6a31a', 'latest'],
-      id: 0,
-    })
-    return data
-  }
+  const { account, chainId, library } = useEthers()
+  const config = useConfig()
+  // const fetchData = async () => {
+  //   const data = await postData(provided.connection.url, {
+  //     jsonrpc: '2.0',
+  //     method: 'eth_getBalance',
+  //     params: ['0xE35ef95A80839C3c261197B6c93E5765C9A6a31a', 'latest'],
+  //     id: 0,
+  //   })
+  //   return data
+  // }
+  // // useEffect(() => {
+  // //   fetchData().then((res) => setWalletAmount(utils.formatEther(res.result)))
+  // // }, [])
   useEffect(() => {
-    fetchData().then((res) => setWalletAmount(utils.formatEther(res.result)))
+    console.log(config.readOnlyUrls[library.network.chainId])
   }, [])
-  return !walletAmount ? null : (
+  return (
     <Box
       w="500px"
       h="350px"

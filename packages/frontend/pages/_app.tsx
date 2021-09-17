@@ -18,6 +18,7 @@ export const INFURA_ID = '460f40a260564ac4a4f4b3fffb032dad'
 const config: Config = {
   readOnlyUrls: {
     [ChainId.Ropsten]: `https://ropsten.infura.io/v3/${INFURA_ID}`,
+    [ChainId.Kovan]: `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`,
     [ChainId.Hardhat]: 'http://localhost:8545',
     [ChainId.Localhost]: 'http://localhost:8545',
   },

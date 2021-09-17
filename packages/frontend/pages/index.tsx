@@ -105,9 +105,9 @@ function HomeIndex(): JSX.Element {
   const [blockList, { addBlock, removeBlock, clearAllBlocks, moveBlocks }] =
     useBlocks()
   const size: Size = useWindowSize()
-  const url = `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`
+  // const url = `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`
 
-  const customHttpProvider = new ethers.providers.JsonRpcProvider(url)
+  // const customHttpProvider = new ethers.providers.JsonRpcProvider(url)
 
   const isLocalChain =
     chainId === ChainId.Localhost || chainId === ChainId.Hardhat
@@ -179,7 +179,7 @@ function HomeIndex(): JSX.Element {
                     height: '100%',
                   }}
                 >
-                  {getBlockType(block, customHttpProvider)}
+                  {getBlockType(block)}
                 </div>
               </GridItem>
             ))}
