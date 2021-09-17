@@ -30,21 +30,21 @@ const Wallet = (props) => {
   const [walletAmount, setWalletAmount] = useState(null)
   const { account, chainId, library } = useEthers()
   const config = useConfig()
-  // const fetchData = async () => {
-  //   const data = await postData(provided.connection.url, {
-  //     jsonrpc: '2.0',
-  //     method: 'eth_getBalance',
-  //     params: ['0xE35ef95A80839C3c261197B6c93E5765C9A6a31a', 'latest'],
-  //     id: 0,
-  //   })
-  //   return data
-  // }
-  // // useEffect(() => {
-  // //   fetchData().then((res) => setWalletAmount(utils.formatEther(res.result)))
-  // // }, [])
+  const fetchData = async () => {
+    const data = await postData(config.readOnlyUrls[library.network.chainId], {
+      jsonrpc: '2.0',
+      method: 'eth_getBalance',
+      params: ['0xE35ef95A80839C3c261197B6c93E5765C9A6a31a', 'latest'],
+      id: 0,
+    })
+    return data
+  }
   useEffect(() => {
-    console.log(config.readOnlyUrls[library.network.chainId])
+    fetchData().then((res) => setWalletAmount(utils.formatEther(res.result)))
   }, [])
+  // useEffect(() => {
+  //   console.log()
+  // }, [])
   return (
     <Box
       w="500px"
