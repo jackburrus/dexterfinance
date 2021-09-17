@@ -15,6 +15,7 @@ import {
   MenuList,
   SimpleGrid,
   Text,
+  Heading,
 } from '@chakra-ui/react'
 import { useEthers, useNotifications } from '@usedapp/core'
 import blockies from 'blockies-ts'
@@ -70,6 +71,7 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
   return (
     <>
       <Head customMeta={customMeta} />
+      <Heading>Dexter</Heading>
       <header>
         <Container maxWidth="container.xl">
           <SimpleGrid
