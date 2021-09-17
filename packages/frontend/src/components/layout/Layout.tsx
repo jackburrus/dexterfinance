@@ -59,7 +59,7 @@ interface LayoutProps {
 }
 
 /**
- * Component
+ * Component!
  */
 export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
   const { account, deactivate, error } = useEthers()
