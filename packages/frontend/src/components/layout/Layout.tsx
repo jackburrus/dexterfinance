@@ -17,6 +17,7 @@ import {
   Text,
   Heading,
 } from '@chakra-ui/react'
+import { useBlocks } from '@recoil/hooks/useBlocks'
 import { useEthers, useNotifications } from '@usedapp/core'
 import blockies from 'blockies-ts'
 import NextLink from 'next/link'
@@ -63,7 +64,7 @@ interface LayoutProps {
 export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
   const { account, deactivate, error } = useEthers()
   const { notifications } = useNotifications()
-
+  const [blockList, { clearAllBlocks }] = useBlocks()
   let blockieImageSrc
   if (typeof window !== 'undefined') {
     blockieImageSrc = blockies.create({ seed: account }).toDataURL()
@@ -115,9 +116,9 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
                   🤑
                 </Button> */}
 
-                {/* <Button onClick={clearAllBlocks} mr={'12'} colorScheme="blue">
+                <Button onClick={clearAllBlocks} mr={'12'} colorScheme="blue">
                   Clear
-                </Button> */}
+                </Button>
                 <Balance />
 
                 <Image ml="4" src={blockieImageSrc} alt="blockie" />

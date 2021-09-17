@@ -149,10 +149,10 @@ function HomeIndex(): JSX.Element {
             rowHeight={400}
             // rowWidth={200}
             style={{
-              // border: '1px solid red',
+              border: '1px solid red',
               // position: 'relative',
               // height: 'auto',
-              minHeight: '100vh',
+              minHeight: '80vh',
               width: '80vw',
               display: 'flex',
               flex: 1,
