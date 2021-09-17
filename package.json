@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "yarn workspace nextjs-ethereum-starter-frontend dev",
-    "build": "yarn workspace nextjs-ethereum-starter-frontend build",
-    "start": "yarn workspace nextjs-ethereum-starter-frontend start",
+    "dev": "yarn workspace dexterfinance dev",
+    "build": "yarn workspace dexterfinance build",
+    "start": "yarn workspace dexterfinance start",
     "chain": "yarn workspace nextjs-ethereum-starter-hardhat chain",
     "deploy": "yarn workspace nextjs-ethereum-starter-hardhat deploy",
     "compile": "yarn workspace nextjs-ethereum-starter-hardhat compile"
