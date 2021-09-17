@@ -52,26 +52,6 @@ function OptionText(props: any) {
   return highlightedText
 }
 
-function DocIcon(props) {
-  return (
-    <chakra.svg
-      strokeWidth="2px"
-      width="20px"
-      height="20px"
-      viewBox="0 0 20 20"
-      {...props}
-    >
-      <path
-        d="M17 6v12c0 .52-.2 1-1 1H4c-.7 0-1-.33-1-1V2c0-.55.42-1 1-1h8l5 5zM14 8h-3.13c-.51 0-.87-.34-.87-.87V4"
-        stroke="currentColor"
-        fill="none"
-        fillRule="evenodd"
-        strokeLinejoin="round"
-      />
-    </chakra.svg>
-  )
-}
-
 function EnterIcon(props) {
   return (
     <chakra.svg
@@ -91,27 +71,6 @@ function EnterIcon(props) {
         <path d="M18 3v4c0 2-2 4-4 4H2" />
         <path d="M8 17l-6-6 6-6" />
       </g>
-    </chakra.svg>
-  )
-}
-
-function HashIcon(props) {
-  return (
-    <chakra.svg
-      strokeWidth="2px"
-      width="20px"
-      height="20px"
-      viewBox="0 0 20 20"
-      {...props}
-    >
-      <path
-        d="M13 13h4-4V8H7v5h6v4-4H7V8H3h4V3v5h6V3v5h4-4v5zm-6 0v4-4H3h4z"
-        stroke="currentColor"
-        fill="none"
-        fillRule="evenodd"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
     </chakra.svg>
   )
 }

@@ -7,9 +7,11 @@ import {
   Text,
   Flex,
 } from '@chakra-ui/react'
+import { useBlocks } from '@recoil/hooks/useBlocks'
 import { ChainId, useEthers, useSendTransaction } from '@usedapp/core'
 import { ethers, providers, utils } from 'ethers'
 import React, { useReducer } from 'react'
+import Wallet from 'src/blocks/Wallet'
 import { YourContract as LOCAL_CONTRACT_ADDRESS } from '../artifacts/contracts/contractAddress'
 import YourContract from '../artifacts/contracts/YourContract.sol/YourContract.json'
 import { Layout } from '../src/components/layout/Layout'
@@ -79,9 +81,21 @@ function reducer(state: StateType, action: ActionType): StateType {
   }
 }
 
+const getBlockType = (block: BlockType, provided): JSX.Element => {
+  switch (block.title) {
+    case 'Wallet':
+      return <Wallet provided={provided} />
+
+    default:
+      return null
+  }
+}
+
 function HomeIndex(): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState)
   const { account, chainId, library } = useEthers()
+  const [blockList, { addBlock, removeBlock, clearAllBlocks, moveBlocks }] =
+    useBlocks()
 
   const isLocalChain =
     chainId === ChainId.Localhost || chainId === ChainId.Hardhat
@@ -96,48 +110,6 @@ function HomeIndex(): JSX.Element {
     signer: localProvider.getSigner(),
   })
 
-  // call the smart contract, read the current greeting value
-  async function fetchContractGreeting() {
-    if (library) {
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        YourContract.abi,
-        library
-      ) as YourContractType
-      try {
-        const data = await contract.greeting()
-        dispatch({ type: 'SET_GREETING', greeting: data })
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.log('Error: ', err)
-      }
-    }
-  }
-
-  // call the smart contract, send an update
-  async function setContractGreeting() {
-    if (!state.inputValue) return
-    if (library) {
-      dispatch({
-        type: 'SET_LOADING',
-        isLoading: true,
-      })
-      const signer = library.getSigner()
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        YourContract.abi,
-        signer
-      ) as YourContractType
-      const transaction = await contract.setGreeting(state.inputValue)
-      await transaction.wait()
-      fetchContractGreeting()
-      dispatch({
-        type: 'SET_LOADING',
-        isLoading: false,
-      })
-    }
-  }
-
   function sendFunds(): void {
     sendTransaction({
       to: account,
@@ -149,6 +121,16 @@ function HomeIndex(): JSX.Element {
     <Layout>
       <Flex>
         <h1>Hello</h1>
+        {blockList.map((block) => (
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          >
+            {getBlockType(block)}
+          </div>
+        ))}
       </Flex>
     </Layout>
   )
