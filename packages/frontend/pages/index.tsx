@@ -11,7 +11,7 @@ import {
 import { useBlocks } from '@recoil/hooks/useBlocks'
 import { ChainId, useEthers, useSendTransaction } from '@usedapp/core'
 import { ethers, providers, utils } from 'ethers'
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import Wallet from 'src/blocks/Wallet'
 import { YourContract as LOCAL_CONTRACT_ADDRESS } from '../artifacts/contracts/contractAddress'
 import YourContract from '../artifacts/contracts/YourContract.sol/YourContract.json'
@@ -128,6 +128,10 @@ function HomeIndex(): JSX.Element {
     const nextState = swap(blockList, sourceIndex, targetIndex)
     moveBlocks(nextState)
   }
+
+  useEffect(() => {
+    addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
+  }, [])
 
   return (
     <Layout>

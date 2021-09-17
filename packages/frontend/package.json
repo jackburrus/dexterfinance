@@ -26,6 +26,7 @@
     "@emotion/styled": "^11",
     "@fontsource/aclonica": "^4.5.0",
     "@fontsource/inter": "^4.5.0",
+    "@types/react": "^17.0.21",
     "@uniswap/sdk-core": "^3.0.0",
     "@uniswap/v3-sdk": "^3.3.1",
     "@usedapp/core": "^0.4.1",
