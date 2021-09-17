@@ -6,6 +6,7 @@ import {
   Input,
   Text,
   Flex,
+  Center,
 } from '@chakra-ui/react'
 import { useBlocks } from '@recoil/hooks/useBlocks'
 import { ChainId, useEthers, useSendTransaction } from '@usedapp/core'
@@ -16,7 +17,13 @@ import { YourContract as LOCAL_CONTRACT_ADDRESS } from '../artifacts/contracts/c
 import YourContract from '../artifacts/contracts/YourContract.sol/YourContract.json'
 import { Layout } from '../src/components/layout/Layout'
 import { YourContract as YourContractType } from '../types/typechain'
-
+import {
+  GridContextProvider,
+  GridDropZone,
+  GridItem,
+  swap,
+} from 'react-grid-dnd'
+import { Size, useWindowSize } from 'src/hooks/useWindowSize'
 /**
  * Constants & Helpers
  */
@@ -96,7 +103,8 @@ function HomeIndex(): JSX.Element {
   const { account, chainId, library } = useEthers()
   const [blockList, { addBlock, removeBlock, clearAllBlocks, moveBlocks }] =
     useBlocks()
-
+  const size: Size = useWindowSize()
+  console.log(size)
   const isLocalChain =
     chainId === ChainId.Localhost || chainId === ChainId.Hardhat
 
@@ -116,22 +124,57 @@ function HomeIndex(): JSX.Element {
       value: utils.parseEther('0.1'),
     })
   }
+  function onChange(sourceId, sourceIndex, targetIndex, targetId) {
+    const nextState = swap(blockList, sourceIndex, targetIndex)
+    moveBlocks(nextState)
+  }
 
   return (
     <Layout>
-      <Flex>
-        <h1>Hello</h1>
-        {blockList.map((block) => (
-          <div
+      {blockList.length == 0 ? (
+        <Center flex={1} h={'80vh'} flexDirection={'column'}>
+          <Text fontFamily={'Inter'} fontSize="2xl" mb={2} color={'grey'}>
+            Press ⌘+K for block search,{' '}
+          </Text>
+          <Text mb={2} fontFamily={'Inter'} fontSize="2xl" color={'grey'}>
+            or drag in a block file.
+          </Text>
+          {/* <PlusSquareIcon w={10} h={10} color={'grey'} /> */}
+        </Center>
+      ) : (
+        <GridContextProvider onChange={onChange}>
+          <GridDropZone
+            id="items"
+            boxesPerRow={size.width < 1240 ? 1 : 2}
+            rowHeight={400}
+            // rowWidth={200}
             style={{
-              width: '100%',
-              height: '100%',
+              // border: '1px solid red',
+              // position: 'relative',
+              // height: 'auto',
+              minHeight: '100vh',
+              width: '80vw',
+              display: 'flex',
+              flex: 1,
+              // justifyContent: 'center',
+              // alignItems: 'center',
             }}
           >
-            {getBlockType(block)}
-          </div>
-        ))}
-      </Flex>
+            {blockList.map((block) => (
+              <GridItem key={block.uuid}>
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                  }}
+                >
+                  {getBlockType(block)}
+                </div>
+              </GridItem>
+            ))}
+          </GridDropZone>
+        </GridContextProvider>
+      )}
     </Layout>
   )
 }
