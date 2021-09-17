@@ -1,6 +1,6 @@
 {
-  "name": "nextjs-ethereum-starter-frontend",
-  "author": "@huntarosan",
+  "name": "dexterfinance",
+  "author": "@jackburrus",
   "license": "MIT",
   "version": "1.0.0",
   "scripts": {
@@ -13,12 +13,6 @@
     "test": "jest",
     "test-all": "yarn lint && yarn type-check && yarn test"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn run type-check"
-    }
-  },
   "lint-staged": {
     "*.@(ts|tsx)": [
       "yarn lint"
@@ -26,26 +20,47 @@
   },
   "dependencies": {
     "@apollo/client": "3.1.1",
+    "@chakra-ui/icons": "^1.0.14",
     "@chakra-ui/react": "^1.6.3",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "@usedapp/core": "^0.4.4",
-    "@web3-react/walletconnect-connector": "^6.2.4",
+    "@fontsource/aclonica": "^4.5.0",
+    "@fontsource/inter": "^4.5.0",
+    "@uniswap/sdk-core": "^3.0.0",
+    "@uniswap/v3-sdk": "^3.3.1",
+    "@usedapp/core": "^0.4.1",
+    "@web3-react/walletconnect-connector": "^6.2.0",
+    "axios": "^0.21.4",
     "blockies-ts": "^1.0.0",
+    "chakra-ui-select": "^1.0.5",
+    "cryptocurrency-icons": "^0.18.0",
+    "dayjs": "^1.10.6",
+    "dayjs-plugin-utc": "^0.1.2",
     "deepmerge": "^4.2.2",
-    "ethers": "^5.4.5",
+    "ethers": "^5.1.4",
     "framer-motion": "^4",
     "graphql": "^15.3.0",
     "lodash": "4.17.20",
     "next": "^11.0.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "numbro": "^2.3.5",
+    "polished": "^4.1.3",
+    "react": "^17.0.1",
+    "react-beautiful-dnd": "^13.1.0",
+    "react-dom": "^17.0.1",
+    "react-gesture-responder": "^2.1.0",
+    "react-grid-dnd": "^2.1.2",
+    "react-icons": "^4.2.0",
+    "react-select": "^4.3.1",
+    "react-table": "^7.7.0",
+    "recharts": "^2.1.0",
+    "recoil": "^0.3.1",
+    "styled-components": "^5.3.0"
   },
   "devDependencies": {
     "@testing-library/react": "^11.2.5",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.25",
-    "@types/react": "^17.0.15",
+    "@types/react": "^17.0.1",
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "babel-jest": "^26.6.3",
