@@ -25,6 +25,7 @@ import {
 } from 'react-grid-dnd'
 import { Size, useWindowSize } from 'src/hooks/useWindowSize'
 import process from 'process'
+import NFTBlock from 'src/blocks/NFT'
 /**
  * Constants & Helpers
  */
@@ -93,6 +94,8 @@ const getBlockType = (block: BlockType, provided): JSX.Element => {
   switch (block.title) {
     case 'Wallet':
       return <Wallet provided={provided} />
+    case 'NFT':
+      return <NFTBlock provided={provided} />
 
     default:
       return null
