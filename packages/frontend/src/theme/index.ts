@@ -4,13 +4,14 @@ import {
   theme as chakraTheme,
 } from '@chakra-ui/react'
 
-const fonts = { heading: 'Inter' }
+const fonts = { heading: 'Inter', body: 'Inter' }
 
 const components = {
   Text: {
-    baseStyle: {
+    baseStyle: (props) => ({
       fontWeight: 'bold',
-    },
+      color: props.colorMode === 'dark' ? '#FFFFFF' : 'white',
+    }),
     variant: {
       label: (props) => ({
         fontWeight: '500',

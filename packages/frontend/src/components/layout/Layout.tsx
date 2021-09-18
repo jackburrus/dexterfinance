@@ -1,3 +1,4 @@
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import {
   Alert,
   AlertDescription,
@@ -18,6 +19,8 @@ import {
   Heading,
 } from '@chakra-ui/react'
 import { useBlocks } from '@recoil/hooks/useBlocks'
+import { useColorMode } from '@chakra-ui/color-mode'
+
 import { useEthers, useNotifications } from '@usedapp/core'
 import blockies from 'blockies-ts'
 import NextLink from 'next/link'
@@ -65,6 +68,7 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
   const { account, deactivate, error } = useEthers()
   const { notifications } = useNotifications()
   const [blockList, { clearAllBlocks }] = useBlocks()
+  const { colorMode, toggleColorMode } = useColorMode()
   let blockieImageSrc
   if (typeof window !== 'undefined') {
     blockieImageSrc = blockies.create({ seed: account }).toDataURL()
@@ -91,9 +95,9 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
                 </Link>
               </NextLink> */}
               {/* <SearchButton /> */}
-              {/* <Button onClick={toggleColorMode}>
+              <Button onClick={toggleColorMode}>
                 {colorMode == 'light' ? <MoonIcon /> : <SunIcon />}
-              </Button> */}
+              </Button>
               <Heading as="h2" mr={12} ml={12} fontWeight={500}>
                 Dexter
               </Heading>

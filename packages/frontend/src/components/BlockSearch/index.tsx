@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 // import SearchStyle from './search.styles'
+import { useColorMode } from '@chakra-ui/color-mode'
 
 const ACTION_KEY_DEFAULT = ['Ctrl', 'Control']
 const ACTION_KEY_APPLE = ['⌘', 'Command']
@@ -41,6 +42,7 @@ export const SearchButton = React.forwardRef(function SearchButton(
       setActionKey(ACTION_KEY_DEFAULT)
     }
   }, [])
+  const { colorMode } = useColorMode()
 
   useEventListener('keydown', (event) => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.platform)
@@ -77,7 +79,11 @@ export const SearchButton = React.forwardRef(function SearchButton(
     >
       <SearchIcon />
       <HStack w="full" ml="3" spacing="4px">
-        <Text textAlign="left" flex="1">
+        <Text
+          color={colorMode === 'light' ? 'black' : 'white'}
+          textAlign="left"
+          flex="1"
+        >
           Search the blocks
         </Text>
         <HStack spacing="4px">

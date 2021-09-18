@@ -71,7 +71,8 @@ const NFTCard = ({ imageURI, id }: NFTCardTypes) => {
     <Flex
       h={'100px'}
       w={'90px'}
-      bg={getRandomColor()}
+      // bg={getRandomColor()}
+      bg={'white'}
       borderRadius={'lg'}
       overflow={'hidden'}
       //   style={{ cursor: 'pointer' }}

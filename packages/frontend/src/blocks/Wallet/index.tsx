@@ -1,4 +1,4 @@
-import { Box, Center, Text } from '@chakra-ui/layout'
+import { Box, Center, Flex, Text } from '@chakra-ui/layout'
 import { formatEther } from '@ethersproject/units'
 import {
   useBlockNumber,
@@ -9,6 +9,8 @@ import {
 import { ethers } from '@usedapp/core/node_modules/ethers'
 import { utils } from 'ethers'
 import React, { useEffect, useState } from 'react'
+import { BsDot } from 'react-icons/bs'
+import { useQuery } from 'react-query'
 // import hre, { ethers } from 'hardhat'
 interface Props {}
 
@@ -40,9 +42,25 @@ const Wallet = (props) => {
   const etherBalance = useEtherBalance(account)
   const blockNumber = useBlockNumber()
   const config = useConfig()
-  console.log(library)
+  // const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
+  //   fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
+  //     (res) => res.json()
+  //   )
+  // )
+  const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
+    fetch(`https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD`, {
+      method: 'POST',
+      headers: {
+        authorization: process.env.CryptoCompareKey,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json())
+  )
+  const valueUSD = parseFloat(formatEther(etherBalance)).toFixed(2) * data.USD
+  // console.log(library)
 
-  return (
+  return isLoading ? null : (
     <Box
       w="500px"
       h="350px"
@@ -57,14 +75,41 @@ const Wallet = (props) => {
       overflow={'scroll'}
       p={5}
     >
-      <Center>
-        {/* <Text>{blockNumber}</Text>
-        <Text>{walletAmount}</Text> */}
+      <Flex
+        flex={1}
+        border={'1px solid white'}
+        flexDirection={'column'}
+        align={'center'}
+        justify={'center'}
+      >
+        <Text fontSize={'2xl'}>Balance</Text>
         {etherBalance && (
-          <Text>Ether balance: {formatEther(etherBalance)} ETH </Text>
+          <Box align={'center'}>
+            <Text fontSize={'2xl'}>
+              {formatEther(etherBalance).substring(0, 5)} ETH
+            </Text>
+            {console.log(data)}
+
+            <Text color={'grey'} opacity={'0.5'}>
+              ${valueUSD.toFixed(2)} USD
+            </Text>
+          </Box>
         )}
-        {blockNumber && <Text>Block Number: {blockNumber}</Text>}
-      </Center>
+      </Flex>
+      {/* <Text>{blockNumber}</Text>
+        <Text>{walletAmount}</Text> */}
+      {blockNumber && (
+        <Flex border={'1px solid white'} justify="flex-end" align={'center'}>
+          <Text fontSize="8" color={'limegreen'} fontFamily="Inter">
+            {blockNumber}
+          </Text>
+          <BsDot
+            size={'18px'}
+            style={{ paddingRight: '4px' }}
+            color={'limegreen'}
+          />
+        </Flex>
+      )}
     </Box>
   )
 }
