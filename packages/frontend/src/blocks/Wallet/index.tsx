@@ -40,44 +40,8 @@ const Wallet = (props) => {
   const etherBalance = useEtherBalance(account)
   const blockNumber = useBlockNumber()
   const config = useConfig()
-  // const fetchData = async () => {
-  //   const data = await postData(config.readOnlyUrls[library.network.chainId], {
-  //     jsonrpc: '2.0',
-  //     method: 'eth_getBalance',
-  //     params: ['0xE35ef95A80839C3c261197B6c93E5765C9A6a31a', 'latest'],
-  //     id: 0,
-  //   })
-  //   return data
-  // }
+  console.log(library)
 
-  // const getBlockNumber = async () => {
-  //   const blockNumber = await hre.network.provider.send('eth_blockNumber')
-  //   return parseInt(blockNumber.slice(2), 16)
-  // }
-  // useEffect(() => {
-  //   // if (library.network) {
-  //   //   postData(config.readOnlyUrls[library.network.chainId], {
-  //   //     jsonrpc: '2.0',
-  //   //     method: 'eth_getBalance',
-  //   //     params: ['0xE35ef95A80839C3c261197B6c93E5765C9A6a31a', 'latest'],
-  //   //     id: 0,
-  //   //   }).then((res) => setWalletAmount(utils.formatEther(res.result)))
-
-  //     // postData(config.readOnlyUrls[library.network.chainId], {
-  //     //   jsonrpc: '2.0',
-  //     //   method: 'eth_blockNumber',
-  //     //   params: [],
-  //     //   id: 0,
-  //     // }).then((res) => setBlockNumber(utils.formatEther(res.result)))
-  //   }
-  // }, [])
-  // useEffect(() => {
-  //   console.log(
-  //     library
-  //       .lookupAddress('0xE35ef95A80839C3c261197B6c93E5765C9A6a31a')
-  //       .then((res) => console.log(res))
-  //   )
-  // }, [])
   return (
     <Box
       w="500px"
