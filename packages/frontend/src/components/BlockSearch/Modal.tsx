@@ -238,7 +238,8 @@ function ModalSearch() {
                       }}
                       onClick={() => {
                         modal.onClose()
-
+                        console.log(BlockData[active])
+                        console.log(blockList)
                         addBlock(BlockData[active])
                       }}
                       //   ref={menuNodes.ref(index)}

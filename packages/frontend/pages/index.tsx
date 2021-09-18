@@ -137,6 +137,22 @@ function HomeIndex(): JSX.Element {
     addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
   }, [])
 
+  useEffect(() => {
+    console.log(size.width)
+  }, [size])
+
+  const getColumnNumbers = (size) => {
+    switch (size) {
+      case size < 1240:
+        return 1
+
+      case size > 1240:
+        return 4
+      // default:
+      //   return 2
+    }
+  }
+
   return (
     <Layout>
       {blockList.length == 0 ? (
@@ -153,20 +169,17 @@ function HomeIndex(): JSX.Element {
         <GridContextProvider onChange={onChange}>
           <GridDropZone
             id="items"
-            boxesPerRow={size.width < 1240 ? 1 : 2}
+            boxesPerRow={size.width > 1000 ? 3 : 1}
             rowHeight={400}
             // rowWidth={200}
             style={{
-              // border: '1px solid red',
+              border: '1px solid cyan',
               // position: 'relative',
               // height: 'auto',
               minHeight: '100vh',
-              width: '90vw',
+              width: '80vw',
               display: 'flex',
               flex: 1,
-              overflow: 'auto',
-              paddingLeft: '30px',
-
               // justifyContent: 'center',
               // alignItems: 'center',
             }}

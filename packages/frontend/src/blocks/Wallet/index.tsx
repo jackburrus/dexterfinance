@@ -30,20 +30,24 @@ const Wallet = (props) => {
   const [walletAmount, setWalletAmount] = useState(null)
   const { account, chainId, library } = useEthers()
   const config = useConfig()
-  const fetchData = async () => {
-    const data = await postData(config.readOnlyUrls[library.network.chainId], {
-      jsonrpc: '2.0',
-      method: 'eth_getBalance',
-      params: ['0xE35ef95A80839C3c261197B6c93E5765C9A6a31a', 'latest'],
-      id: 0,
-    })
-    return data
-  }
-  useEffect(() => {
-    fetchData().then((res) => setWalletAmount(utils.formatEther(res.result)))
-  }, [])
+  // const fetchData = async () => {
+  //   const data = await postData(config.readOnlyUrls[library.network.chainId], {
+  //     jsonrpc: '2.0',
+  //     method: 'eth_getBalance',
+  //     params: ['0xE35ef95A80839C3c261197B6c93E5765C9A6a31a', 'latest'],
+  //     id: 0,
+  //   })
+  //   return data
+  // }
   // useEffect(() => {
-  //   console.log()
+  //   fetchData().then((res) => setWalletAmount(utils.formatEther(res.result)))
+  // }, [])
+  // useEffect(() => {
+  //   console.log(
+  //     library
+  //       .lookupAddress('0xE35ef95A80839C3c261197B6c93E5765C9A6a31a')
+  //       .then((res) => console.log(res))
+  //   )
   // }, [])
   return (
     <Box
@@ -56,12 +60,12 @@ const Wallet = (props) => {
       flexDirection="column"
       bg={'#181C20'}
       borderRadius={'3xl'}
-      position="relative"
+      // position="relative"
       overflow={'scroll'}
       p={5}
     >
       <Center>
-        <Text>Wallet Block</Text>
+        {/* <Text>Wallet Block</Text> */}
         <Text>{walletAmount}</Text>
       </Center>
     </Box>
