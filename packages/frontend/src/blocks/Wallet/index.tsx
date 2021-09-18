@@ -1,9 +1,15 @@
 import { Box, Center, Text } from '@chakra-ui/layout'
-import { useConfig, useEthers } from '@usedapp/core'
+import { formatEther } from '@ethersproject/units'
+import {
+  useBlockNumber,
+  useConfig,
+  useEtherBalance,
+  useEthers,
+} from '@usedapp/core'
 import { ethers } from '@usedapp/core/node_modules/ethers'
 import { utils } from 'ethers'
 import React, { useEffect, useState } from 'react'
-
+// import hre, { ethers } from 'hardhat'
 interface Props {}
 
 // Example POST method implementation:
@@ -28,7 +34,11 @@ async function postData(url = '', data = {}) {
 const Wallet = (props) => {
   const { provided } = props
   const [walletAmount, setWalletAmount] = useState(null)
+
   const { account, chainId, library } = useEthers()
+
+  const etherBalance = useEtherBalance(account)
+  const blockNumber = useBlockNumber()
   const config = useConfig()
   // const fetchData = async () => {
   //   const data = await postData(config.readOnlyUrls[library.network.chainId], {
@@ -39,8 +49,27 @@ const Wallet = (props) => {
   //   })
   //   return data
   // }
+
+  // const getBlockNumber = async () => {
+  //   const blockNumber = await hre.network.provider.send('eth_blockNumber')
+  //   return parseInt(blockNumber.slice(2), 16)
+  // }
   // useEffect(() => {
-  //   fetchData().then((res) => setWalletAmount(utils.formatEther(res.result)))
+  //   // if (library.network) {
+  //   //   postData(config.readOnlyUrls[library.network.chainId], {
+  //   //     jsonrpc: '2.0',
+  //   //     method: 'eth_getBalance',
+  //   //     params: ['0xE35ef95A80839C3c261197B6c93E5765C9A6a31a', 'latest'],
+  //   //     id: 0,
+  //   //   }).then((res) => setWalletAmount(utils.formatEther(res.result)))
+
+  //     // postData(config.readOnlyUrls[library.network.chainId], {
+  //     //   jsonrpc: '2.0',
+  //     //   method: 'eth_blockNumber',
+  //     //   params: [],
+  //     //   id: 0,
+  //     // }).then((res) => setBlockNumber(utils.formatEther(res.result)))
+  //   }
   // }, [])
   // useEffect(() => {
   //   console.log(
@@ -65,8 +94,12 @@ const Wallet = (props) => {
       p={5}
     >
       <Center>
-        {/* <Text>Wallet Block</Text> */}
-        <Text>{walletAmount}</Text>
+        {/* <Text>{blockNumber}</Text>
+        <Text>{walletAmount}</Text> */}
+        {etherBalance && (
+          <Text>Ether balance: {formatEther(etherBalance)} ETH </Text>
+        )}
+        {blockNumber && <Text>Block Number: {blockNumber}</Text>}
       </Center>
     </Box>
   )

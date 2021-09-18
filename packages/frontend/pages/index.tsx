@@ -169,7 +169,7 @@ function HomeIndex(): JSX.Element {
         <GridContextProvider onChange={onChange}>
           <GridDropZone
             id="items"
-            boxesPerRow={size.width > 1000 ? 3 : 1}
+            boxesPerRow={size.width > 1900 ? 3 : 2}
             rowHeight={400}
             // rowWidth={200}
             style={{
