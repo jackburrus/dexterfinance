@@ -1,4 +1,5 @@
 import { Box, Center, Flex, Text } from '@chakra-ui/layout'
+import { CryptoIcon } from '@components/CryptoIcon'
 import { formatEther } from '@ethersproject/units'
 import {
   useBlockNumber,
@@ -6,11 +7,13 @@ import {
   useEtherBalance,
   useEthers,
 } from '@usedapp/core'
-import { ethers } from '@usedapp/core/node_modules/ethers'
+import { ethers, BigNumber } from '@usedapp/core/node_modules/ethers'
 import { utils } from 'ethers'
 import React, { useEffect, useState } from 'react'
 import { BsDot } from 'react-icons/bs'
 import { useQuery } from 'react-query'
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import EthAddressInput from './EthAddressInput'
 // import hre, { ethers } from 'hardhat'
 interface Props {}
 
@@ -41,26 +44,38 @@ const Wallet = (props) => {
 
   const etherBalance = useEtherBalance(account)
   const blockNumber = useBlockNumber()
+  const [USDValue, setUSDValue] = useState(null)
   const config = useConfig()
   // const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
   //   fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
   //     (res) => res.json()
   //   )
   // )
-  const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
-    fetch(`https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD`, {
-      method: 'POST',
-      headers: {
-        authorization: process.env.CryptoCompareKey,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then((res) => res.json())
-  )
-  const valueUSD = parseFloat(formatEther(etherBalance)).toFixed(2) * data.USD
+  // const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
+  //   fetch(`https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD`, {
+  //     method: 'POST',
+  //     headers: {
+  //       authorization: process.env.CryptoCompareKey,
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //   }).then((res) => res.json())
+  // )
+  // useEffect(() => {
+  //   if (data && data.USD) {
+  //     if (formatEther(etherBalance)) {
+  //       const usdv = parseFloat(formatEther(etherBalance)) * data.USD
+  //       console.log(usdv)
+  //     }
+
+  //     // const usdv = walletValue
+  //     // setUSDValue(usdv)
+  //   }
+  // }, [data])
+  //
   // console.log(library)
 
-  return isLoading ? null : (
+  return (
     <Box
       w="500px"
       h="350px"
@@ -75,40 +90,70 @@ const Wallet = (props) => {
       overflow={'scroll'}
       p={5}
     >
+      <EthAddressInput />
       <Flex
         flex={1}
-        border={'1px solid white'}
+        // border={'1px solid white'}
         flexDirection={'column'}
         align={'center'}
         justify={'center'}
       >
-        <Text fontSize={'2xl'}>Balance</Text>
+        <CryptoIcon code={'Eth'} />
+
         {etherBalance && (
-          <Box align={'center'}>
+          <Box mt={'1'} align={'center'}>
+            <Text fontSize={'xl'}>Balance</Text>
             <Text fontSize={'2xl'}>
               {formatEther(etherBalance).substring(0, 5)} ETH
             </Text>
-            {console.log(data)}
 
-            <Text color={'grey'} opacity={'0.5'}>
-              ${valueUSD.toFixed(2)} USD
-            </Text>
+            {/* <Text color={'grey'} opacity={'0.5'}>
+              ${USDValue.toFixed(2)} USD
+            </Text> */}
           </Box>
         )}
       </Flex>
-      {/* <Text>{blockNumber}</Text>
-        <Text>{walletAmount}</Text> */}
+      <Flex flex={2}>
+        <Tabs w={500}>
+          <TabList>
+            <Tab>Assets</Tab>
+            <Tab>Activity</Tab>
+            <Tab>NFT</Tab>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel>
+              <p>one!</p>
+            </TabPanel>
+            <TabPanel>
+              <p>two!</p>
+            </TabPanel>
+            <TabPanel>
+              <p>three!</p>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Flex>
       {blockNumber && (
-        <Flex border={'1px solid white'} justify="flex-end" align={'center'}>
-          <Text fontSize="8" color={'limegreen'} fontFamily="Inter">
-            {blockNumber}
-          </Text>
-          <BsDot
-            size={'18px'}
-            style={{ paddingRight: '4px' }}
-            color={'limegreen'}
-          />
-        </Flex>
+        <Box
+          // border={'1px solid white'}
+          // justify="flex-end"
+          // align={'center'}
+          position="absolute"
+          bottom="5"
+          right="10"
+        >
+          <Flex flexDirection="row" align={'center'}>
+            <Text fontSize="8" color={'limegreen'} fontFamily="Inter">
+              {blockNumber}
+            </Text>
+            <BsDot
+              size={'18px'}
+              style={{ paddingRight: '4px' }}
+              color={'limegreen'}
+            />
+          </Flex>
+        </Box>
       )}
     </Box>
   )
