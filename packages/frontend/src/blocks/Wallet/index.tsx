@@ -135,15 +135,21 @@ const Wallet = (props) => {
         </Tabs>
       </Flex>
       {blockNumber && (
-        <Box
+        <Flex
           // border={'1px solid white'}
-          // justify="flex-end"
-          // align={'center'}
-          position="absolute"
-          bottom="5"
-          right="10"
+          display={'flex'}
+          justify="flex-end"
+          align={'flex-end'}
+          // position="absolute"
+          // bottom="5"
+          // right="10"
         >
-          <Flex flexDirection="row" align={'center'}>
+          <Flex
+            // border={'1px solid orange'}
+            flexDirection="row"
+            align={'center'}
+            justify="flex-end"
+          >
             <Text fontSize="8" color={'limegreen'} fontFamily="Inter">
               {blockNumber}
             </Text>
@@ -153,7 +159,7 @@ const Wallet = (props) => {
               color={'limegreen'}
             />
           </Flex>
-        </Box>
+        </Flex>
       )}
     </Box>
   )
