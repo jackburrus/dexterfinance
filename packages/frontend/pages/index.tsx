@@ -26,6 +26,7 @@ import {
 import { Size, useWindowSize } from 'src/hooks/useWindowSize'
 import process from 'process'
 import NFTBlock from 'src/blocks/NFT'
+import AnalyticsBlock from 'src/blocks/Analytics'
 /**
  * Constants & Helpers
  */
@@ -96,6 +97,8 @@ const getBlockType = (block: BlockType, provided): JSX.Element => {
       return <Wallet provided={provided} />
     case 'NFT':
       return <NFTBlock provided={provided} />
+    case 'Analytics':
+      return <AnalyticsBlock provided={provided} />
 
     default:
       return null
