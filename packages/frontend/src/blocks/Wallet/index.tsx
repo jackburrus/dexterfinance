@@ -12,9 +12,18 @@ import { utils } from 'ethers'
 import React, { useEffect, useState } from 'react'
 import { BsDot } from 'react-icons/bs'
 import { useQuery } from 'react-query'
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Spinner,
+} from '@chakra-ui/react'
 import EthAddressInput from './EthAddressInput'
 import { truncateHash } from '@components/layout/Layout'
+import { getTokenMetadata } from './utils'
+import TokenAssetRow from './components/TokenAssetRow'
 // import hre, { ethers } from 'hardhat'
 interface Props {}
 
@@ -48,116 +57,94 @@ const Wallet = (props) => {
   const [USDValue, setUSDValue] = useState(null)
   const config = useConfig()
   const [activeEthAddress, setActiveEthAddress] = useState(account)
+  const [tokenBalanceData, setTokenBalanceData] = useState(null)
   // console.log(library)
 
-  const fetchTokenBalances = async (account: string, addresses: string[]) => {
-    fetch(`https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        method: 'alchemy_getTokenBalances',
-        params: [
-          '0xE35ef95A80839C3c261197B6c93E5765C9A6a31a',
-          'DEFAULT_TOKENS',
-        ],
-        id: 42,
-      }),
-    }).then((response) => {
-      if (response.ok) {
-        response.json().then((json) => {
-          console.log(json.result.tokenBalances)
-        })
+  // const fetchTokenBalances = async (account: string, addresses: string[]) => {
+  //   fetch(`https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`, {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application/json',
+  //     },
+  // body: JSON.stringify({
+  //   jsonrpc: '2.0',
+  //   method: 'alchemy_getTokenBalances',
+  //   params: [
+  //     '0xE35ef95A80839C3c261197B6c93E5765C9A6a31a',
+  //     'DEFAULT_TOKENS',
+  //   ],
+  //   id: 42,
+  // }),
+  //   }).then((response) => {
+  //     if (response.ok) {
+  //       response.json().then((json) => {
+  //         const arrayOfTokenBalances = json.result.tokenBalances
+  //         for (const token of arrayOfTokenBalances) {
+  //           if (token.tokenBalance !== '0x') {
+  //             // console.log(token)
+  //             return getTokenMetadata(token.contractAddress)
+  //           }
+  //         }
+  //       })
+  //     }
+  //   })
+  //   // console.log(balances)
+  //   // return balances
+  //   // return balances.tokenBalances.map((balance) => balance.tokenBalance)
+  // }
+
+  async function fetchTokens() {
+    try {
+      const response = await fetch(
+        `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`,
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            method: 'alchemy_getTokenBalances',
+            params: [
+              '0xE35ef95A80839C3c261197B6c93E5765C9A6a31a',
+              'DEFAULT_TOKENS',
+            ],
+            id: 42,
+          }),
+        }
+      )
+      const tokens = await response.json()
+      return tokens.result.tokenBalances
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async function fetchAllTokenData() {
+    const tokensWithData = []
+    const tokensForProcessing = await fetchTokens()
+    tokensForProcessing.map((token) => {
+      if (token.tokenBalance !== '0x') {
+        const tokenMeta = async () => {
+          const meta = await getTokenMetadata(token.contractAddress)
+
+          if (formatEther(token.tokenBalance) > 0.01) {
+            const tokenCombined = Object.assign({}, token, meta.result)
+            // console.log(tokenCombined)
+            tokensWithData.push(tokenCombined)
+          }
+        }
+        tokenMeta()
+
+        // console.log(tokenMeta)
       }
     })
-    // console.log(balances)
-    // return balances
-    // return balances.tokenBalances.map((balance) => balance.tokenBalance)
+    setTokenBalanceData(tokensWithData)
   }
 
   useEffect(() => {
     if (library) {
-      fetchTokenBalances()
-      // console.log(library)
+      console.log('fetching')
+      fetchAllTokenData()
     }
   }, [])
-  // const fetchTokenBalances = async (account: string, addresses: string[]) => {
-  //   const balances = await library.send('alchemy_getTokenBalances', [
-  //     account,
-  //     addresses,
-  //   ])
-  //   return balances.tokenBalances.map((balance) => balance.tokenBalance)
-  // }
-
-  // const KOVAN_PROVIDER = new ethers.providers.AlchemyProvider(
-  //   42,
-  //   process.env.ALCHEMYAPIKEY
-  // )
-  // const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
-  //   fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
-  //     (res) => res.json()
-  //   )
-  // )
-  // const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
-  //   fetch(`https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD`, {
-  //     method: 'POST',
-  //     headers: {
-  //       authorization: process.env.CryptoCompareKey,
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //   }).then((res) => res.json())
-  // )
-  // const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
-  //   fetch(config.readOnlyUrls[chainId], {
-  //     method: 'POST',
-  //     headers: {
-  //       jsonrpc: '2.0',
-  //       method: 'alchemy_getTokenBalances',
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //       params: [
-  //         '0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be',
-  //         [
-  //           '0x607f4c5bb672230e8672085532f7e901544a7375',
-  //           '0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6',
-  //           '0x63b992e6246d88f07fc35a056d2c365e6d441a3d',
-  //           '0x6467882316dc6e206feef05fba6deaa69277f155',
-  //           '0x647f274b3a7248d6cf51b35f08e7e7fd6edfb271',
-  //         ],
-  //       ],
-  //       id: 42,
-  //     },
-  //   }).then((res) => res.json())
-  // )
-
-  // useEffect(() => {
-  //   const tokenBalances = fetchTokenBalances(
-  //     '0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be'
-  //   )
-  //   console.log(tokenBalances)
-  // }, [])
-
-  // useEffect(() => {
-  //   console.log(data)
-  // }, [data])
-  // console.log(config.readOnlyUrls[account])
-  // console.log(account)
-
-  // useEffect(() => {
-  //   if (data && data.USD) {
-  //     if (formatEther(etherBalance)) {
-  //       const usdv = parseFloat(formatEther(etherBalance)) * data.USD
-  //       console.log(usdv)
-  //     }
-
-  //     // const usdv = walletValue
-  //     // setUSDValue(usdv)
-  //   }
-  // }, [data])
-  //
 
   return (
     <Box
@@ -220,8 +207,34 @@ const Wallet = (props) => {
           </TabList>
 
           <TabPanels>
-            <TabPanel>
-              <p>one!</p>
+            <TabPanel
+              flex={1}
+              height={100}
+              // border={'1px solid white'}
+            >
+              {etherBalance && (
+                <TokenAssetRow
+                  key={'ETH'}
+                  symbol={'ETH'}
+                  amount={formatEther(etherBalance).substring(0, 5)}
+                />
+              )}
+
+              {!tokenBalanceData ? (
+                <Center flex={1}>
+                  <Spinner color={'white'} />
+                </Center>
+              ) : (
+                tokenBalanceData.map((token) => {
+                  return (
+                    <TokenAssetRow
+                      key={token.symbol}
+                      symbol={token.symbol}
+                      amount={formatEther(token.tokenBalance).substring(0, 5)}
+                    />
+                  )
+                })
+              )}
             </TabPanel>
             <TabPanel>
               <p>two!</p>

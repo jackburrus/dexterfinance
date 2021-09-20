@@ -34,7 +34,8 @@ export const EthAddressInput = (props: Props) => {
       //   ref={ref}
       //   lineHeight="1.2"
       h={'6'}
-      w="20%"
+      w="30%"
+      minWidth={'20%'}
       position={'absolute'}
       //   h={50}
       bg={useColorModeValue('white', 'gray.700')}
