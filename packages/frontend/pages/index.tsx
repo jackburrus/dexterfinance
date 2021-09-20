@@ -176,7 +176,7 @@ function HomeIndex(): JSX.Element {
             rowHeight={400}
             // rowWidth={200}
             style={{
-              border: '1px solid cyan',
+              // border: '1px solid cyan',
               // position: 'relative',
               // height: 'auto',
               minHeight: '100vh',
