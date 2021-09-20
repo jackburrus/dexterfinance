@@ -113,7 +113,7 @@ function HomeIndex(): JSX.Element {
   const size: Size = useWindowSize()
   // const url = `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`
 
-  // const customHttpProvider = new ethers.providers.JsonRpcProvider(url)
+  // const customHttpProvider = new ethers.providers.AlchemyProvider
 
   const isLocalChain =
     chainId === ChainId.Localhost || chainId === ChainId.Hardhat
@@ -142,22 +142,6 @@ function HomeIndex(): JSX.Element {
   useEffect(() => {
     addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
   }, [])
-
-  useEffect(() => {
-    console.log(size.width)
-  }, [size])
-
-  const getColumnNumbers = (size) => {
-    switch (size) {
-      case size < 1240:
-        return 1
-
-      case size > 1240:
-        return 4
-      // default:
-      //   return 2
-    }
-  }
 
   return (
     <Layout>

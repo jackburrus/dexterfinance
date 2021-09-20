@@ -48,6 +48,33 @@ const Wallet = (props) => {
   const [USDValue, setUSDValue] = useState(null)
   const config = useConfig()
   const [activeEthAddress, setActiveEthAddress] = useState(account)
+  // console.log(library)
+
+  const fetchTokenBalances = async (account: string, addresses: string[]) => {
+    const balances = await library.send('eth_getBalance', [
+      '0xE35ef95A80839C3c261197B6c93E5765C9A6a31a',
+      'latest',
+    ])
+    console.log(formatEther(balances))
+    return balances
+    // return balances.tokenBalances.map((balance) => balance.tokenBalance)
+  }
+
+  useEffect(() => {
+    fetchTokenBalances()
+  }, [])
+  // const fetchTokenBalances = async (account: string, addresses: string[]) => {
+  //   const balances = await library.send('alchemy_getTokenBalances', [
+  //     account,
+  //     addresses,
+  //   ])
+  //   return balances.tokenBalances.map((balance) => balance.tokenBalance)
+  // }
+
+  // const KOVAN_PROVIDER = new ethers.providers.AlchemyProvider(
+  //   42,
+  //   process.env.ALCHEMYAPIKEY
+  // )
   // const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
   //   fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
   //     (res) => res.json()
@@ -63,6 +90,42 @@ const Wallet = (props) => {
   //     },
   //   }).then((res) => res.json())
   // )
+  // const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
+  //   fetch(config.readOnlyUrls[chainId], {
+  //     method: 'POST',
+  //     headers: {
+  //       jsonrpc: '2.0',
+  //       method: 'alchemy_getTokenBalances',
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //       params: [
+  //         '0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be',
+  //         [
+  //           '0x607f4c5bb672230e8672085532f7e901544a7375',
+  //           '0x618e75ac90b12c6049ba3b27f5d5f8651b0037f6',
+  //           '0x63b992e6246d88f07fc35a056d2c365e6d441a3d',
+  //           '0x6467882316dc6e206feef05fba6deaa69277f155',
+  //           '0x647f274b3a7248d6cf51b35f08e7e7fd6edfb271',
+  //         ],
+  //       ],
+  //       id: 42,
+  //     },
+  //   }).then((res) => res.json())
+  // )
+
+  // useEffect(() => {
+  //   const tokenBalances = fetchTokenBalances(
+  //     '0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be'
+  //   )
+  //   console.log(tokenBalances)
+  // }, [])
+
+  // useEffect(() => {
+  //   console.log(data)
+  // }, [data])
+  // console.log(config.readOnlyUrls[account])
+  // console.log(account)
+
   // useEffect(() => {
   //   if (data && data.USD) {
   //     if (formatEther(etherBalance)) {
@@ -75,7 +138,6 @@ const Wallet = (props) => {
   //   }
   // }, [data])
   //
-  // console.log(account)
 
   return (
     <Box
@@ -111,7 +173,7 @@ const Wallet = (props) => {
           justifyContent={'flex-end'}
         >
           <Text fontSize="8" color={'grey'}>
-            {truncateHash(activeEthAddress)}
+            {activeEthAddress && truncateHash(activeEthAddress)}
           </Text>
         </Box>
         <CryptoIcon code={'Eth'} />
