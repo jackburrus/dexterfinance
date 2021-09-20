@@ -14,6 +14,7 @@ import { BsDot } from 'react-icons/bs'
 import { useQuery } from 'react-query'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import EthAddressInput from './EthAddressInput'
+import { truncateHash } from '@components/layout/Layout'
 // import hre, { ethers } from 'hardhat'
 interface Props {}
 
@@ -46,6 +47,7 @@ const Wallet = (props) => {
   const blockNumber = useBlockNumber()
   const [USDValue, setUSDValue] = useState(null)
   const config = useConfig()
+  const [activeEthAddress, setActiveEthAddress] = useState(account)
   // const { isLoading, error, data, isFetching } = useQuery('repoData', () =>
   //   fetch('https://api.github.com/repos/tannerlinsley/react-query').then(
   //     (res) => res.json()
@@ -73,7 +75,7 @@ const Wallet = (props) => {
   //   }
   // }, [data])
   //
-  // console.log(library)
+  // console.log(account)
 
   return (
     <Box
@@ -91,6 +93,7 @@ const Wallet = (props) => {
       p={5}
     >
       <EthAddressInput />
+
       <Flex
         flex={1}
         // border={'1px solid white'}
@@ -98,6 +101,19 @@ const Wallet = (props) => {
         align={'center'}
         justify={'center'}
       >
+        <Box
+          d={'flex'}
+          flex={1}
+          p={'2'}
+          // border={'1px solid white'}
+          w={'100%'}
+          align={'flex-end'}
+          justifyContent={'flex-end'}
+        >
+          <Text fontSize="8" color={'grey'}>
+            {truncateHash(activeEthAddress)}
+          </Text>
+        </Box>
         <CryptoIcon code={'Eth'} />
 
         {etherBalance && (
