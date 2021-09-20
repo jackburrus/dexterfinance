@@ -61,7 +61,9 @@ const Wallet = (props) => {
   }
 
   useEffect(() => {
-    fetchTokenBalances()
+    if (library) {
+      fetchTokenBalances()
+    }
   }, [])
   // const fetchTokenBalances = async (account: string, addresses: string[]) => {
   //   const balances = await library.send('alchemy_getTokenBalances', [
