@@ -16,7 +16,7 @@ export const getTokenMetadata = async (address: string) => {
       }
     )
     const tokenMetaDataFulfilled = await tokenMetaData.json()
-
+    // console.log(tokenMetaDataFulfilled)
     return tokenMetaDataFulfilled
   } catch (error) {
     console.log(error)
