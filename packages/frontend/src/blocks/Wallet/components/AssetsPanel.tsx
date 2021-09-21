@@ -10,10 +10,9 @@ import TokenAssetRow from './TokenAssetRow'
 interface Props {}
 
 const PanelComponent = forwardRef<TabPanelProps, 'div'>((props, ref) => {
-  console.log(props.children)
   return (
     <TabPanel
-      border={'1px solid white'}
+      //   border={'1px solid white'}
       flex={1}
       height={100}
       ref={ref}
@@ -48,14 +47,22 @@ export const AssetsPanel = (props) => {
       const tokens = await response.json()
       tokens.result.tokenBalances.map(async (token) => {
         // console.log(token.contractAddress)
-        const meta = await getTokenMetadata(token.contractAddress)
-        if (meta.result && parseFloat(formatEther(token.tokenBalance)) > 0.01) {
-          const exists = tokenBalanceData.find((t) => t.symbol === token.symbol)
-          if (exists) return
-          setTokenBalanceData((prevArray) => [
-            ...prevArray,
-            Object.assign({}, meta.result, token),
-          ])
+        if (token.tokenBalance !== '0x') {
+          const meta = await getTokenMetadata(token.contractAddress)
+          console.log(meta)
+          if (
+            meta.result &&
+            parseFloat(formatEther(token.tokenBalance)) > 0.01
+          ) {
+            const exists = tokenBalanceData.find(
+              (t) => t.symbol === token.symbol
+            )
+            if (exists) return
+            setTokenBalanceData((prevArray) => [
+              ...prevArray,
+              Object.assign({}, meta.result, token),
+            ])
+          }
         }
       })
       // return tokens.result.tokenBalances
