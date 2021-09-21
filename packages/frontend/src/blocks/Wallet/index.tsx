@@ -25,6 +25,7 @@ import { truncateHash } from '@components/layout/Layout'
 import { getTokenMetadata } from './utils'
 import TokenAssetRow from './components/TokenAssetRow'
 import AssetsPanel from './components/AssetsPanel'
+import TransactionsPanel from './components/TransactionsPanel'
 // import hre, { ethers } from 'hardhat'
 interface Props {}
 
@@ -102,9 +103,7 @@ const Wallet = (props) => {
 
           <TabPanels>
             <AssetsPanel />
-            <TabPanel>
-              <p>two!</p>
-            </TabPanel>
+            <TransactionsPanel />
             <TabPanel>
               <p>three!</p>
             </TabPanel>

@@ -5,7 +5,7 @@ import React from 'react'
 /**
  * Constants & Helpers
  */
-export const WEBSITE_HOST_URL = 'https://nextjs-ethereum-starter.vercel.app/'
+export const WEBSITE_HOST_URL = 'https://dexterdashboard.vercel.app/'
 
 /**
  * Prop Types
@@ -27,9 +27,9 @@ export const Head = ({
 }): JSX.Element => {
   const router = useRouter()
   const meta: MetaProps = {
-    title: 'Next.js Ethereum Starter',
-    description: 'Ethers.js - Hardhat - Next.js - Typescript',
-    image: `${WEBSITE_HOST_URL}/images/site-preview.png`,
+    title: 'Dexter Finance',
+    description: 'Dexter DeFi Dashboard',
+    image: `${WEBSITE_HOST_URL}/images/Logo.png`,
     type: 'website',
     ...customMeta,
   }

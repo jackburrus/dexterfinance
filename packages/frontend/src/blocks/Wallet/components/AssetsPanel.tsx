@@ -9,7 +9,7 @@ import TokenAssetRow from './TokenAssetRow'
 
 interface Props {}
 
-const PanelComponent = forwardRef<TabPanelProps, 'div'>((props, ref) => {
+export const PanelComponent = forwardRef<TabPanelProps, 'div'>((props, ref) => {
   return (
     <TabPanel
       //   border={'1px solid white'}
