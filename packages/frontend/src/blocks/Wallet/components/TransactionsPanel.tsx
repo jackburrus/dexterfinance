@@ -1,4 +1,9 @@
 import { Box, Text } from '@chakra-ui/layout'
+import { truncateHash } from '@components/layout/Layout'
+import { hexDataSlice } from '@ethersproject/bytes'
+import { formatEther } from '@ethersproject/units'
+import { useEthers } from '@usedapp/core'
+import { ethers } from '@usedapp/core/node_modules/ethers'
 import React, { useEffect, useState } from 'react'
 import { PanelComponent } from './AssetsPanel'
 
@@ -36,6 +41,7 @@ const getTransactionRow = (tx, activeEthAddress) => {
 const TransactionsPanel = (props: Props) => {
   const { activeEthAddress } = props
   const [transactionList, setTransactionList] = useState([])
+  const { library } = useEthers()
   async function fetchTransactions() {
     try {
       const response = await fetch(
@@ -46,7 +52,13 @@ const TransactionsPanel = (props: Props) => {
         }
       )
       const transactions = await response.json()
-      setTransactionList(transactions.result)
+      transactions.result.map(async (tx) => {
+        const txdata = await library.getTransaction(tx.hash)
+        setTransactionList((prevArray) => [
+          ...prevArray,
+          Object.assign({}, tx, txdata.value),
+        ])
+      })
     } catch (error) {
       console.log(error)
     }
@@ -58,20 +70,36 @@ const TransactionsPanel = (props: Props) => {
   return !transactionList ? null : (
     <PanelComponent {...props}>
       {transactionList.map((tx) => {
-        console.log('transaction', tx.to)
-        console.log('active eth address', activeEthAddress)
-        if (tx.to.toLowerCase() === activeEthAddress.toLowerCase()) {
+        // console.log(
+        //   ethers.utils.defaultAbiCoder.decode(
+        //     ['bytes', 'string'],
+        //     hexDataSlice(tx.hash, 4)
+        //   )
+        // )
+        console.log(tx)
+        // ethers.utils.parseTransaction(tx.hash)
+        if (
+          tx.to.toLowerCase() === activeEthAddress.toLowerCase() &&
+          tx.value !== '0'
+        ) {
           return (
-            <Box flex={1} border={'1px solid orange'}>
-              <Text color={'white'}>Receive: {tx.to}</Text>
+            <Box flex={1}>
+              <Text color={'white'}>Receive from: {truncateHash(tx.from)}</Text>
+              <Text color={'white'}>Amount: {formatEther(tx.value)}</Text>
             </Box>
           )
-        } else if (tx.from.toLowerCase() === activeEthAddress.toLowerCase()) {
+        } else if (
+          tx.from.toLowerCase() === activeEthAddress.toLowerCase() &&
+          tx.value !== '0'
+        ) {
           return (
-            <Box flex={1} border={'1px solid orange'}>
-              <Text color={'white'}>From: {tx.to}</Text>
+            <Box flex={1}>
+              <Text color={'white'}>Send To: {truncateHash(tx.to)}</Text>
+              <Text color={'white'}>Amount: {formatEther(tx.value)}</Text>
             </Box>
           )
+        } else if (tx.hex === '0x00') {
+          return null
         }
       })}
     </PanelComponent>
