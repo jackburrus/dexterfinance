@@ -16,5 +16,6 @@ module.exports = {
   },
   env: {
     ALCHEMYAPIKEY: process.env.ALCHEMYAPIKEY,
+    Etherscan: process.env.Etherscan,
   },
 }
