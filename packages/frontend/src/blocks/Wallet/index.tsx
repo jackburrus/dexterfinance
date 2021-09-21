@@ -57,41 +57,7 @@ const Wallet = (props) => {
   const [USDValue, setUSDValue] = useState(null)
   const config = useConfig()
   const [activeEthAddress, setActiveEthAddress] = useState(account)
-  const [tokenBalanceData, setTokenBalanceData] = useState(null)
-  // console.log(library)
-
-  // const fetchTokenBalances = async (account: string, addresses: string[]) => {
-  //   fetch(`https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`, {
-  //     method: 'POST',
-  //     headers: {
-  //       Accept: 'application/json',
-  //     },
-  // body: JSON.stringify({
-  //   jsonrpc: '2.0',
-  //   method: 'alchemy_getTokenBalances',
-  //   params: [
-  //     '0xE35ef95A80839C3c261197B6c93E5765C9A6a31a',
-  //     'DEFAULT_TOKENS',
-  //   ],
-  //   id: 42,
-  // }),
-  //   }).then((response) => {
-  //     if (response.ok) {
-  //       response.json().then((json) => {
-  //         const arrayOfTokenBalances = json.result.tokenBalances
-  //         for (const token of arrayOfTokenBalances) {
-  //           if (token.tokenBalance !== '0x') {
-  //             // console.log(token)
-  //             return getTokenMetadata(token.contractAddress)
-  //           }
-  //         }
-  //       })
-  //     }
-  //   })
-  //   // console.log(balances)
-  //   // return balances
-  //   // return balances.tokenBalances.map((balance) => balance.tokenBalance)
-  // }
+  const [tokenBalanceData, setTokenBalanceData] = useState([])
 
   async function fetchTokens() {
     try {
@@ -111,40 +77,53 @@ const Wallet = (props) => {
         }
       )
       const tokens = await response.json()
-      return tokens.result.tokenBalances
+      tokens.result.tokenBalances.map(async (token) => {
+        // console.log(token.contractAddress)
+        const meta = await getTokenMetadata(token.contractAddress)
+        if (meta.result && parseFloat(formatEther(token.tokenBalance)) > 0.01) {
+          setTokenBalanceData((prevArray) => [
+            ...prevArray,
+            Object.assign({}, meta.result, token),
+          ])
+        }
+      })
+      // return tokens.result.tokenBalances
     } catch (error) {
       console.error(error)
     }
   }
 
-  async function fetchAllTokenData() {
-    const tokensWithData = []
-    const tokensForProcessing = await fetchTokens()
-    tokensForProcessing.map((token) => {
-      if (token.tokenBalance !== '0x') {
-        const tokenMeta = async () => {
-          const meta = await getTokenMetadata(token.contractAddress)
+  // async function fetchAllTokenData() {
+  //   const tokensForProcessing = await fetchTokens()
 
-          if (formatEther(token.tokenBalance) > 0.01) {
-            const tokenCombined = Object.assign({}, token, meta.result)
-            // console.log(tokenCombined)
-            tokensWithData.push(tokenCombined)
-          }
-        }
-        tokenMeta()
+  //   tokensForProcessing.map((token) => {
+  //     if (token.tokenBalance !== '0x') {
+  //       const tokenMeta = async () => {
+  //         const meta = await getTokenMetadata(token.contractAddress)
+  //         // console.log('meta: ', meta)
+  //         setTokenBalanceData((prevArray) => [...prevArray, meta.result])
+  //         // console.log('token: ', token)
+  //         // if (parseInt(formatEther(token.tokenBalance)) > 0.01) {
+  //         //   const tokenCombined = Object.assign({}, token, meta.result)
+  //         //   // console.log(tokenCombined)
+  //         //   setTokenBalanceData((prevArray) => [...prevArray, tokenCombined])
+  //         //   // console.log(tokenBalanceData)
+  //         // }
+  //       }
+  //       tokenMeta()
+  //     }
+  //   })
 
-        // console.log(tokenMeta)
-      }
-    })
-    setTokenBalanceData(tokensWithData)
-  }
+  // }
 
   useEffect(() => {
-    if (library) {
-      console.log('fetching')
-      fetchAllTokenData()
-    }
+    fetchTokens()
   }, [])
+  useEffect(() => {
+    if (tokenBalanceData) {
+      console.log(tokenBalanceData)
+    }
+  }, [tokenBalanceData])
 
   return (
     <Box
@@ -220,21 +199,16 @@ const Wallet = (props) => {
                 />
               )}
 
-              {!tokenBalanceData ? (
-                <Center flex={1}>
-                  <Spinner color={'white'} />
-                </Center>
-              ) : (
-                tokenBalanceData.map((token) => {
-                  return (
-                    <TokenAssetRow
-                      key={token.symbol}
-                      symbol={token.symbol}
-                      amount={formatEther(token.tokenBalance).substring(0, 5)}
-                    />
-                  )
-                })
-              )}
+              {tokenBalanceData.map((token) => {
+                // console.log(token)
+                return (
+                  <TokenAssetRow
+                    key={token.symbol}
+                    symbol={token.symbol}
+                    amount={formatEther(token.tokenBalance).substring(0, 5)}
+                  />
+                )
+              })}
             </TabPanel>
             <TabPanel>
               <p>two!</p>
