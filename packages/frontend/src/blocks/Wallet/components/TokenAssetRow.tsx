@@ -4,7 +4,7 @@ import React from 'react'
 
 interface Props {
   symbol: string
-  amount: number
+  amount: string
 }
 
 const TokenAssetRow = (props: Props) => {

@@ -24,6 +24,7 @@ import EthAddressInput from './EthAddressInput'
 import { truncateHash } from '@components/layout/Layout'
 import { getTokenMetadata } from './utils'
 import TokenAssetRow from './components/TokenAssetRow'
+import AssetsPanel from './components/AssetsPanel'
 // import hre, { ethers } from 'hardhat'
 interface Props {}
 
@@ -57,73 +58,12 @@ const Wallet = (props) => {
   const [USDValue, setUSDValue] = useState(null)
   const config = useConfig()
   const [activeEthAddress, setActiveEthAddress] = useState(account)
-  const [tokenBalanceData, setTokenBalanceData] = useState([])
 
-  async function fetchTokens() {
-    try {
-      const response = await fetch(
-        `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            jsonrpc: '2.0',
-            method: 'alchemy_getTokenBalances',
-            params: [
-              '0xE35ef95A80839C3c261197B6c93E5765C9A6a31a',
-              'DEFAULT_TOKENS',
-            ],
-            id: 42,
-          }),
-        }
-      )
-      const tokens = await response.json()
-      tokens.result.tokenBalances.map(async (token) => {
-        // console.log(token.contractAddress)
-        const meta = await getTokenMetadata(token.contractAddress)
-        if (meta.result && parseFloat(formatEther(token.tokenBalance)) > 0.01) {
-          setTokenBalanceData((prevArray) => [
-            ...prevArray,
-            Object.assign({}, meta.result, token),
-          ])
-        }
-      })
-      // return tokens.result.tokenBalances
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  // async function fetchAllTokenData() {
-  //   const tokensForProcessing = await fetchTokens()
-
-  //   tokensForProcessing.map((token) => {
-  //     if (token.tokenBalance !== '0x') {
-  //       const tokenMeta = async () => {
-  //         const meta = await getTokenMetadata(token.contractAddress)
-  //         // console.log('meta: ', meta)
-  //         setTokenBalanceData((prevArray) => [...prevArray, meta.result])
-  //         // console.log('token: ', token)
-  //         // if (parseInt(formatEther(token.tokenBalance)) > 0.01) {
-  //         //   const tokenCombined = Object.assign({}, token, meta.result)
-  //         //   // console.log(tokenCombined)
-  //         //   setTokenBalanceData((prevArray) => [...prevArray, tokenCombined])
-  //         //   // console.log(tokenBalanceData)
-  //         // }
-  //       }
-  //       tokenMeta()
-  //     }
-  //   })
-
-  // }
-
-  useEffect(() => {
-    fetchTokens()
-  }, [])
-  useEffect(() => {
-    if (tokenBalanceData) {
-      console.log(tokenBalanceData)
-    }
-  }, [tokenBalanceData])
+  // useEffect(() => {
+  //   if (tokenBalanceData) {
+  //     console.log(tokenBalanceData)
+  //   }
+  // }, [tokenBalanceData])
 
   return (
     <Box
@@ -186,30 +126,7 @@ const Wallet = (props) => {
           </TabList>
 
           <TabPanels>
-            <TabPanel
-              flex={1}
-              height={100}
-              // border={'1px solid white'}
-            >
-              {etherBalance && (
-                <TokenAssetRow
-                  key={'ETH'}
-                  symbol={'ETH'}
-                  amount={formatEther(etherBalance).substring(0, 5)}
-                />
-              )}
-
-              {tokenBalanceData.map((token) => {
-                // console.log(token)
-                return (
-                  <TokenAssetRow
-                    key={token.symbol}
-                    symbol={token.symbol}
-                    amount={formatEther(token.tokenBalance).substring(0, 5)}
-                  />
-                )
-              })}
-            </TabPanel>
+            <AssetsPanel />
             <TabPanel>
               <p>two!</p>
             </TabPanel>
