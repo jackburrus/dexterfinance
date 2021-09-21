@@ -121,7 +121,7 @@ const BAYC = (props: Props) => {
       data['tokens'].map(async (token) => {
         const newData = await fetchURIs(token)
         const newTokenData = { token, ...newData }
-        console.log(newTokenData)
+        // console.log(newTokenData)
         setNFTData((oldArray) => [...oldArray, newTokenData])
       })
     }
