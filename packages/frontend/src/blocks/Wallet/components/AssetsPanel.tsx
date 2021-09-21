@@ -12,7 +12,7 @@ interface Props {}
 export const PanelComponent = forwardRef<TabPanelProps, 'div'>((props, ref) => {
   return (
     <TabPanel
-      //   border={'1px solid white'}
+      border={'1px solid white'}
       flex={1}
       height={100}
       ref={ref}

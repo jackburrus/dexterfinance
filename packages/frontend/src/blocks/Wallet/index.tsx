@@ -39,9 +39,13 @@ const Wallet = (props) => {
   const blockNumber = useBlockNumber()
   const [USDValue, setUSDValue] = useState(null)
   const config = useConfig()
-  const [activeEthAddress, setActiveEthAddress] = useState(account)
+  const [activeEthAddress, setActiveEthAddress] = useState(null)
 
-  return (
+  useEffect(() => {
+    setActiveEthAddress(account)
+  }, [])
+
+  return !activeEthAddress ? null : (
     <Box
       w="500px"
       h="350px"
@@ -103,7 +107,7 @@ const Wallet = (props) => {
 
           <TabPanels>
             <AssetsPanel />
-            <TransactionsPanel />
+            <TransactionsPanel activeEthAddress={activeEthAddress} />
             <TabPanel>
               <p>three!</p>
             </TabPanel>
