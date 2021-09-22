@@ -1,9 +1,12 @@
 import { Center, Text } from '@chakra-ui/layout'
 import React, { useCallback, useEffect } from 'react'
+import { useBlocks } from '@recoil/hooks/useBlocks'
 
 interface Props {}
 
 const FileDropZone = (props: Props) => {
+  const [blockList, { addBlock, removeBlock, clearAllBlocks, moveBlocks }] =
+    useBlocks()
   const onDragEnter = useCallback((e) => {
     // setIsVisible(true);
     e.stopPropagation()
@@ -23,8 +26,20 @@ const FileDropZone = (props: Props) => {
   }, [])
   const onDrop = useCallback((e) => {
     e.preventDefault()
+
     const files = e.dataTransfer.files
-    console.log('Files dropped: ', files)
+    const fileReader = new FileReader()
+    fileReader.readAsText(files[0])
+    fileReader.onload = () => {
+      console.log(fileReader.result)
+      //   const data = fileReader.result
+      console.log(typeof fileReader.result)
+      //   fileReader.result.map((block) => {
+      //     addBlock(block)
+      //   })
+      moveBlocks(JSON.parse(fileReader.result))
+    }
+    // console.log('Files dropped: ', files)
     // Upload files
     // setIsVisible(false);
     return false
