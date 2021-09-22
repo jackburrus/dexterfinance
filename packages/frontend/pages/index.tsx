@@ -28,6 +28,7 @@ import process from 'process'
 import NFTBlock from 'src/blocks/NFT'
 import AnalyticsBlock from 'src/blocks/Analytics'
 import NewBlock from 'src/blocks/News'
+import UniswapBlock from 'src/blocks/Uniswap'
 /**
  * Constants & Helpers
  */
@@ -102,6 +103,8 @@ const getBlockType = (block: BlockType, provided): JSX.Element => {
       return <AnalyticsBlock provided={provided} />
     case 'News':
       return <NewBlock provided={provided} />
+    case 'Uniswap':
+      return <UniswapBlock provided={provided} />
 
     default:
       return null
