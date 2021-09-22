@@ -29,6 +29,7 @@ import NFTBlock from 'src/blocks/NFT'
 import AnalyticsBlock from 'src/blocks/Analytics'
 import NewBlock from 'src/blocks/News'
 import UniswapBlock from 'src/blocks/Uniswap'
+import FileDropZone from '@components/FileDropZone'
 /**
  * Constants & Helpers
  */
@@ -152,15 +153,7 @@ function HomeIndex(): JSX.Element {
   return (
     <Layout>
       {blockList.length == 0 ? (
-        <Center flex={1} h={'80vh'} flexDirection={'column'}>
-          <Text fontFamily={'Inter'} fontSize="2xl" mb={2} color={'grey'}>
-            Press ⌘+K for block search,{' '}
-          </Text>
-          <Text mb={2} fontFamily={'Inter'} fontSize="2xl" color={'grey'}>
-            or drag in a block file.
-          </Text>
-          {/* <PlusSquareIcon w={10} h={10} color={'grey'} /> */}
-        </Center>
+        <FileDropZone />
       ) : (
         <GridContextProvider onChange={onChange}>
           <GridDropZone
