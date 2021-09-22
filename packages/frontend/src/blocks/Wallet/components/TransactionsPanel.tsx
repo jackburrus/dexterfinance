@@ -54,13 +54,16 @@ const TransactionsPanel = (props: Props) => {
         }
       )
       const transactions = await response.json()
-      transactions.result.map(async (tx) => {
-        const txdata = await library.getTransaction(tx.hash)
-        setTransactionList((prevArray) => [
-          ...prevArray,
-          Object.assign({}, tx, txdata.value),
-        ])
-      })
+      transactions.result
+        .slice(0)
+        .reverse()
+        .map(async (tx) => {
+          const txdata = await library.getTransaction(tx.hash)
+          setTransactionList((prevArray) => [
+            ...prevArray,
+            Object.assign({}, tx, txdata.value),
+          ])
+        })
     } catch (error) {
       console.log(error)
     }
