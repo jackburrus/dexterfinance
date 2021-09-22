@@ -172,10 +172,10 @@ function HomeIndex(): JSX.Element {
               // border: '1px solid cyan',
               // position: 'relative',
               // height: 'auto',
-              minHeight: '100vh',
+              height: '90vh',
               width: '80vw',
-              display: 'flex',
-              flex: 1,
+              // display: 'flex',
+              // flex: 1,
               // justifyContent: 'center',
               // alignItems: 'center',
             }}

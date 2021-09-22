@@ -1,4 +1,4 @@
-import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import { DownloadIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import {
   Alert,
   AlertDescription,
@@ -182,11 +182,22 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
             )
           })}
         </Container>
+        <DownloadIcon
+          w={5}
+          h={5}
+          position={'fixed'}
+          bottom={'45'}
+          right={'55'}
+        />
       </main>
       {/* <footer>
-        <Container mt={2} maxWidth="container.xl">
-          <Text>Made with ☕ in Boise, Idaho</Text>
-        </Container>
+        <Container
+          position={'absolute'}
+          bottom={10}
+          left={'10'}
+          mt={2}
+          maxWidth="container.xl"
+        ></Container>
       </footer> */}
     </>
   )
