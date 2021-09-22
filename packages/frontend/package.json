@@ -51,6 +51,7 @@
     "react-dom": "^17.0.1",
     "react-gesture-responder": "^2.1.0",
     "react-grid-dnd": "^2.1.2",
+    "react-hook-form": "^7.15.4",
     "react-icons": "^4.2.0",
     "react-query": "^3.23.2",
     "react-select": "^4.3.1",

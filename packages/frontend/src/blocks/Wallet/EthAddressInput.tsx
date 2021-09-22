@@ -9,22 +9,36 @@ import {
   useColorModeValue,
   VisuallyHidden,
   useEventListener,
+  Input,
 } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 import { useColorMode } from '@chakra-ui/color-mode'
+import { useForm } from 'react-hook-form'
 interface Props {}
 const ACTION_KEY_DEFAULT = ['Ctrl', 'Control']
 const ACTION_KEY_APPLE = ['⌘', 'Command']
 export const EthAddressInput = (props: Props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+
+  const { activeEthAddress, setActiveEthAddress } = props
   const [actionKey, setActionKey] = React.useState<string[]>(ACTION_KEY_APPLE)
   const { colorMode } = useColorMode()
-  React.useEffect(() => {
-    if (typeof navigator === 'undefined') return
-    const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
-    if (!isMac) {
-      setActionKey(ACTION_KEY_DEFAULT)
-    }
-  }, [])
+  // React.useEffect(() => {
+  //   if (typeof navigator === 'undefined') return
+  //   const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
+  //   if (!isMac) {
+  //     setActionKey(ACTION_KEY_DEFAULT)
+  //   }
+  // }, [])
+
+  const onSubmit = ({ ethAddress }) => {
+    setActiveEthAddress(ethAddress)
+  }
+
   return (
     <chakra.button
       flex="1"
@@ -54,7 +68,7 @@ export const EthAddressInput = (props: Props) => {
     >
       <SearchIcon w={3} h={3} color={'grey'} />
       <HStack w="full" ml="3" spacing="4px">
-        <Text
+        {/* <Text
           //   color={colorMode === 'light' ? 'black' : 'white'}
           textAlign="left"
           flex="1"
@@ -62,7 +76,22 @@ export const EthAddressInput = (props: Props) => {
           color={'grey'}
         >
           ETH Address
-        </Text>
+        </Text> */}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            id="ethAddress"
+            {...register('ethAddress', {
+              required: 'This is required',
+              minLength: { value: 4, message: 'Minimum length should be 4' },
+            })}
+            textAlign="left"
+            flex="1"
+            fontSize="8"
+            color={'grey'}
+            placeholder="ETH Address"
+            variant="unstyled"
+          />
+        </form>
       </HStack>
     </chakra.button>
   )

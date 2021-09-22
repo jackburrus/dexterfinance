@@ -47,7 +47,7 @@ const TransactionsPanel = (props: Props) => {
   async function fetchTransactions() {
     try {
       const response = await fetch(
-        `https://api-kovan.etherscan.io/api?module=account&action=txlist&address=0xE35ef95A80839C3c261197B6c93E5765C9A6a31a&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${process.env.Etherscan}`,
+        `https://api-kovan.etherscan.io/api?module=account&action=txlist&address=${activeEthAddress}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${process.env.Etherscan}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

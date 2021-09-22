@@ -24,6 +24,7 @@ export const PanelComponent = forwardRef<TabPanelProps, 'div'>((props, ref) => {
 })
 
 export const AssetsPanel = (props) => {
+  const { activeEthAddress } = props
   const [tokenBalanceData, setTokenBalanceData] = useState([])
   const { account } = useEthers()
   const etherBalance = useEtherBalance(account)
@@ -36,10 +37,7 @@ export const AssetsPanel = (props) => {
           body: JSON.stringify({
             jsonrpc: '2.0',
             method: 'alchemy_getTokenBalances',
-            params: [
-              '0xE35ef95A80839C3c261197B6c93E5765C9A6a31a',
-              'DEFAULT_TOKENS',
-            ],
+            params: [activeEthAddress, 'DEFAULT_TOKENS'],
             id: 42,
           }),
         }

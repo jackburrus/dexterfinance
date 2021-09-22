@@ -31,12 +31,10 @@ const FileDropZone = (props: Props) => {
     const fileReader = new FileReader()
     fileReader.readAsText(files[0])
     fileReader.onload = () => {
-      console.log(fileReader.result)
-      //   const data = fileReader.result
-      console.log(typeof fileReader.result)
-      //   fileReader.result.map((block) => {
-      //     addBlock(block)
-      //   })
+      const data = JSON.parse(fileReader.result)
+      const checkKeyPresenceInArray = (key) =>
+        data.some((obj) => Object.keys(obj).includes(key))
+      console.log(checkKeyPresenceInArray('protocol'))
       moveBlocks(JSON.parse(fileReader.result))
     }
     // console.log('Files dropped: ', files)

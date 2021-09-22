@@ -61,7 +61,10 @@ const Wallet = (props) => {
       overflow={'scroll'}
       p={5}
     >
-      <EthAddressInput />
+      <EthAddressInput
+        activeEthAddress={activeEthAddress}
+        setActiveEthAddress={setActiveEthAddress}
+      />
 
       <Flex
         flex={1}
@@ -107,7 +110,7 @@ const Wallet = (props) => {
           </TabList>
 
           <TabPanels>
-            <AssetsPanel />
+            <AssetsPanel activeEthAddress={activeEthAddress} />
             <TransactionsPanel activeEthAddress={activeEthAddress} />
             {/* <TabPanel>
               <p>three!</p>
