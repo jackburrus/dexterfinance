@@ -43,6 +43,7 @@ const Wallet = (props) => {
 
   useEffect(() => {
     setActiveEthAddress(account)
+    // setActiveEthAddress('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
   }, [])
 
   return !activeEthAddress ? null : (
@@ -102,15 +103,15 @@ const Wallet = (props) => {
           <TabList>
             <Tab>Assets</Tab>
             <Tab>Activity</Tab>
-            <Tab>NFT</Tab>
+            {/* <Tab>NFT</Tab> */}
           </TabList>
 
           <TabPanels>
             <AssetsPanel />
             <TransactionsPanel activeEthAddress={activeEthAddress} />
-            <TabPanel>
+            {/* <TabPanel>
               <p>three!</p>
-            </TabPanel>
+            </TabPanel> */}
           </TabPanels>
         </Tabs>
       </Flex>

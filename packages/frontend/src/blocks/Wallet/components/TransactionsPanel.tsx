@@ -1,10 +1,12 @@
-import { Box, Text } from '@chakra-ui/layout'
+import { ArrowUpIcon, DownloadIcon } from '@chakra-ui/icons'
+import { Box, Flex, Text } from '@chakra-ui/layout'
 import { truncateHash } from '@components/layout/Layout'
 import { hexDataSlice } from '@ethersproject/bytes'
 import { formatEther } from '@ethersproject/units'
 import { useEthers } from '@usedapp/core'
 import { ethers } from '@usedapp/core/node_modules/ethers'
 import React, { useEffect, useState } from 'react'
+import { openInNewTab } from 'src/blocks/NFT/NFTTypes/BAYC'
 import { PanelComponent } from './AssetsPanel'
 
 interface Props {
@@ -83,20 +85,78 @@ const TransactionsPanel = (props: Props) => {
           tx.value !== '0'
         ) {
           return (
-            <Box flex={1}>
-              <Text color={'white'}>Receive from: {truncateHash(tx.from)}</Text>
-              <Text color={'white'}>Amount: {formatEther(tx.value)}</Text>
-            </Box>
+            <Flex
+              style={{ cursor: 'pointer' }}
+              as={'a'}
+              onClick={() =>
+                openInNewTab('https://kovan.etherscan.io/tx/' + tx.hash)
+              }
+              flex={1}
+              flexDirection={'row'}
+            >
+              <Flex
+                align="center"
+                justifyContent={'center'}
+                p={2}
+                // border={'1px solid white'}
+                flex={0.2}
+              >
+                <DownloadIcon />
+              </Flex>
+              <Flex
+                direction={'column'}
+                p={2}
+                // border={'1px solid white'}
+                flex={2}
+              >
+                <Text color={'white'}>Receive</Text>
+                <Text fontSize={'sm'} color={'white'}>
+                  {formatEther(tx.value)} ETH
+                </Text>
+                <Text fontSize={'xs'} color={'grey'}>
+                  From: {truncateHash(tx.from)}
+                </Text>
+              </Flex>
+            </Flex>
           )
         } else if (
           tx.from.toLowerCase() === activeEthAddress.toLowerCase() &&
           tx.value !== '0'
         ) {
           return (
-            <Box flex={1}>
-              <Text color={'white'}>Send To: {truncateHash(tx.to)}</Text>
-              <Text color={'white'}>Amount: {formatEther(tx.value)}</Text>
-            </Box>
+            <Flex
+              style={{ cursor: 'pointer' }}
+              as={'a'}
+              onClick={() =>
+                openInNewTab('https://kovan.etherscan.io/tx/' + tx.hash)
+              }
+              flex={1}
+              flexDirection={'row'}
+            >
+              <Flex
+                align="center"
+                justifyContent={'center'}
+                p={2}
+                // border={'1px solid white'}
+                flex={0.2}
+              >
+                <ArrowUpIcon />
+              </Flex>
+              <Flex
+                direction={'column'}
+                p={2}
+                // border={'1px solid white'}
+                flex={2}
+              >
+                <Text color={'white'}>Sent</Text>
+                <Text fontSize={'sm'} color={'white'}>
+                  {formatEther(tx.value)} ETH
+                </Text>
+                <Text fontSize={'xs'} color={'grey'}>
+                  To: {truncateHash(tx.to)}
+                </Text>
+              </Flex>
+            </Flex>
           )
         } else if (tx.hex === '0x00') {
           return null
