@@ -49,7 +49,7 @@ export const AssetsPanel = (props) => {
         // console.log(token.contractAddress)
         if (token.tokenBalance !== '0x') {
           const meta = await getTokenMetadata(token.contractAddress)
-          console.log(meta)
+          // console.log(meta)
           if (
             meta.result &&
             parseFloat(formatEther(token.tokenBalance)) > 0.01

@@ -182,13 +182,21 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
             )
           })}
         </Container>
-        <DownloadIcon
-          w={5}
-          h={5}
-          position={'fixed'}
-          bottom={'45'}
-          right={'55'}
-        />
+        <a
+          href={`data:text/json;charset=utf-8,${encodeURIComponent(
+            JSON.stringify(blockList)
+          )}`}
+          download={`DexterDashboard-${Math.floor(Math.random() * 100)}.json`}
+        >
+          <DownloadIcon
+            as={'a'}
+            w={5}
+            h={5}
+            position={'fixed'}
+            bottom={'45'}
+            right={'55'}
+          />
+        </a>
       </main>
       {/* <footer>
         <Container

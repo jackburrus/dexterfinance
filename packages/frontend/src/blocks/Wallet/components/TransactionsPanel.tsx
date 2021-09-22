@@ -78,7 +78,7 @@ const TransactionsPanel = (props: Props) => {
         //     hexDataSlice(tx.hash, 4)
         //   )
         // )
-        console.log(tx)
+        // console.log(tx)
         // ethers.utils.parseTransaction(tx.hash)
         if (
           tx.to.toLowerCase() === activeEthAddress.toLowerCase() &&
