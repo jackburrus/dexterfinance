@@ -36,6 +36,7 @@ const Wallet = (props) => {
   const { account, chainId, library } = useEthers()
 
   const etherBalance = useEtherBalance(account)
+  const [updatedEtherBlanace, setUpdatedEtherBalance] = useState(null)
   const blockNumber = useBlockNumber()
   const [USDValue, setUSDValue] = useState(null)
   const config = useConfig()
@@ -45,6 +46,29 @@ const Wallet = (props) => {
     setActiveEthAddress(account)
     // setActiveEthAddress('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
   }, [])
+
+  const getBal = async (address) => {
+    // If account balance is 1 ETH
+    const balance = await library.getBalance(address)
+    // prints 100000000000... 18 zeros
+
+    const stringBalance = balance.toString()
+    // console.log(ethers.utils.formatEther(stringBalance))
+    // to format the value in a readable format
+    return ethers.utils.formatEther(stringBalance) // prints 1.0
+  }
+
+  useEffect(() => {
+    if (library && activeEthAddress) {
+      // async function getBalance() {
+      //   const bal = await getBal(activeEthAddress)
+      //   setUpdatedEtherBalance(bal)
+      // }
+      // getBalance()
+      getBal(activeEthAddress).then((res) => setUpdatedEtherBalance(res))
+      console.log('running')
+    }
+  }, [activeEthAddress])
 
   return !activeEthAddress ? null : (
     <Box
@@ -92,7 +116,10 @@ const Wallet = (props) => {
           <Box mt={'1'} align={'center'}>
             <Text fontSize={'xl'}>Balance</Text>
             <Text fontSize={'2xl'}>
-              {formatEther(etherBalance).substring(0, 5)} ETH
+              {updatedEtherBlanace
+                ? updatedEtherBlanace.substring(0, 5)
+                : formatEther(etherBalance).substring(0, 5)}{' '}
+              ETH
             </Text>
 
             {/* <Text color={'grey'} opacity={'0.5'}>

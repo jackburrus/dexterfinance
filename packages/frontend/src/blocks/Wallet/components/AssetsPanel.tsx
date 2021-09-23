@@ -70,8 +70,10 @@ export const AssetsPanel = (props) => {
   }
 
   useEffect(() => {
+    setTokenBalanceData([])
     fetchTokens()
-  }, [])
+    console.log('running fetch tokens')
+  }, [activeEthAddress])
   return (
     <PanelComponent {...props}>
       {/* <PanelComponent /> */}

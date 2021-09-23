@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   chakra,
   HStack,
@@ -14,6 +14,9 @@ import {
 import { SearchIcon } from '@chakra-ui/icons'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { useForm } from 'react-hook-form'
+import { ethers } from 'ethers'
+import { Alert, AlertIcon, AlertTitle } from '@chakra-ui/alert'
+import { AlertDialogInvalidAddress } from './components/AlertDialog'
 interface Props {}
 const ACTION_KEY_DEFAULT = ['Ctrl', 'Control']
 const ACTION_KEY_APPLE = ['⌘', 'Command']
@@ -27,6 +30,7 @@ export const EthAddressInput = (props: Props) => {
   const { activeEthAddress, setActiveEthAddress } = props
   const [actionKey, setActionKey] = React.useState<string[]>(ACTION_KEY_APPLE)
   const { colorMode } = useColorMode()
+  const [validAddressModalOpen, setValidAddressOpenStatus] = useState(false)
   // React.useEffect(() => {
   //   if (typeof navigator === 'undefined') return
   //   const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
@@ -37,12 +41,13 @@ export const EthAddressInput = (props: Props) => {
 
   const onSubmit = ({ ethAddress }) => {
     setActiveEthAddress(ethAddress)
+    console.log(activeEthAddress)
   }
 
   return (
     <chakra.button
       flex="1"
-      type="button"
+      // type="button"
       role="search"
       //   mx="6"
       //   ref={ref}
@@ -77,8 +82,50 @@ export const EthAddressInput = (props: Props) => {
         >
           ETH Address
         </Text> */}
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {/* {validAddressModalOpen ? (
+          <Portal>
+            <Alert status="error">
+              <AlertIcon />
+              <AlertTitle mr={2}>Your browser is outdated!</AlertTitle>
+            </Alert>
+          </Portal>
+        ) : // <AlertDialogInvalidAddress
+        //   validAddressModalOpen={validAddressModalOpen}
+        // />
+        null} */}
+
+        <form
+          style={{
+            display: 'flex',
+            // border: '1px solid orange',
+            // alignItems: 'center',
+            // justifyContent: 'center',
+          }}
+          onSubmit={handleSubmit(onSubmit)}
+          // onChange={(e) => {
+          //   console.log()
+          //   if (!ethers.utils.isAddress(e.target.value)) {
+          //     setValidAddress(false)
+          //   }
+          // }}
+        >
           <Input
+            // type="search"
+
+            aria-autocomplete="list"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck="false"
+            maxLength={64}
+            sx={{
+              w: '100%',
+              h: '68px',
+              // pl: '68px',
+              fontWeight: 'medium',
+              outline: 0,
+              bg: 'white',
+              '.chakra-ui-dark &': { bg: 'gray.700' },
+            }}
             id="ethAddress"
             {...register('ethAddress', {
               required: 'This is required',
@@ -86,6 +133,7 @@ export const EthAddressInput = (props: Props) => {
             })}
             textAlign="left"
             flex="1"
+            // border="1px solid green"
             fontSize="8"
             color={'grey'}
             placeholder="ETH Address"
