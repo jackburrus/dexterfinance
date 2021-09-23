@@ -85,6 +85,7 @@ function ModalSearch() {
   const menuRef = React.useRef<HTMLDivElement>(null)
   const eventRef = React.useRef<'mouse' | 'keyboard'>(null)
   const [blockList, { addBlock, removeBlock }] = useBlocks()
+  const [DisplayBlockData, setDisplayBlockData] = React.useState(BlockData)
 
   React.useEffect(() => {
     router.events.on('routeChangeComplete', modal.onClose)
@@ -203,6 +204,16 @@ function ModalSearch() {
               placeholder="Search Blocks"
               value={query}
               onChange={(e) => {
+                const newArray = BlockData.filter((d) => {
+                  // console.log(e.target.value)
+                  return (
+                    d.title
+                      .toLowerCase()
+                      .indexOf(e.target.value.toLowerCase()) !== -1
+                  )
+                })
+                setDisplayBlockData(newArray)
+                console.log(newArray)
                 setQuery(e.target.value)
                 menu.onOpen()
               }}
@@ -221,7 +232,7 @@ function ModalSearch() {
               }}
             >
               <Box as="ul" role="listbox" borderTopWidth="1px" pt={2} pb={4}>
-                {BlockData.map((item) => {
+                {DisplayBlockData.map((item) => {
                   const selected = parseInt(item.index) === active
 
                   return (
