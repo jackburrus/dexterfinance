@@ -14,7 +14,7 @@ export const useBlocks: () => [
   BlockType[],
   {
     addBlock: (b) => void
-    removeBlock: (b) => void
+    removeBlock: (b, id?: string) => void
     clearAllBlocks: () => void
     moveBlocks: (newState) => void
   }
@@ -27,8 +27,12 @@ export const useBlocks: () => [
     setBlocks((prevBlocks) => [...prevBlocks, newBlock])
   }
 
-  const removeBlock = (b) => {
-    setBlocks(blockList.filter((blockItem) => blockItem.uuid !== b.uuid))
+  const removeBlock = (b, id?: string) => {
+    if (id) {
+      setBlocks(blockList.filter((blockItem) => blockItem.uuid !== id))
+    } else {
+      setBlocks(blockList.filter((blockItem) => blockItem.uuid !== b.uuid))
+    }
   }
 
   const clearAllBlocks = () => {

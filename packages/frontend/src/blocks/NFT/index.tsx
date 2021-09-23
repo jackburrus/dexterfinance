@@ -17,10 +17,11 @@ import { ApolloClient, InMemoryCache, useQuery, gql } from '@apollo/client'
 
 import BAYC from './NFTTypes/BAYC'
 import NiftyInk from './NFTTypes/NiftyInk'
+import CloseButton from '@components/CloseButton'
 
-const NFTBlock = ({ provided }): BoxProps => {
+const NFTBlock = (props): BoxProps => {
   const [NFTName, setNFTName] = useState<'BAYC' | 'NiftyInk'>('BAYC')
-
+  const { uuid } = props
   const onNFTChange = (e) => {
     setNFTName(e.target.value)
   }
@@ -38,6 +39,7 @@ const NFTBlock = ({ provided }): BoxProps => {
       position="relative"
       overflow={'scroll'}
     >
+      <CloseButton blockID={uuid} />
       <Flex pr={15} p={15} align="center">
         <Box
           bgColor="#1F2128"
@@ -94,7 +96,7 @@ const NFTBlock = ({ provided }): BoxProps => {
         {NFTName == 'BAYC' ? <BAYC /> : <NiftyInk />}
       </Flex>
 
-      <PopoverOnBlock />
+      {/* <PopoverOnBlock /> */}
     </Box>
   )
 }

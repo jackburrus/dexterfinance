@@ -99,7 +99,7 @@ const getBlockType = (block: BlockType, provided): JSX.Element => {
     case 'Wallet':
       return <Wallet provided={provided} />
     case 'NFT':
-      return <NFTBlock provided={provided} />
+      return <NFTBlock provided={provided} uuid={block.uuid} />
     case 'Analytics':
       return <AnalyticsBlock provided={provided} />
     case 'News':
