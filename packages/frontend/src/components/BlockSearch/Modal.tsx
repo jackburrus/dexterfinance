@@ -114,6 +114,7 @@ function ModalSearch() {
   React.useEffect(() => {
     if (modal.isOpen && query.length > 0) {
       setQuery('')
+      setDisplayBlockData(BlockData)
     }
   }, [modal.isOpen])
   // REMOVE THIS
@@ -153,7 +154,10 @@ function ModalSearch() {
         }
         case 'Enter': {
           modal.onClose()
-          console.log(DisplayBlockData[active])
+          console.log(DisplayBlockData)
+          // if (DisplayBlockData) {
+          //   setActive(parseInt(DisplayBlockData[0].index))
+          // }
           addBlock(DisplayBlockData[active])
           //   router.push(BlockData[active].url)
           break
@@ -222,13 +226,12 @@ function ModalSearch() {
                   )
                 })
 
-                setDisplayBlockData(newArray)
-                console.log(parseInt(DisplayBlockData[0].index))
-                if (DisplayBlockData) {
-                  setActive(parseInt(DisplayBlockData[0].index))
-                }
-
                 setQuery(e.target.value)
+                setDisplayBlockData(newArray)
+                // console.log(newArray)
+                if (DisplayBlockData.length > 0) {
+                  setActive(parseInt(newArray[0].index))
+                }
                 menu.onOpen()
               }}
               onKeyDown={onKeyDown}
