@@ -22,7 +22,7 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { BlockData } from 'src/constants/BlockData'
 import { SearchButton } from '.'
-import { useColorModeValue } from '@chakra-ui/color-mode'
+import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode'
 
 // import MultiRef from "react-multi-ref"
 // import scrollIntoView from "scroll-into-view-if-needed"
@@ -89,6 +89,7 @@ function ModalSearch() {
   const eventRef = React.useRef<'mouse' | 'keyboard'>(null)
   const [blockList, { addBlock, removeBlock }] = useBlocks()
   const [DisplayBlockData, setDisplayBlockData] = React.useState(BlockData)
+  const { colorMode } = useColorMode()
 
   React.useEffect(() => {
     router.events.on('routeChangeComplete', modal.onClose)
@@ -102,6 +103,10 @@ function ModalSearch() {
     const hotkey = isMac ? 'metaKey' : 'ctrlKey'
     if (event?.key?.toLowerCase() === 'k' && event[hotkey]) {
       event.preventDefault()
+      setDisplayBlockData(BlockData)
+      setActive(
+        DisplayBlockData.findIndex((x) => x.title == DisplayBlockData[0].title)
+      )
       modal.isOpen ? modal.onClose() : modal.onOpen()
     }
   })
@@ -133,7 +138,7 @@ function ModalSearch() {
       switch (e.key) {
         case 'ArrowDown': {
           e.preventDefault()
-          if (active + 1 <= BlockData.length) {
+          if (active + 1 <= DisplayBlockData.length) {
             setActive(active + 1)
             console.log(active)
           }
@@ -148,8 +153,8 @@ function ModalSearch() {
         }
         case 'Enter': {
           modal.onClose()
-          console.log(BlockData[active])
-          addBlock(BlockData[active])
+          console.log(DisplayBlockData[active])
+          addBlock(DisplayBlockData[active])
           //   router.push(BlockData[active].url)
           break
         }
@@ -188,7 +193,7 @@ function ModalSearch() {
           shadow="lg"
           maxW="600px"
         >
-          <Flex pos="relative" align="stretch">
+          <Flex pos="relative" align="stretch" mb={2}>
             <Input
               variant="main"
               aria-autocomplete="list"
@@ -216,8 +221,13 @@ function ModalSearch() {
                       .indexOf(e.target.value.toLowerCase()) !== -1
                   )
                 })
+
                 setDisplayBlockData(newArray)
-                console.log(newArray)
+                console.log(parseInt(DisplayBlockData[0].index))
+                if (DisplayBlockData) {
+                  setActive(parseInt(DisplayBlockData[0].index))
+                }
+
                 setQuery(e.target.value)
                 menu.onOpen()
               }}
@@ -229,13 +239,21 @@ function ModalSearch() {
           </Flex>
           <ModalBody maxH="66vh" p="0" ref={menuRef}>
             <Box
+              borderRadius={'10px'}
               sx={{
                 px: 4,
                 bg: 'white',
                 '.chakra-ui-dark &': { bg: 'gray.700' },
               }}
             >
-              <Box as="ul" role="listbox" borderTopWidth="1px" pt={2} pb={4}>
+              <Box
+                as="ul"
+                role="listbox"
+                // borderTopWidth="1px"
+                pt={2}
+                pb={4}
+                borderRadius={'10px'}
+              >
                 {DisplayBlockData.map((item) => {
                   const selected = parseInt(item.index) === active
 
@@ -265,19 +283,17 @@ function ModalSearch() {
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         minH: 16,
-                        mt: 2,
+                        // br: '10px',
+                        mt: 3,
                         px: 4,
                         py: 2,
                         rounded: 'lg',
                         bg: 'gray.100',
                         '.chakra-ui-dark &': { bg: 'gray.600' },
-                        '.chakra-ui-light &': { bg: 'maroon' },
+                        '.chakra-ui-light &': { bg: '#DEE7F4' },
                         _selected: (props) => ({
-                          bg:
-                            props.colorMode === 'dark'
-                              ? 'teal.500'
-                              : 'orange.500',
-                          color: 'white',
+                          bg: colorMode == 'dark' ? 'teal.500' : '#CBE3F9',
+
                           mark: {
                             color: 'white',
                             textDecoration: 'underline',
@@ -285,7 +301,9 @@ function ModalSearch() {
                         }),
                       }}
                     >
-                      <Text>{item.title}</Text>
+                      <Text color={useColorModeValue('#182C4A', 'white')}>
+                        {item.title}
+                      </Text>
                       <EnterIcon opacity={0.5} />
                     </Box>
                   )
