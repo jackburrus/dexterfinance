@@ -97,15 +97,15 @@ function reducer(state: StateType, action: ActionType): StateType {
 const getBlockType = (block: BlockType, provided): JSX.Element => {
   switch (block.title) {
     case 'Wallet':
-      return <Wallet provided={provided} />
+      return <Wallet provided={provided} uuid={block.uuid} />
     case 'NFT':
       return <NFTBlock provided={provided} uuid={block.uuid} />
     case 'Analytics':
-      return <AnalyticsBlock provided={provided} />
+      return <AnalyticsBlock provided={provided} uuid={block.uuid} />
     case 'News':
-      return <NewBlock provided={provided} />
+      return <NewBlock provided={provided} uuid={block.uuid} />
     case 'Uniswap':
-      return <UniswapBlock provided={provided} />
+      return <UniswapBlock provided={provided} uuid={block.uuid} />
 
     default:
       return null

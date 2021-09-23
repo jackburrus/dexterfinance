@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
 import { Box, Flex } from '@chakra-ui/layout'
 import { Select } from '@chakra-ui/react'
+import CloseButton from '@components/CloseButton'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
@@ -93,7 +94,7 @@ const SushiswapDataOptions = [
   },
 ]
 
-const AnalyticsBlock = ({ provided }) => {
+const AnalyticsBlock = ({ provided, uuid }) => {
   const { loading, error, data } = useQuery(UniswapQuery, {
     variables: { startTime: startTimestamp },
   })
@@ -210,7 +211,7 @@ const AnalyticsBlock = ({ provided }) => {
       position="relative"
       p={activeDataType === 'Top Tokens' ? 2 : null}
     >
-      {/* <PopoverOnBlock /> */}
+      <CloseButton blockID={uuid} />
       <Box
         style={{
           display: 'flex',

@@ -23,16 +23,16 @@ const CloseButton = (props: Props) => {
     >
       {isHovered ? (
         <CloseIcon
-          style={{ border: '1px solid orange' }}
+          //   style={{ border: '1px solid orange' }}
           position={'fixed'}
           as={'button'}
           //   onMouseEnter={() => console.log(blockID)}
-          top={2}
-          left={2}
+          top={3}
+          left={3}
           color="white"
           margin={3}
-          w={'5'}
-          h={'5'}
+          w={'3'}
+          h={'3'}
         />
       ) : null}
 
@@ -46,7 +46,7 @@ const CloseButton = (props: Props) => {
         left={-5}
         h={70}
         w={70}
-        border={'1px solid magenta'}
+        // border={'1px solid magenta'}
       />
     </Box>
   )
