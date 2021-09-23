@@ -137,7 +137,10 @@ const Wallet = (props) => {
           </TabList>
 
           <TabPanels>
-            <AssetsPanel activeEthAddress={activeEthAddress} />
+            <AssetsPanel
+              updatedEtherBlanace={updatedEtherBlanace}
+              activeEthAddress={activeEthAddress}
+            />
             <TransactionsPanel activeEthAddress={activeEthAddress} />
             {/* <TabPanel>
               <p>three!</p>

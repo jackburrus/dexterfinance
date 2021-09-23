@@ -24,7 +24,7 @@ export const PanelComponent = forwardRef<TabPanelProps, 'div'>((props, ref) => {
 })
 
 export const AssetsPanel = (props) => {
-  const { activeEthAddress } = props
+  const { activeEthAddress, updatedEtherBlanace } = props
   const [tokenBalanceData, setTokenBalanceData] = useState([])
   const { account } = useEthers()
   const etherBalance = useEtherBalance(account)
@@ -73,6 +73,7 @@ export const AssetsPanel = (props) => {
     setTokenBalanceData([])
     fetchTokens()
     console.log('running fetch tokens')
+    console.log(activeEthAddress != account)
   }, [activeEthAddress])
   return (
     <PanelComponent {...props}>
@@ -81,7 +82,11 @@ export const AssetsPanel = (props) => {
         <TokenAssetRow
           key={'ETH'}
           symbol={'ETH'}
-          amount={formatEther(etherBalance).substring(0, 5)}
+          amount={
+            updatedEtherBlanace
+              ? updatedEtherBlanace.substring(0, 5)
+              : formatEther(etherBalance).substring(0, 5)
+          }
         />
       )}
 

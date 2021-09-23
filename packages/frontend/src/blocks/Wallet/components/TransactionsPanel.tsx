@@ -71,7 +71,8 @@ const TransactionsPanel = (props: Props) => {
 
   useEffect(() => {
     fetchTransactions()
-  }, [])
+    console.log('running transactions')
+  }, [activeEthAddress])
   return !transactionList ? null : (
     <PanelComponent {...props}>
       {transactionList.map((tx) => {
