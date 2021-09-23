@@ -15,13 +15,21 @@ const components = {
     variant: {
       label: (props) => ({
         fontWeight: '500',
-        color: props.colorMode === 'dark' ? '#FFFFFF' : '#000000',
+        // color: props.colorMode === 'dark' ? '#FFFFFF' : '#000000',
+        color: props.colorMode === 'dark' ? '#FFFFFF' : 'red',
       }),
       largeHeader: (props) => ({
         fontSize: '6xl',
       }),
     },
   },
+  // Input: {
+  //   variant: {
+  //     main: (props) => ({
+  //       backgroundColor: props.colorMode === 'dark' ? '#2D3748' : '#DEE7F4',
+  //     }),
+  //   },
+  // },
 }
 
 const config: ThemeConfig = {
