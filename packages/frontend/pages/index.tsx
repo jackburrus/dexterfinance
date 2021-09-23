@@ -147,7 +147,7 @@ function HomeIndex(): JSX.Element {
   }
 
   useEffect(() => {
-    addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
+    // addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
   }, [])
 
   return (
