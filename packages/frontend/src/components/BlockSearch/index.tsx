@@ -63,7 +63,7 @@ export const SearchButton = React.forwardRef(function SearchButton(
       ref={ref}
       lineHeight="1.2"
       w="100%"
-      bg={useColorModeValue('white', 'gray.700')}
+      bg={useColorModeValue('#DEE7F4', 'gray.700')}
       whiteSpace="nowrap"
       display={{ base: 'none', sm: 'flex' }}
       alignItems="center"
@@ -77,10 +77,10 @@ export const SearchButton = React.forwardRef(function SearchButton(
       aria-label="Search the docs"
       {...props}
     >
-      <SearchIcon />
+      <SearchIcon color={colorMode === 'light' ? '#989FAE' : 'white'} />
       <HStack w="full" ml="3" spacing="4px">
         <Text
-          color={colorMode === 'light' ? 'black' : 'white'}
+          color={colorMode === 'light' ? '#989FAE' : 'white'}
           textAlign="left"
           flex="1"
         >
@@ -93,12 +93,16 @@ export const SearchButton = React.forwardRef(function SearchButton(
               as="abbr"
               title={actionKey[1]}
               textDecoration="none !important"
+              color={colorMode === 'light' ? '#989FAE' : 'white'}
             >
               {actionKey[0]}
             </chakra.div>
           </Kbd>
           <VisuallyHidden> and </VisuallyHidden>
-          <Kbd color="gray.500" rounded="2px">
+          <Kbd
+            color={colorMode === 'light' ? '#989FAE' : 'white'}
+            rounded="2px"
+          >
             K
           </Kbd>
           <VisuallyHidden> to search</VisuallyHidden>

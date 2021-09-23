@@ -12,6 +12,7 @@ import {
   useDisclosure,
   useEventListener,
   useUpdateEffect,
+  Input,
 } from '@chakra-ui/react'
 import { useBlocks, uuidv4 } from '@recoil/hooks/useBlocks'
 // import searchData from "configs/search-meta.json"
@@ -21,6 +22,8 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { BlockData } from 'src/constants/BlockData'
 import { SearchButton } from '.'
+import { useColorModeValue } from '@chakra-ui/color-mode'
+
 // import MultiRef from "react-multi-ref"
 // import scrollIntoView from "scroll-into-view-if-needed"
 // import { findAll } from "highlight-words-core"
@@ -186,7 +189,8 @@ function ModalSearch() {
           maxW="600px"
         >
           <Flex pos="relative" align="stretch">
-            <chakra.input
+            <Input
+              variant="main"
               aria-autocomplete="list"
               autoComplete="off"
               autoCorrect="off"
@@ -255,6 +259,7 @@ function ModalSearch() {
                       }}
                       //   ref={menuNodes.ref(index)}
                       role="option"
+                      // bg={useColorModeValue('#DEE7F4', 'gray.700')}
                       sx={{
                         display: 'flex',
                         alignItems: 'center',
@@ -266,14 +271,18 @@ function ModalSearch() {
                         rounded: 'lg',
                         bg: 'gray.100',
                         '.chakra-ui-dark &': { bg: 'gray.600' },
-                        _selected: {
-                          bg: 'teal.500',
+                        '.chakra-ui-light &': { bg: 'maroon' },
+                        _selected: (props) => ({
+                          bg:
+                            props.colorMode === 'dark'
+                              ? 'teal.500'
+                              : 'orange.500',
                           color: 'white',
                           mark: {
                             color: 'white',
                             textDecoration: 'underline',
                           },
-                        },
+                        }),
                       }}
                     >
                       <Text>{item.title}</Text>

@@ -1,6 +1,7 @@
 import { Center, Text } from '@chakra-ui/layout'
 import React, { useCallback, useEffect } from 'react'
 import { useBlocks } from '@recoil/hooks/useBlocks'
+import { useColorModeValue } from '@chakra-ui/color-mode'
 
 interface Props {}
 
@@ -57,10 +58,20 @@ const FileDropZone = (props: Props) => {
   }, [onDragEnter, onDragLeave, onDragOver, onDrop])
   return (
     <Center flex={1} h={'80vh'} flexDirection={'column'}>
-      <Text fontFamily={'Inter'} fontSize="2xl" mb={2} color={'grey'}>
+      <Text
+        fontFamily={'Inter'}
+        fontSize="2xl"
+        mb={2}
+        color={useColorModeValue('#A3ABB9', 'grey')}
+      >
         Press ⌘+K for block search,{' '}
       </Text>
-      <Text mb={2} fontFamily={'Inter'} fontSize="2xl" color={'grey'}>
+      <Text
+        mb={2}
+        fontFamily={'Inter'}
+        fontSize="2xl"
+        color={useColorModeValue('#A3ABB9', 'grey')}
+      >
         or drag in a block file.
       </Text>
       {/* <PlusSquareIcon w={10} h={10} color={'grey'} /> */}
