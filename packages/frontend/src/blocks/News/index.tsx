@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import { openInNewTab } from '../NFT/NFTTypes/BAYC'
+import CloseButton from '@components/CloseButton'
 interface Props {}
 
 const CryptoNewsIDs = [
@@ -87,7 +88,7 @@ const NewsArticleCard = (props: NewsCardTypes) => {
 // TODO: #10 create news block with category options
 const NewsBlock = (props: Props) => {
   const [newsFeed, setNewsFeed] = useState([])
-
+  const {uuid} = props
   useEffect(() => {
     if (CryptoNewsIDs) {
       const url = `https://min-api.cryptocompare.com/data/v2/news/?lang=EN`
@@ -127,6 +128,7 @@ const NewsBlock = (props: Props) => {
       overflow={'scroll'}
       p={5}
     >
+      <CloseButton blockID={uuid} />
       <Heading fontWeight={'bold'} color={'white'} m={2} size={'md'} mb={5}>
         Crypto News
       </Heading>

@@ -26,11 +26,12 @@ import { getTokenMetadata } from './utils'
 import TokenAssetRow from './components/TokenAssetRow'
 import AssetsPanel from './components/AssetsPanel'
 import TransactionsPanel from './components/TransactionsPanel'
+import CloseButton from '@components/CloseButton'
 // import hre, { ethers } from 'hardhat'
 interface Props {}
 
 const Wallet = (props) => {
-  const { provided } = props
+  const { provided, uuid } = props
   const [walletAmount, setWalletAmount] = useState(null)
 
   const { account, chainId, library } = useEthers()
@@ -85,6 +86,7 @@ const Wallet = (props) => {
       overflow={'scroll'}
       p={5}
     >
+      <CloseButton blockID={uuid} />
       <EthAddressInput
         activeEthAddress={activeEthAddress}
         setActiveEthAddress={setActiveEthAddress}

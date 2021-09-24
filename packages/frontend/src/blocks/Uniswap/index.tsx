@@ -6,6 +6,7 @@ import { useSelectedTokens } from '@recoil/hooks/useSelectedTokens'
 import Image from 'next/image'
 import FormInput from './FormInput'
 import { useEthers } from '@usedapp/core'
+import CloseButton from '@components/CloseButton'
 
 const getButtonText = (account, token0Amount, token1Amount) => {
   if (!account) {
@@ -18,16 +19,16 @@ const getButtonText = (account, token0Amount, token1Amount) => {
 }
 
 const UniswapBlock = (props) => {
-  const { provided } = props
+  const { provided, uuid } = props
   const [tokens, { setSelectedTokens }] = useSelectedTokens()
   const { account, chainId, library } = useEthers()
   const [token0Amount, setToken0Amount] = useState(null)
   const [token1Amount, setToken1Amount] = useState(null)
 
-  useEffect(() => {
-    // setSelectedTokens({ token0: 'ALCHI', token1: 'BLIMP' })
-    console.log(account)
-  }, [tokens])
+  // useEffect(() => {
+  //   // setSelectedTokens({ token0: 'ALCHI', token1: 'BLIMP' })
+  //   console.log(account)
+  // }, [tokens])
 
   return (
     <Box
@@ -43,6 +44,7 @@ const UniswapBlock = (props) => {
       borderRadius={'3xl'}
       position="relative"
     >
+      <CloseButton blockID={uuid} />
       <Flex mr={10} ml={5}>
         <Image
           src={require('../../../../../node_modules/cryptocurrency-icons/svg/color/uni.svg')}

@@ -148,7 +148,7 @@ function HomeIndex(): JSX.Element {
   })
   const fetchNetworkName = useCallback(async () => {
     const response = await library.getNetwork()
-    console.log(response)
+
     setNetworkName(response.name)
   }, [library, networkName])
 
