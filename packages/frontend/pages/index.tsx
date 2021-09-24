@@ -23,6 +23,12 @@ import {
   GridItem,
   swap,
 } from 'react-grid-dnd'
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from '@chakra-ui/react'
 import { Size, useWindowSize } from 'src/hooks/useWindowSize'
 import process from 'process'
 import NFTBlock from 'src/blocks/NFT'
@@ -169,17 +175,35 @@ function HomeIndex(): JSX.Element {
     moveBlocks(nextState)
   }
 
-  useEffect(() => {
-    if (library) {
-      console.log(library)
-    }
+  // useEffect(() => {
+  //   if (library) {
+  //     console.log(library)
+  //   }
 
-    // addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
-  }, [library])
+  //   // addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
+  // }, [library])
 
   return networkName && networkName !== 'kovan' ? (
     <Layout>
-      <Modal
+      <Alert
+        status="warning"
+        variant="subtle"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
+        height="200px"
+      >
+        <AlertIcon boxSize="40px" mr={0} />
+        <AlertTitle mt={4} mb={1} fontSize="lg">
+          Wrong Network
+        </AlertTitle>
+        <AlertDescription maxWidth="sm">
+          Dexter currently works on the Kovan Text Network. Please switch
+          networks for the best experience.
+        </AlertDescription>
+      </Alert>
+      {/* <Modal
         isCentered
         onClose={onClose}
         isOpen={true}
@@ -189,11 +213,11 @@ function HomeIndex(): JSX.Element {
         <ModalContent>
           <ModalHeader>Wrong Network</ModalHeader>
           <ModalBody>
-            Dexter currently works on the Kovan testnet. Please switch networks
-            for the best experience.
+            Dexter currently works on the Kovan Text Network. Please switch
+            networks for the best experience.
           </ModalBody>
         </ModalContent>
-      </Modal>
+      </Modal> */}
     </Layout>
   ) : (
     <Layout>
