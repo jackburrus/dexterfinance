@@ -11,7 +11,7 @@ import {
 import { useBlocks } from '@recoil/hooks/useBlocks'
 import { ChainId, useEthers, useSendTransaction } from '@usedapp/core'
 import { ethers, providers, utils } from 'ethers'
-import React, { useEffect, useReducer } from 'react'
+import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import Wallet from 'src/blocks/Wallet'
 import { YourContract as LOCAL_CONTRACT_ADDRESS } from '../artifacts/contracts/contractAddress'
 import YourContract from '../artifacts/contracts/YourContract.sol/YourContract.json'
@@ -30,6 +30,16 @@ import AnalyticsBlock from 'src/blocks/Analytics'
 import NewBlock from 'src/blocks/News'
 import UniswapBlock from 'src/blocks/Uniswap'
 import FileDropZone from '@components/FileDropZone'
+import { useDisclosure } from '@chakra-ui/hooks'
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 /**
  * Constants & Helpers
  */
@@ -117,7 +127,9 @@ function HomeIndex(): JSX.Element {
   const { account, chainId, library } = useEthers()
   const [blockList, { addBlock, removeBlock, clearAllBlocks, moveBlocks }] =
     useBlocks()
+  const [networkName, setNetworkName] = useState(null)
   const size: Size = useWindowSize()
+  const { isOpen, onOpen, onClose } = useDisclosure()
   // const url = `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`
 
   // const customHttpProvider = new ethers.providers.AlchemyProvider
@@ -134,6 +146,17 @@ function HomeIndex(): JSX.Element {
   const { sendTransaction } = useSendTransaction({
     signer: localProvider.getSigner(),
   })
+  const fetchNetworkName = useCallback(async () => {
+    const response = await library.getNetwork()
+    console.log(response)
+    setNetworkName(response.name)
+  }, [library, networkName])
+
+  useEffect(() => {
+    if (library) {
+      fetchNetworkName()
+    }
+  }, [networkName, fetchNetworkName, library])
 
   function sendFunds(): void {
     sendTransaction({
@@ -150,7 +173,25 @@ function HomeIndex(): JSX.Element {
     // addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
   }, [])
 
-  return (
+  return networkName && networkName !== 'kovan' ? (
+    <Layout>
+      <Modal
+        isCentered
+        onClose={onClose}
+        isOpen={true}
+        motionPreset="slideInBottom"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Wrong Network</ModalHeader>
+          <ModalBody>
+            Dexter currently works on the Kovan testnet. Please switch networks
+            for the best experience.
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </Layout>
+  ) : (
     <Layout>
       {blockList.length == 0 ? (
         <FileDropZone />
