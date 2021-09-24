@@ -8,7 +8,7 @@ import {
   Button,
   Container,
   Flex,
-  Image,
+  Image as ChakraImage,
   Link,
   Menu,
   MenuButton,
@@ -18,9 +18,10 @@ import {
   Text,
   Heading,
 } from '@chakra-ui/react'
+import Image from 'next/image'
 import { useBlocks } from '@recoil/hooks/useBlocks'
 import { useColorMode } from '@chakra-ui/color-mode'
-
+// import Logo from '/../../../public/images/site-preview.png'
 import { useEthers, useNotifications } from '@usedapp/core'
 import blockies from 'blockies-ts'
 import NextLink from 'next/link'
@@ -77,37 +78,56 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
   return (
     <>
       <Head customMeta={customMeta} />
+
       <header>
         <Container maxWidth="container.xl">
           <SimpleGrid
-            columns={[1, 1, 1, 2]}
-            alignItems="center"
+            columns={[1, 1, 1, 3]}
+            // alignItems="center"
             // justifyContent="space-between"
-
+            // border={'1px solid magenta'}
             py="8"
+            display={'flex'}
           >
             <Flex
-            // justify="flex-start"
+              // border={'1px solid red'}
+              flex={0.8}
+              // justify="flex-start"
             >
-              {/* <NextLink href="/" passHref>
-                <Link px="4" py="1">
-                  Block Buidler
-                </Link>
-              </NextLink> */}
-              {/* <SearchButton /> */}
-              <Button onClick={toggleColorMode}>
-                {colorMode == 'light' ? <MoonIcon /> : <SunIcon />}
-              </Button>
-              <Heading as="h2" mr={12} ml={12} fontWeight={500}>
+              <Flex>
+                <Image
+                  width={'40px'}
+                  height={'40px'}
+                  layout={'fixed'}
+                  src={'/images/Logo.png'}
+                />
+              </Flex>
+
+              <Heading
+                ml={3}
+                // border={'1px solid green'}
+                as="h2"
+                fontWeight={500}
+                alignSelf="flex-end"
+              >
                 Dexter
               </Heading>
+            </Flex>
+            <Flex
+              pl={20}
+              pr={20}
+              flex={2}
+              // border={'1px solid orange'}
+            >
               <ModalSearch />
             </Flex>
 
             {account ? (
               <Flex
+                flex={1}
                 order={[-1, null, null, 2]}
                 alignItems={'center'}
+                // border={'1px solid cyan'}
                 justifyContent={['flex-start', null, null, 'flex-end']}
               >
                 {/* <Button
@@ -120,17 +140,20 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
                   🤑
                 </Button> */}
 
-                <Button onClick={clearAllBlocks} mr={'12'} colorScheme="blue">
-                  Clear
-                </Button>
                 <Balance />
 
-                <Image ml="4" src={blockieImageSrc} alt="blockie" />
                 <Menu placement="bottom-end">
-                  <MenuButton as={Button} ml="4">
-                    {truncateHash(account)}
+                  <MenuButton as={Button} ml="4" variant={'unstyled'}>
+                    {/* {truncateHash(account)} */}
+                    <ChakraImage
+                      borderRadius={5}
+                      ml="4"
+                      src={blockieImageSrc}
+                      alt="blockie"
+                    />
                   </MenuButton>
                   <MenuList>
+                    <MenuItem onClick={clearAllBlocks}>Clear</MenuItem>
                     <MenuItem
                       onClick={() => {
                         deactivate()
@@ -182,21 +205,44 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
             )
           })}
         </Container>
-        <a
-          href={`data:text/json;charset=utf-8,${encodeURIComponent(
-            JSON.stringify(blockList)
-          )}`}
-          download={`DexterDashboard-${Math.floor(Math.random() * 100)}.json`}
+
+        <Box
+          // border={'1px solid red'}
+          position={'fixed'}
+          bottom={'45'}
+          right={'55'}
+          display={'flex'}
+          alignItems="center"
         >
-          <DownloadIcon
-            as={'a'}
-            w={5}
-            h={5}
-            position={'fixed'}
-            bottom={'45'}
-            right={'55'}
-          />
-        </a>
+          <Button
+            mr={5}
+            // position={'fixed'}
+            // bottom={'45'}
+            // right={'85'}
+            variant={'unstyled'}
+            onClick={toggleColorMode}
+          >
+            {colorMode == 'light' ? <MoonIcon mb={1} /> : <SunIcon mb={1} />}
+          </Button>
+          <a
+            href={`data:text/json;charset=utf-8,${encodeURIComponent(
+              JSON.stringify(blockList)
+            )}`}
+            download={`DexterDashboard-${Math.floor(Math.random() * 100)}.json`}
+          >
+            <DownloadIcon
+              href={`data:text/json;charset=utf-8,${encodeURIComponent(
+                JSON.stringify(blockList)
+              )}`}
+              download={`DexterDashboard-${Math.floor(
+                Math.random() * 100
+              )}.json`}
+              as={'a'}
+              w={5}
+              h={5}
+            />
+          </a>
+        </Box>
       </main>
       {/* <footer>
         <Container

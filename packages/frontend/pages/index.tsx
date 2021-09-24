@@ -170,8 +170,12 @@ function HomeIndex(): JSX.Element {
   }
 
   useEffect(() => {
+    if (library) {
+      console.log(library)
+    }
+
     // addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
-  }, [])
+  }, [library])
 
   return networkName && networkName !== 'kovan' ? (
     <Layout>
