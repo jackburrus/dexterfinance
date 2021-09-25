@@ -18,9 +18,10 @@ import { ApolloClient, InMemoryCache, useQuery, gql } from '@apollo/client'
 import BAYC from './NFTTypes/BAYC'
 import NiftyInk from './NFTTypes/NiftyInk'
 import CloseButton from '@components/CloseButton'
+import Zora from './NFTTypes/Zora'
 
 const NFTBlock = (props): BoxProps => {
-  const [NFTName, setNFTName] = useState<'BAYC' | 'NiftyInk'>('BAYC')
+  const [NFTName, setNFTName] = useState<'BAYC' | 'NiftyInk' | 'Zora'>('BAYC')
   const { uuid } = props
   const onNFTChange = (e) => {
     setNFTName(e.target.value)
@@ -84,16 +85,21 @@ const NFTBlock = (props): BoxProps => {
           >
             <option value="BAYC">BAYC</option>
             <option value="NiftyInk">Nifty Ink</option>
+            <option value="Zora">Zora</option>
           </Select>
         </Box>
       </Flex>
       <Flex
         // border={'1px solid cyan'}
-        flex={1}
+        // display={'flex'}
+        // flex={1}
+        // h={'250px'}
         align="center"
         justify="center"
       >
-        {NFTName == 'BAYC' ? <BAYC /> : <NiftyInk />}
+        {NFTName == 'BAYC' && <BAYC />}
+        {NFTName == 'NiftyInk' && <NiftyInk />}
+        {NFTName == 'Zora' && <Zora />}
       </Flex>
 
       {/* <PopoverOnBlock /> */}

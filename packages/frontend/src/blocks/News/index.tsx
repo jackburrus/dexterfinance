@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Heading, Text } from '@chakra-ui/layout'
+import { Box, Center, Divider, Flex, Heading, Text } from '@chakra-ui/layout'
 import React, { useState, useEffect } from 'react'
 import {
   List,
@@ -64,6 +64,7 @@ const NewsArticleCard = (props: NewsCardTypes) => {
         // border={'1px solid red'}
         display="flex"
         borderRadius={'2xl'}
+        overflow={'hidden'}
       >
         <Image src={image} layout={'fill'} objectFit="contain" />
       </Box>
@@ -88,7 +89,7 @@ const NewsArticleCard = (props: NewsCardTypes) => {
 // TODO: #10 create news block with category options
 const NewsBlock = (props: Props) => {
   const [newsFeed, setNewsFeed] = useState([])
-  const {uuid} = props
+  const { uuid } = props
   useEffect(() => {
     if (CryptoNewsIDs) {
       const url = `https://min-api.cryptocompare.com/data/v2/news/?lang=EN`
@@ -140,16 +141,15 @@ const NewsBlock = (props: Props) => {
         <List ml={2} spacing={3}>
           {newsFeed.map((news) => {
             return (
-              <NewsArticleCard
-                title={news.title}
-                image={news.imageurl}
-                categories={news.categories}
-                sourceURI={news.url}
-              />
-              // <ListItem key={news.id} color={'white'}>
-              //   {/* <ListIcon as={MdCheckCircle} color="green.500" /> */}
-              //   {news.title}
-              // </ListItem>
+              <Box>
+                <NewsArticleCard
+                  title={news.title}
+                  image={news.imageurl}
+                  categories={news.categories}
+                  sourceURI={news.url}
+                />
+                <Divider />
+              </Box>
             )
           })}
         </List>

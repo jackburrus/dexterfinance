@@ -5,6 +5,9 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { NFTPreview, MediaConfiguration } from '@zoralabs/nft-components'
 import { openInNewTab } from './BAYC'
+import { Image } from '@chakra-ui/image'
+import { useNFTMetadata } from '@zoralabs/nft-hooks'
+
 interface Props {}
 
 const ZoraNftClient = new ApolloClient({
@@ -41,15 +44,45 @@ const ZoraQuery = gql`
       id
       contentURI
       metadataHash
+      metadataURI
     }
   }
 `
+
+const NFTCard = ({ nftData }) => {
+  const { metadata } = useNFTMetadata(nftData && nftData.metadataURI)
+  console.log(metadata && metadata.mimeType)
+  return (metadata && metadata.mimeType == 'image/jpeg') ||
+    (metadata && metadata.mimeType == 'image/png') ||
+    (metadata && metadata.mimeType == 'image/jpg') ? (
+    <Box
+      borderRadius={'lg'}
+      as={'a'}
+      _hover={{
+        transform: `scale(1.02)`,
+      }}
+      bg="white"
+      onClick={() => openInNewTab(nftData.contentURI)}
+      style={{ cursor: 'pointer' }}
+      key={nftData.id}
+      overflow={'hidden'}
+    >
+      <Image src={nftData.contentURI} width={100} height={100} />
+    </Box>
+  ) : null
+}
 
 const Zora = (props: Props) => {
   const { loading, error, data } = useQuery(ZoraQuery, {
     client: ZoraNftClient,
   })
   const [NFTData, setNFTData] = useState([])
+
+  //   const getIPFS = async () => {
+  //     for await (const chunk of ipfs.cat(ipfsPath)) {
+  //         console.info(chunk)
+  //       }
+  //   }
   useEffect(() => {
     if (data) {
       console.log(data)
@@ -61,36 +94,47 @@ const Zora = (props: Props) => {
       // border={'1px solid orange'}
       d={'flex'}
       mt={2}
+      ml={2}
+      mr={2}
       flexWrap={'wrap'}
       justifyContent={'center'}
       columns={4}
       spacing={5}
     >
       {NFTData.map((NFT) => {
-        return (
-          <Box
-            // h={'100px'}
-            // w={'90px'}
-            bg={'blue'}
-            display={'flex'}
-            flex={1}
-            borderRadius={'lg'}
-            as={'a'}
-            _hover={{
-              transform: `scale(1.02)`,
-            }}
-            onClick={() => openInNewTab(NFT.contentURI)}
-            style={{ cursor: 'pointer' }}
-            key={NFT.id}
-            // overflow={'hidden'}
-          >
-            <MediaConfiguration
+        return <NFTCard key={NFT.id} nftData={NFT} />
+      })}
+    </SimpleGrid>
+  )
+}
+
+export default Zora
+
+//   <Box
+//     h={'100px'}
+//     w={'90px'}
+//     bg={'white'}
+//     display={'flex'}
+//     flex={1}
+//     borderRadius={'lg'}
+//     as={'a'}
+//     _hover={{
+//       transform: `scale(1.02)`,
+//     }}
+// onClick={() => openInNewTab(NFT.contentURI)}
+// style={{ cursor: 'pointer' }}
+// key={NFT.id}
+
+// // overflow={'hidden'}
+//   >
+
+/* <MediaConfiguration
               style={{
                 theme: {
                   previewCard: {
                     height: 'auto',
-                    width: '200px',
-                    background: 'red',
+                    width: 'auto',
+                    background: 'transparent',
                   },
                   defaultBorderRadius: 0,
                   borderStyle: 'none',
@@ -101,13 +145,12 @@ const Zora = (props: Props) => {
                 },
               }}
             >
-              <NFTPreview id={NFT.id} />
-            </MediaConfiguration>
-          </Box>
-        )
-      })}
-    </SimpleGrid>
-  )
-}
-
-export default Zora
+              <NFTPreview
+                contract={false}
+                initialData={false}
+                showPerpetual={false}
+                showBids={false}
+                id={NFT.id}
+              />
+            </MediaConfiguration> */
+//   </Box>

@@ -55,9 +55,9 @@ const UniswapBlock = (props) => {
           Swap
         </Text>
         <Spacer />
-        <Flex justify="center" align="center">
+        {/* <Flex justify="center" align="center">
           <SettingsIcon w={5} h={5} color="white" />
-        </Flex>
+        </Flex> */}
       </Flex>
       <Flex
         flex={1}
@@ -106,7 +106,7 @@ const UniswapBlock = (props) => {
         </Text>
       </Flex>
 
-      <PopoverOnBlock />
+      {/* <PopoverOnBlock /> */}
     </Box>
   )
 }
