@@ -6,31 +6,36 @@ import {
 
 const fonts = { heading: 'Inter', body: 'Inter' }
 
-const components = {
-  Text: {
-    baseStyle: (props) => ({
-      fontWeight: 'bold',
-      color: props.colorMode === 'dark' ? '#FFFFFF' : 'white',
-    }),
-    variant: {
-      label: (props) => ({
-        fontWeight: '500',
-        // color: props.colorMode === 'dark' ? '#FFFFFF' : '#000000',
-        color: props.colorMode === 'dark' ? '#FFFFFF' : 'red',
-      }),
-      largeHeader: (props) => ({
-        fontSize: '6xl',
-      }),
-    },
-  },
-  // Input: {
-  //   variant: {
-  //     main: (props) => ({
-  //       backgroundColor: props.colorMode === 'dark' ? '#2D3748' : '#DEE7F4',
-  //     }),
-  //   },
-  // },
-}
+// const components = {
+//   Text: {
+//     baseStyle: (props) => ({
+//       fontWeight: 'bold',
+//       color: props.colorMode === 'dark' ? '#FFFFFF' : 'white',
+//     }),
+//     variant: {
+//       label: (props) => ({
+//         fontWeight: '500',
+//         // color: props.colorMode === 'dark' ? '#FFFFFF' : '#000000',
+//         color: props.colorMode === 'dark' ? '#FFFFFF' : 'red',
+//       }),
+//       largeHeader: (props) => ({
+//         fontSize: '6xl',
+//       }),
+//     },
+//   },
+//   Box: {
+//     baseStyle: (props) => ({
+//       // fontWeight: 'bold',
+//       // color: props.colorMode === 'dark' ? '#FFFFFF' : 'white',
+//     }),
+//     variant: {
+//       card: (props) => ({
+//         // boxShadow: props.colorMode == 'light' ? '1px 0 15px 2px #b6bdca' : null,
+//         boxShadow: '1px 0 15px 2px #b6bdca',
+//       }),
+//     },
+//   },
+// }
 
 const config: ThemeConfig = {
   ...chakraTheme.config,
@@ -41,9 +46,26 @@ const config: ThemeConfig = {
 const overrides = {
   ...config,
   fonts,
-  components,
+  // components,
+  // components: {
+
+  // }
 }
 
-const theme = extendTheme(overrides)
+// const theme = extendTheme(overrides)
+const theme = extendTheme({
+  components: {
+    Box: {
+      baseStyle: {
+        border: null,
+      },
+      variants: {
+        'with-card': {
+          boxShadow: '1px 0 15px 2px #b6bdca',
+        },
+      },
+    },
+  },
+})
 
 export default theme

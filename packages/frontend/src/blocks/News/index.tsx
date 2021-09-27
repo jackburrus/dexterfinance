@@ -11,6 +11,7 @@ import {
 import Image from 'next/image'
 import { openInNewTab } from '../NFT/NFTTypes/BAYC'
 import CloseButton from '@components/CloseButton'
+import { CustomBox } from '@components/CustomBox'
 interface Props {}
 
 const CryptoNewsIDs = [
@@ -115,20 +116,7 @@ const NewsBlock = (props: Props) => {
     console.log(newsFeed)
   }, [newsFeed])
   return !newsFeed ? null : (
-    <Box
-      w="500px"
-      h="350px"
-      d="flex"
-      margin={'10'}
-      justifyContent="flex-start"
-      //Text
-      flexDirection="column"
-      bg={'#181C20'}
-      borderRadius={'3xl'}
-      position="relative"
-      overflow={'scroll'}
-      p={5}
-    >
+    <CustomBox>
       <CloseButton blockID={uuid} />
       <Heading fontWeight={'bold'} color={'white'} m={2} size={'md'} mb={5}>
         Crypto News
@@ -154,7 +142,7 @@ const NewsBlock = (props: Props) => {
           })}
         </List>
       )}
-    </Box>
+    </CustomBox>
   )
 }
 

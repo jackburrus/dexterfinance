@@ -19,6 +19,7 @@ import BAYC from './NFTTypes/BAYC'
 import NiftyInk from './NFTTypes/NiftyInk'
 import CloseButton from '@components/CloseButton'
 import Zora from './NFTTypes/Zora'
+import { CustomBox } from '@components/CustomBox'
 
 const NFTBlock = (props): BoxProps => {
   const [NFTName, setNFTName] = useState<'BAYC' | 'NiftyInk' | 'Zora'>('BAYC')
@@ -28,18 +29,7 @@ const NFTBlock = (props): BoxProps => {
   }
 
   return (
-    <Box
-      w="500px"
-      h="350px"
-      d="flex"
-      margin={'10'}
-      justifyContent="flex-start"
-      flexDirection="column"
-      bg={'#181C20'}
-      borderRadius={'3xl'}
-      position="relative"
-      overflow={'scroll'}
-    >
+    <CustomBox>
       <CloseButton blockID={uuid} />
       <Flex pr={15} p={15} align="center">
         <Box
@@ -103,7 +93,7 @@ const NFTBlock = (props): BoxProps => {
       </Flex>
 
       {/* <PopoverOnBlock /> */}
-    </Box>
+    </CustomBox>
   )
 }
 

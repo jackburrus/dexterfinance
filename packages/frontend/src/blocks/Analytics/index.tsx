@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
 import { Box, Flex } from '@chakra-ui/layout'
-import { Select } from '@chakra-ui/react'
+import { Select, Text } from '@chakra-ui/react'
 import CloseButton from '@components/CloseButton'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -15,6 +15,7 @@ import TopTokens from './TopTokens'
 import { formatChartData } from './utils'
 import ValueAndDate from './ValueAndDate'
 import { useColorMode } from '@chakra-ui/color-mode'
+import { CustomBox } from '@components/CustomBox'
 
 export function unixToDate(unix: number, format = 'YYYY-MM-DD'): string {
   return dayjs.unix(unix).utc().format(format)
@@ -202,21 +203,7 @@ const AnalyticsBlock = ({ provided, uuid }) => {
   }, [selectedProtocol, activeDataType])
 
   return !chartData ? null : (
-    <Box
-      w="500px"
-      h="350px"
-      d="flex"
-      margin={'10'}
-      justifyContent="flex-start"
-      flexDirection="column"
-      // bg={colorMode == 'light' ? '#E0EAF2' : '#181C20'}
-      bg={colorMode == 'light' ? 'white' : '#181C20'}
-      // border={colorMode == 'light' ? '1px solid grey' : null}
-      boxShadow={colorMode == 'light' ? '1px 0 15px 2px #b6bdca' : null}
-      borderRadius={'3xl'}
-      position="relative"
-      p={activeDataType === 'Top Tokens' ? 2 : null}
-    >
+    <CustomBox>
       <CloseButton blockID={uuid} />
       <Box
         style={{
@@ -313,7 +300,7 @@ const AnalyticsBlock = ({ provided, uuid }) => {
           selectedProtocol={selectedProtocol}
         />
       )} */}
-    </Box>
+    </CustomBox>
   )
 }
 
