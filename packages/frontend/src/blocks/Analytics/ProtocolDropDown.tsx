@@ -1,12 +1,14 @@
+import { useColorMode } from '@chakra-ui/color-mode'
 import { Box, Flex } from '@chakra-ui/layout'
 import { Select } from '@chakra-ui/select'
 import Image from 'next/image'
 import React from 'react'
 
 const ProtocolDropDown = ({ onProtocolChange, selectedProtocol }) => {
+  const { colorMode } = useColorMode()
   return (
     <Box
-      bgColor="#1F2128"
+      bgColor={colorMode == 'light' ? '#A0CBDB' : '#181C20'}
       height={30}
       borderRadius={'2xl'}
       pl={'3'}
@@ -41,7 +43,7 @@ const ProtocolDropDown = ({ onProtocolChange, selectedProtocol }) => {
         height={30}
         variant="unstyled"
         // placeholder={'Uniswap'}
-        color={'white'}
+        color={colorMode == 'light' ? 'grey' : 'white'}
         // icon={}
       >
         <option value="Uniswap"> Uniswap</option>

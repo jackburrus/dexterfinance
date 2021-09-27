@@ -193,6 +193,7 @@ function HomeIndex(): JSX.Element {
         justifyContent="center"
         textAlign="center"
         height="200px"
+        borderRadius={10}
       >
         <AlertIcon boxSize="40px" mr={0} />
         <AlertTitle mt={4} mb={1} fontSize="lg">

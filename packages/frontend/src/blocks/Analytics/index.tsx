@@ -14,6 +14,8 @@ import ProtocolDropDown from './ProtocolDropDown'
 import TopTokens from './TopTokens'
 import { formatChartData } from './utils'
 import ValueAndDate from './ValueAndDate'
+import { useColorMode } from '@chakra-ui/color-mode'
+
 export function unixToDate(unix: number, format = 'YYYY-MM-DD'): string {
   return dayjs.unix(unix).utc().format(format)
 }
@@ -104,6 +106,7 @@ const AnalyticsBlock = ({ provided, uuid }) => {
   const [value, setValue] = useState<string | undefined>(
     latestPrice ? latestPrice : undefined
   )
+  const { colorMode } = useColorMode()
   const [parsedDate, setParsedDate] = useState(null)
   const [selectedProtocol, setSelectedProtocol] = useState('Uniswap')
   const [protocolDataOptions, setProtocolDataOptions] =
@@ -206,7 +209,9 @@ const AnalyticsBlock = ({ provided, uuid }) => {
       margin={'10'}
       justifyContent="flex-start"
       flexDirection="column"
-      bg={'#181C20'}
+      bg={colorMode == 'light' ? '#E0EAF2' : '#181C20'}
+      // border={colorMode == 'light' ? '1px solid grey' : null}
+      boxShadow={colorMode == 'light' ? '0 0 5px #333' : null}
       borderRadius={'3xl'}
       position="relative"
       p={activeDataType === 'Top Tokens' ? 2 : null}
