@@ -110,7 +110,10 @@ const TopTokens = (props: Props) => {
               align="flex-end"
               justify="center"
             >
-              <Text fontWeight={'light'} color={'white'}>
+              <Text
+                fontWeight={'light'}
+                color={colorMode == 'light' ? 'black' : 'white'}
+              >
                 {props.row.index + 1}
               </Text>
             </Flex>
@@ -128,7 +131,10 @@ const TopTokens = (props: Props) => {
           return (
             <Flex align="center" w={275}>
               <CryptoIcon iconSize={20} code={props.row.original.symbol} />
-              <Text fontWeight={'semibold'} color={'white'}>
+              <Text
+                fontWeight={'semibold'}
+                color={colorMode == 'light' ? 'black' : 'white'}
+              >
                 {props.value}
               </Text>
               <Text fontWeight={'semibold'} color={'grey'} pl={2}>
@@ -145,7 +151,10 @@ const TopTokens = (props: Props) => {
         // Cell: (props) => <div>{parseInt(props.value).toFixed(2)}</div>,
         // TODO: #3 add Chakra text component so this looks better on darkmode @jackburrus
         Cell: (props) => (
-          <Text fontWeight={'light'} color={'white'}>
+          <Text
+            fontWeight={'light'}
+            color={colorMode == 'light' ? 'black' : 'white'}
+          >
             {formatDollarAmount(props.value)}
           </Text>
         ),
@@ -160,7 +169,7 @@ const TopTokens = (props: Props) => {
             props.value[1].priceUSD
           )
           return (
-            <HStack>
+            <HStack w={20}>
               {percentageChange >= 0 ? (
                 <ArrowUpIcon
                   color={percentageChange >= 0 ? 'green.500' : 'red.500'}
@@ -235,9 +244,17 @@ const TopTokens = (props: Props) => {
                       <Flex>
                         {column.isSorted ? (
                           column.isSortedDesc ? (
-                            <ArrowDownIcon color={'white'} w={3} h={3} />
+                            <ArrowDownIcon
+                              color={colorMode == 'light' ? 'black' : 'white'}
+                              w={3}
+                              h={3}
+                            />
                           ) : (
-                            <ArrowUpIcon color={'white'} w={3} h={3} />
+                            <ArrowUpIcon
+                              color={colorMode == 'light' ? 'black' : 'white'}
+                              w={3}
+                              h={3}
+                            />
                           )
                         ) : null}
                       </Flex>

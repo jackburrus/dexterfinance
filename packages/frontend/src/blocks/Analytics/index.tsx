@@ -223,7 +223,7 @@ const AnalyticsBlock = ({ provided, uuid }) => {
             fontSize="12px"
             height={30}
             variant="unstyled"
-            color={'white'}
+            color={colorMode == 'light' ? 'grey' : 'white'}
           >
             {protocolDataOptions.map((dataOption) => {
               return (

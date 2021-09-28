@@ -8,7 +8,7 @@ const ProtocolDropDown = ({ onProtocolChange, selectedProtocol }) => {
   const { colorMode } = useColorMode()
   return (
     <Box
-      bgColor={colorMode == 'light' ? '#A0CBDB' : '#181C20'}
+      bgColor={colorMode == 'light' ? 'transparent' : '#1F2128'}
       height={30}
       borderRadius={'2xl'}
       pl={'3'}
