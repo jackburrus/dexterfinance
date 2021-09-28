@@ -12,6 +12,7 @@ import Image from 'next/image'
 import { openInNewTab } from '../NFT/NFTTypes/BAYC'
 import CloseButton from '@components/CloseButton'
 import { CustomBox } from '@components/CustomBox'
+import { useColorMode } from '@chakra-ui/color-mode'
 interface Props {}
 
 const CryptoNewsIDs = [
@@ -41,6 +42,7 @@ interface NewsCardTypes {
 
 const NewsArticleCard = (props: NewsCardTypes) => {
   const { title, image, categories, sourceURI } = props
+  const { colorMode } = useColorMode()
   // console.log(categories)
   // if (categories) {
   //   const mainCategory = categories.split('|')[0]
@@ -76,10 +78,16 @@ const NewsArticleCard = (props: NewsCardTypes) => {
         // alignItems="center"
         justifyContent="center"
       >
-        <Text color={'GrayText'} fontSize="small">
+        <Text
+          color={colorMode == 'light' ? 'black' : 'GrayText'}
+          fontSize="small"
+        >
           {mainCategory}
         </Text>
-        <Text fontWeight={'semibold'} color={'white'}>
+        <Text
+          fontWeight={'semibold'}
+          color={colorMode == 'light' ? 'black' : 'GrayText'}
+        >
           {title}
         </Text>
       </Box>
@@ -90,6 +98,8 @@ const NewsArticleCard = (props: NewsCardTypes) => {
 // TODO: #10 create news block with category options
 const NewsBlock = (props: Props) => {
   const [newsFeed, setNewsFeed] = useState([])
+  const { colorMode } = useColorMode()
+
   const { uuid } = props
   useEffect(() => {
     if (CryptoNewsIDs) {
@@ -117,31 +127,39 @@ const NewsBlock = (props: Props) => {
   }, [newsFeed])
   return !newsFeed ? null : (
     <CustomBox>
-      <CloseButton blockID={uuid} />
-      <Heading fontWeight={'bold'} color={'white'} m={2} size={'md'} mb={5}>
-        Crypto News
-      </Heading>
-      {!newsFeed.length ? (
-        <Center flex={1}>
-          <Spinner />
-        </Center>
-      ) : (
-        <List ml={2} spacing={3}>
-          {newsFeed.map((news) => {
-            return (
-              <Box>
-                <NewsArticleCard
-                  title={news.title}
-                  image={news.imageurl}
-                  categories={news.categories}
-                  sourceURI={news.url}
-                />
-                <Divider />
-              </Box>
-            )
-          })}
-        </List>
-      )}
+      <Box overflowX="hidden" overflowY="scroll" padding={2}>
+        <CloseButton blockID={uuid} />
+        <Heading
+          fontWeight={'bold'}
+          color={colorMode == 'light' ? 'black' : 'white'}
+          m={2}
+          size={'md'}
+          mb={5}
+        >
+          Crypto News
+        </Heading>
+        {!newsFeed.length ? (
+          <Center flex={1}>
+            <Spinner />
+          </Center>
+        ) : (
+          <List ml={2} spacing={3}>
+            {newsFeed.map((news) => {
+              return (
+                <Box>
+                  <NewsArticleCard
+                    title={news.title}
+                    image={news.imageurl}
+                    categories={news.categories}
+                    sourceURI={news.url}
+                  />
+                  <Divider colorScheme="yellow" />
+                </Box>
+              )
+            })}
+          </List>
+        )}
+      </Box>
     </CustomBox>
   )
 }
