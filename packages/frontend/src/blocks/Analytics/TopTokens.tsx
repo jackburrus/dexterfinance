@@ -199,7 +199,7 @@ const TopTokens = (props: Props) => {
         Cell: (props) => <div>{formatDollarAmount(props.value)}</div>,
       },
     ],
-    []
+    [colorMode]
   )
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns: cols, data: tokens }, useSortBy)
