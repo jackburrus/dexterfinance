@@ -6,6 +6,7 @@ import { useEtherBalance, useEthers } from '@usedapp/core'
 import React, { useEffect, useState } from 'react'
 import { getTokenMetadata } from '../utils'
 import TokenAssetRow from './TokenAssetRow'
+import { useColorMode } from '@chakra-ui/color-mode'
 
 interface Props {}
 
@@ -28,6 +29,7 @@ export const AssetsPanel = (props) => {
   const [tokenBalanceData, setTokenBalanceData] = useState([])
   const { account } = useEthers()
   const etherBalance = useEtherBalance(account)
+  const { colorMode } = useColorMode()
   async function fetchTokens() {
     try {
       const response = await fetch(
@@ -50,6 +52,7 @@ export const AssetsPanel = (props) => {
           // console.log(meta)
           if (
             meta.result &&
+            token.tokenBalance &&
             parseFloat(formatEther(token.tokenBalance)) > 0.01
           ) {
             const exists = tokenBalanceData.find(

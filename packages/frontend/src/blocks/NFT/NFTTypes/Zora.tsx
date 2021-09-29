@@ -40,7 +40,7 @@ const ZoraNftClient = new ApolloClient({
 
 const ZoraQuery = gql`
   query ZoraQuery {
-    medias(first: 50) {
+    medias(first: 500) {
       id
       contentURI
       metadataHash
@@ -85,8 +85,9 @@ const Zora = (props: Props) => {
   //   }
   useEffect(() => {
     if (data) {
-      console.log(data)
-      setNFTData(data['medias'])
+      const shuffled = data['medias'].sort(() => 0.5 - Math.random())
+      const selected = shuffled.slice(0, 50)
+      setNFTData(selected)
     }
   }, [data])
   return !NFTData ? null : (

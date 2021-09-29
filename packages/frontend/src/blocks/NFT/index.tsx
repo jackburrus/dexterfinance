@@ -14,6 +14,7 @@ import {
 import { Select } from '@chakra-ui/react'
 import PopoverOnBlock from '@components/Popover'
 import { ApolloClient, InMemoryCache, useQuery, gql } from '@apollo/client'
+import { useColorMode } from '@chakra-ui/color-mode'
 
 import BAYC from './NFTTypes/BAYC'
 import NiftyInk from './NFTTypes/NiftyInk'
@@ -27,6 +28,7 @@ const NFTBlock = (props): BoxProps => {
   const onNFTChange = (e) => {
     setNFTName(e.target.value)
   }
+  const { colorMode } = useColorMode()
 
   return (
     <CustomBox>
@@ -34,13 +36,15 @@ const NFTBlock = (props): BoxProps => {
         <CloseButton blockID={uuid} />
         <Flex pr={15} p={15} align="center">
           <Box
-            bgColor="#1F2128"
+            bgColor={colorMode == 'light' ? 'transparent' : '#1F2128'}
             height={30}
             borderRadius={'2xl'}
             pl={'3'}
+            position={'absolute'}
             display={'flex'}
             flexDirection={'row'}
             alignItems="center"
+            mb={2}
           >
             {NFTName == 'NiftyInk' ? (
               <Flex mr={'8px'}>
@@ -71,7 +75,7 @@ const NFTBlock = (props): BoxProps => {
               height={30}
               variant="unstyled"
               // placeholder={'Uniswap'}
-              color={'white'}
+              color={colorMode == 'light' ? 'grey' : 'white'}
               // icon={}
             >
               <option value="BAYC">BAYC</option>

@@ -42,7 +42,7 @@ const NiftyInkClient = new ApolloClient({
 
 const NFTInkQuery = gql`
   query nftInkQuery {
-    inks(first: 50) {
+    inks(first: 500) {
       id
       inkNumber
       jsonUrl
@@ -98,9 +98,12 @@ const NiftyInk = (props: Props) => {
 
   useEffect(() => {
     if (data) {
-      data['inks'].map(async (ink) => {
+      const shuffled = data['inks'].sort(() => 0.5 - Math.random())
+      const selected = shuffled.slice(0, 50)
+      selected.map(async (ink) => {
         // console.log(ink)
         const newData = await fetchURIs(ink)
+
         const newTokenData = { ink, ...newData }
         // console.log(newTokenData)
         setNFTData((oldArray) => [...oldArray, newTokenData])
@@ -108,9 +111,6 @@ const NiftyInk = (props: Props) => {
     }
   }, [data])
 
-  //   useEffect(() => {
-  //     console.log('stuff', NFTData)
-  //   }, [NFTData])
   return (
     <SimpleGrid
       // border={'1px solid orange'}

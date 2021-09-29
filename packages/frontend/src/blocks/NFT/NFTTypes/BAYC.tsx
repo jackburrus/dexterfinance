@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client'
-import { Box, Flex, SimpleGrid, Text } from '@chakra-ui/layout'
+import { Box, Center, Flex, SimpleGrid, Text } from '@chakra-ui/layout'
 import { useEffect, useState } from 'react'
 import React from 'react'
 import { Spinner } from '@chakra-ui/react'
@@ -138,9 +138,9 @@ const BAYC = (props: Props) => {
     >
       {}
       {NFTData.length < 40 ? (
-        <Box display={'flex'} flex={1} border={'1px solid orange'}>
+        <Center height={300} display={'flex'} flex={1}>
           <Spinner />
-        </Box>
+        </Center>
       ) : (
         NFTData.map((card, index) => {
           return (

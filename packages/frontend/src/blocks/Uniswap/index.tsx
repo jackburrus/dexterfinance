@@ -7,6 +7,7 @@ import Image from 'next/image'
 import FormInput from './FormInput'
 import { useEthers } from '@usedapp/core'
 import CloseButton from '@components/CloseButton'
+import { CustomBox } from '@components/CustomBox'
 
 const getButtonText = (account, token0Amount, token1Amount) => {
   if (!account) {
@@ -31,18 +32,18 @@ const UniswapBlock = (props) => {
   // }, [tokens])
 
   return (
-    <Box
-      w="500px"
-      h="350px"
-      d="flex"
-      justifyContent="center"
-      flexDirection="column"
-      margin={'10'}
-      // mt={'10'}
-      // mb={'10'}
-      bg={'#181C20'}
-      borderRadius={'3xl'}
-      position="relative"
+    <CustomBox
+    // w="500px"
+    // h="350px"
+    // d="flex"
+    // justifyContent="center"
+    // flexDirection="column"
+    // margin={'10'}
+    // // mt={'10'}
+    // // mb={'10'}
+    // bg={'#181C20'}
+    // borderRadius={'3xl'}
+    // position="relative"
     >
       <CloseButton blockID={uuid} />
       <Flex mr={10} ml={5}>
@@ -107,7 +108,7 @@ const UniswapBlock = (props) => {
       </Flex>
 
       {/* <PopoverOnBlock /> */}
-    </Box>
+    </CustomBox>
   )
 }
 

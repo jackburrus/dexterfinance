@@ -6,6 +6,19 @@ import {
 
 const fonts = { heading: 'Inter', body: 'Inter' }
 
+const textStyles = {
+  body: {
+    fontFamily: 'Times New Roman, sans-serif',
+  },
+  heading: {
+    fontFamily: 'Times New Roman, sans-serif',
+  },
+  mono: {
+    fontFamily: 'Oxygen',
+    // fontWeight: 'Bold',
+  },
+}
+
 // const components = {
 //   Text: {
 //     baseStyle: (props) => ({
@@ -46,6 +59,7 @@ const config: ThemeConfig = {
 const overrides = {
   ...config,
   fonts,
+  textStyles,
   // components,
   // components: {
 
@@ -53,19 +67,6 @@ const overrides = {
 }
 
 // const theme = extendTheme(overrides)
-const theme = extendTheme({
-  components: {
-    Box: {
-      baseStyle: {
-        border: null,
-      },
-      variants: {
-        'with-card': {
-          boxShadow: '1px 0 15px 2px #b6bdca',
-        },
-      },
-    },
-  },
-})
+const theme = extendTheme(overrides)
 
 export default theme

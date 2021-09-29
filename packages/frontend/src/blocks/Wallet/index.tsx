@@ -27,6 +27,7 @@ import TokenAssetRow from './components/TokenAssetRow'
 import AssetsPanel from './components/AssetsPanel'
 import TransactionsPanel from './components/TransactionsPanel'
 import CloseButton from '@components/CloseButton'
+import { CustomBox } from '@components/CustomBox'
 // import hre, { ethers } from 'hardhat'
 interface Props {}
 
@@ -38,7 +39,6 @@ const Wallet = (props) => {
 
   const etherBalance = useEtherBalance(account)
   const [updatedEtherBlanace, setUpdatedEtherBalance] = useState(null)
-  const blockNumber = useBlockNumber()
   const [USDValue, setUSDValue] = useState(null)
   const config = useConfig()
   const [activeEthAddress, setActiveEthAddress] = useState(null)
@@ -72,20 +72,7 @@ const Wallet = (props) => {
   }, [activeEthAddress])
 
   return !activeEthAddress ? null : (
-    <Box
-      w="500px"
-      h="350px"
-      d="flex"
-      margin={'10'}
-      justifyContent="flex-start"
-      //Text
-      flexDirection="column"
-      bg={'#181C20'}
-      borderRadius={'3xl'}
-      // position="relative"
-      overflow={'scroll'}
-      p={5}
-    >
+    <CustomBox>
       <CloseButton blockID={uuid} />
       <EthAddressInput
         activeEthAddress={activeEthAddress}
@@ -94,7 +81,6 @@ const Wallet = (props) => {
 
       <Flex
         flex={1}
-        // border={'1px solid white'}
         flexDirection={'column'}
         align={'center'}
         justify={'center'}
@@ -103,7 +89,6 @@ const Wallet = (props) => {
           d={'flex'}
           flex={1}
           p={'2'}
-          // border={'1px solid white'}
           w={'100%'}
           align={'flex-end'}
           justifyContent={'flex-end'}
@@ -150,34 +135,7 @@ const Wallet = (props) => {
           </TabPanels>
         </Tabs>
       </Flex>
-      {blockNumber && (
-        <Flex
-          // border={'1px solid white'}
-          display={'flex'}
-          justify="flex-end"
-          align={'flex-end'}
-          // position="absolute"
-          // bottom="5"
-          // right="10"
-        >
-          <Flex
-            // border={'1px solid orange'}
-            flexDirection="row"
-            align={'center'}
-            justify="flex-end"
-          >
-            <Text fontSize="8" color={'limegreen'} fontFamily="Inter">
-              {blockNumber}
-            </Text>
-            <BsDot
-              size={'18px'}
-              style={{ paddingRight: '4px' }}
-              color={'limegreen'}
-            />
-          </Flex>
-        </Flex>
-      )}
-    </Box>
+    </CustomBox>
   )
 }
 

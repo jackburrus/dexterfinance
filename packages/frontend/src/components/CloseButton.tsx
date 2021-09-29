@@ -1,3 +1,4 @@
+import { useColorMode } from '@chakra-ui/color-mode'
 import { CloseIcon } from '@chakra-ui/icons'
 import { Box } from '@chakra-ui/layout'
 import { useBlocks } from '@recoil/hooks/useBlocks'
@@ -12,11 +13,11 @@ const CloseButton = (props: Props) => {
   const [isHovered, setIsHovered] = useState(false)
   const [blockList, { addBlock, removeBlock, clearAllBlocks, moveBlocks }] =
     useBlocks()
-  //   console.log(blockID)
+  const { colorMode } = useColorMode()
   return (
     <Box
       d={'flex'}
-      flex={1}
+      // flex={1}
       justifyContent="center"
       alignItems={'center'}
       // border={'1px solid green'}
@@ -29,7 +30,7 @@ const CloseButton = (props: Props) => {
           //   onMouseEnter={() => console.log(blockID)}
           top={3}
           left={3}
-          color="white"
+          color={colorMode == 'light' ? 'grey' : 'white'}
           margin={3}
           w={'3'}
           h={'3'}

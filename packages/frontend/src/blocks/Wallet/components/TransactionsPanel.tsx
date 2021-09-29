@@ -1,3 +1,4 @@
+import { useColorMode } from '@chakra-ui/color-mode'
 import { ArrowUpIcon, DownloadIcon } from '@chakra-ui/icons'
 import { Box, Flex, Text } from '@chakra-ui/layout'
 import { truncateHash } from '@components/layout/Layout'
@@ -42,6 +43,7 @@ const getTransactionRow = (tx, activeEthAddress) => {
 
 const TransactionsPanel = (props: Props) => {
   const { activeEthAddress } = props
+  const { colorMode } = useColorMode()
   const [transactionList, setTransactionList] = useState([])
   const { library } = useEthers()
   async function fetchTransactions() {
@@ -113,8 +115,13 @@ const TransactionsPanel = (props: Props) => {
                 // border={'1px solid white'}
                 flex={2}
               >
-                <Text color={'white'}>Receive</Text>
-                <Text fontSize={'sm'} color={'white'}>
+                <Text color={colorMode == 'light' ? 'grey' : 'white'}>
+                  Receive
+                </Text>
+                <Text
+                  fontSize={'sm'}
+                  color={colorMode == 'light' ? 'grey' : 'white'}
+                >
                   {formatEther(tx.value)} ETH
                 </Text>
                 <Text fontSize={'xs'} color={'grey'}>
@@ -152,8 +159,13 @@ const TransactionsPanel = (props: Props) => {
                 // border={'1px solid white'}
                 flex={2}
               >
-                <Text color={'white'}>Sent</Text>
-                <Text fontSize={'sm'} color={'white'}>
+                <Text color={colorMode == 'light' ? 'grey' : 'white'}>
+                  Sent
+                </Text>
+                <Text
+                  fontSize={'sm'}
+                  color={colorMode == 'light' ? 'grey' : 'white'}
+                >
                   {formatEther(tx.value)} ETH
                 </Text>
                 <Text fontSize={'xs'} color={'grey'}>

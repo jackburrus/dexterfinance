@@ -2358,10 +2358,20 @@
   resolved "https://registry.yarnpkg.com/@fontsource/aclonica/-/aclonica-4.5.0.tgz#c433b63f27487e773baf7295bd94ae2ffe3409c3"
   integrity sha512-y5yAeYLr8VR21np0gIJFst12n6j7RFIsfoiA/8HofoKSTVKyWBP0FtjkUZqrKS5IGhQrqgVaQz4s7AwI4lmITw==
 
+"@fontsource/akronim@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/akronim/-/akronim-4.5.0.tgz#55143c24b5a2c0926a9c977e09e15ff79b71be35"
+  integrity sha512-+Sn58qCZxazH9ibZwOV0uQ7oJFDcaif53/XaDJxqpub44zoW3YzfUjYtVKfFmnyJ/9WKE4kxEmtDPNEscQvc5g==
+
 "@fontsource/inter@^4.5.0":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.5.0.tgz#b99e49fa178e4086250fb3df2ed6a7366c9a0cb5"
   integrity sha512-2efK8Ru0LkuOYrEpiHPlV02YkTdIKGbezlxVNeA8/3c+tNt7P2aQPuiYYkVy7N4GA5LWSUVcLL/91MpCIjinOw==
+
+"@fontsource/oxygen@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/oxygen/-/oxygen-4.5.0.tgz#32ff7592378f3b90d6d59b1731a7378de5c21849"
+  integrity sha512-XLO9h1ZG6AI38gzpR3siKbdxceGqbDb4uRavaOigTLgAhLOzviQ3KDwdY+wxs8PVNfGzFmchM/pia8tLzqcItw==
 
 "@hapi/accept@5.0.2", "@hapi/accept@^5.0.1":
   version "5.0.2"

@@ -96,22 +96,25 @@ export const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
             >
               <Flex>
                 <Image
-                  width={'40px'}
+                  width={'60px'}
                   height={'40px'}
-                  layout={'fixed'}
+                  // layout={''}
                   src={'/images/Logo.png'}
                 />
               </Flex>
 
-              <Heading
+              <Text
                 ml={3}
                 // border={'1px solid green'}
+                textStyle={'mono'}
+                // fontFamily={'mono'}
                 as="h2"
+                fontSize={30}
                 fontWeight={500}
                 alignSelf="flex-end"
               >
                 Dexter
-              </Heading>
+              </Text>
             </Flex>
             <Flex
               pl={20}

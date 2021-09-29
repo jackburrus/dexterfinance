@@ -17,6 +17,8 @@ import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 // scaffold-eth's INFURA_ID, SWAP IN YOURS FROM https://infura.io/dashboard/ethereum
 export const INFURA_ID = '460f40a260564ac4a4f4b3fffb032dad'
 import '@fontsource/inter'
+import '@fontsource/akronim'
+import '@fontsource/oxygen/700.css'
 const config: Config = {
   readOnlyUrls: {
     [ChainId.Ropsten]: `https://ropsten.infura.io/v3/${INFURA_ID}`,
