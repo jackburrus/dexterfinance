@@ -45,14 +45,26 @@ const Wallet = (props) => {
   const [ensName, setEnsName] = useState(null)
 
   const getEnsName = async (address) => {
-    const name = await library.lookupAddress(address)
-    return name
+    const networkName = (await library.getNetwork()).name
+
+    if (networkName == 'kovan') {
+      setEnsName(null)
+    } else {
+      const name = await library.lookupAddress(address)
+      setEnsName(name)
+    }
   }
 
   useEffect(() => {
     setActiveEthAddress(account)
     // setActiveEthAddress('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
   }, [])
+
+  useEffect(() => {
+    if (activeEthAddress) {
+      getEnsName(activeEthAddress)
+    }
+  }, [library])
 
   const getBal = async (address) => {
     // If account balance is 1 ETH
@@ -100,7 +112,10 @@ const Wallet = (props) => {
           justifyContent={'flex-end'}
         >
           <Text fontSize="8" color={'grey'}>
-            {activeEthAddress && truncateHash(activeEthAddress)}
+            {ensName ? ensName : null}
+            {activeEthAddress && !ensName
+              ? truncateHash(activeEthAddress)
+              : null}
           </Text>
         </Box>
         <CryptoIcon code={'Eth'} />
