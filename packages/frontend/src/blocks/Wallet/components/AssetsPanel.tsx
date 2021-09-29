@@ -44,8 +44,7 @@ export const AssetsPanel = (props) => {
     }
 
     console.log('running fetch tokens')
-    console.log(activeEthAddress != account)
-  }, [activeEthAddress])
+  }, [activeEthAddress, library])
   return (
     <PanelComponent {...props}>
       {/* <PanelComponent /> */}
