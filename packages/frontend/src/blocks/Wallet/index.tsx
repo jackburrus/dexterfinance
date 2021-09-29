@@ -42,6 +42,12 @@ const Wallet = (props) => {
   const [USDValue, setUSDValue] = useState(null)
   const config = useConfig()
   const [activeEthAddress, setActiveEthAddress] = useState(null)
+  const [ensName, setEnsName] = useState(null)
+
+  const getEnsName = async (address) => {
+    const name = await library.lookupAddress(address)
+    return name
+  }
 
   useEffect(() => {
     setActiveEthAddress(account)
@@ -128,7 +134,7 @@ const Wallet = (props) => {
               updatedEtherBlanace={updatedEtherBlanace}
               activeEthAddress={activeEthAddress}
             />
-            <TransactionsPanel activeEthAddress={activeEthAddress} />
+            {/* <TransactionsPanel activeEthAddress={activeEthAddress} /> */}
             {/* <TabPanel>
               <p>three!</p>
             </TabPanel> */}

@@ -4,7 +4,7 @@ import { TabPanel, TabPanelProps } from '@chakra-ui/tabs'
 import { formatEther } from '@ethersproject/units'
 import { useEtherBalance, useEthers } from '@usedapp/core'
 import React, { useEffect, useState } from 'react'
-import { getTokenMetadata } from '../utils'
+import { FetchTokens, fetchTokens, getTokenMetadata } from '../utils'
 import TokenAssetRow from './TokenAssetRow'
 import { useColorMode } from '@chakra-ui/color-mode'
 
@@ -27,54 +27,22 @@ export const PanelComponent = forwardRef<TabPanelProps, 'div'>((props, ref) => {
 export const AssetsPanel = (props) => {
   const { activeEthAddress, updatedEtherBlanace } = props
   const [tokenBalanceData, setTokenBalanceData] = useState([])
-  const { account } = useEthers()
+  const { account, library } = useEthers()
   const etherBalance = useEtherBalance(account)
   const { colorMode } = useColorMode()
-  async function fetchTokens() {
-    try {
-      const response = await fetch(
-        `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            jsonrpc: '2.0',
-            method: 'alchemy_getTokenBalances',
-            params: [activeEthAddress, 'DEFAULT_TOKENS'],
-            id: 42,
-          }),
-        }
-      )
-      const tokens = await response.json()
-      tokens.result.tokenBalances.map(async (token) => {
-        // console.log(token.contractAddress)
-        if (token.tokenBalance !== '0x') {
-          const meta = await getTokenMetadata(token.contractAddress)
-          // console.log(meta)
-          if (
-            meta.result &&
-            token.tokenBalance &&
-            parseFloat(formatEther(token.tokenBalance)) > 0.01
-          ) {
-            const exists = tokenBalanceData.find(
-              (t) => t.symbol === token.symbol
-            )
-            if (exists) return
-            setTokenBalanceData((prevArray) => [
-              ...prevArray,
-              Object.assign({}, meta.result, token),
-            ])
-          }
-        }
-      })
-      // return tokens.result.tokenBalances
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   useEffect(() => {
     setTokenBalanceData([])
-    fetchTokens()
+    if (library) {
+      // console.log(library)
+      fetchTokens(
+        library,
+        activeEthAddress,
+        tokenBalanceData,
+        setTokenBalanceData
+      )
+    }
+
     console.log('running fetch tokens')
     console.log(activeEthAddress != account)
   }, [activeEthAddress])

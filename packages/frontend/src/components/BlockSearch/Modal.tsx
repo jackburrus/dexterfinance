@@ -169,6 +169,7 @@ function ModalSearch() {
 
   useUpdateEffect(() => {
     setActive(0)
+    console.log(active)
   }, [query])
 
   useUpdateEffect(() => {
@@ -228,7 +229,7 @@ function ModalSearch() {
 
                 setQuery(e.target.value)
                 setDisplayBlockData(newArray)
-                // console.log(newArray)
+                console.log(newArray)
                 if (DisplayBlockData.length > 0) {
                   setActive(parseInt(newArray[0].index))
                 }
@@ -274,8 +275,8 @@ function ModalSearch() {
                       }}
                       onClick={() => {
                         modal.onClose()
-                        console.log(BlockData[active])
-                        console.log(blockList)
+                        // console.log(BlockData[active])
+                        // console.log(blockList)
                         addBlock(BlockData[active])
                       }}
                       //   ref={menuNodes.ref(index)}

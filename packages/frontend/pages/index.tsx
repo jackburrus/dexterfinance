@@ -182,8 +182,17 @@ function HomeIndex(): JSX.Element {
 
   //   // addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
   // }, [library])
+  // useEffect(() => {
+  //   if (networkName) {
+  //     console.log(networkName)
+  //   }
 
-  return networkName && networkName !== 'kovan' ? (
+  //   // addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
+  // }, [networkName])
+
+  return networkName &&
+    networkName !== 'kovan' &&
+    networkName !== 'homestead' ? (
     <Layout>
       <Alert
         status="warning"
@@ -200,25 +209,10 @@ function HomeIndex(): JSX.Element {
           Wrong Network
         </AlertTitle>
         <AlertDescription maxWidth="sm">
-          Dexter currently works on the Kovan Text Network. Please switch
+          Dexter currently works on the Kovan Test Network. Please switch
           networks for the best experience.
         </AlertDescription>
       </Alert>
-      {/* <Modal
-        isCentered
-        onClose={onClose}
-        isOpen={true}
-        motionPreset="slideInBottom"
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Wrong Network</ModalHeader>
-          <ModalBody>
-            Dexter currently works on the Kovan Text Network. Please switch
-            networks for the best experience.
-          </ModalBody>
-        </ModalContent>
-      </Modal> */}
     </Layout>
   ) : (
     <Layout>

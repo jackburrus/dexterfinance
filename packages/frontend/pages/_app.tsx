@@ -21,6 +21,7 @@ import '@fontsource/akronim'
 import '@fontsource/oxygen/700.css'
 const config: Config = {
   readOnlyUrls: {
+    [ChainId.Mainnet]: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEYMAINNET}`,
     [ChainId.Ropsten]: `https://ropsten.infura.io/v3/${INFURA_ID}`,
     [ChainId.Kovan]: `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`,
     [ChainId.Hardhat]: 'http://localhost:8545',
