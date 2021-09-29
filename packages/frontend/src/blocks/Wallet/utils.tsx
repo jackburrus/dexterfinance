@@ -1,5 +1,4 @@
 import { ethers } from '@usedapp/core/node_modules/ethers'
-import { useEthers, getChainName } from '@usedapp/core'
 
 const apiEndpoint = (networkName) =>
   networkName == 'kovan'
@@ -62,7 +61,7 @@ export const fetchTokens = async (
       // console.log(token.contractAddress)
       if (token.tokenBalance !== '0x') {
         const meta = await getTokenMetadata(token.contractAddress, provider)
-        console.log(meta)
+        // console.log(meta)
         if (
           meta.result &&
           token.tokenBalance &&
@@ -82,4 +81,41 @@ export const fetchTokens = async (
   }
 
   return []
+}
+
+const transactionApiEndpoint = (networkName, activeEthAddress) =>
+  networkName == 'kovan'
+    ? `https://api-kovan.etherscan.io/api?module=account&action=txlist&address=${activeEthAddress}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${process.env.Etherscan}`
+    : `https://api.etherscan.io/api?module=account&action=txlist&address=${activeEthAddress}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${process.env.Etherscan}`
+
+export const fetchTransactions = async (
+  provider: ethers.providers.JsonRpcProvider,
+  setTransactionList: any,
+  activeEthAddress: string
+) => {
+  const networkName = (await provider.getNetwork()).name
+  try {
+    const response = await fetch(
+      transactionApiEndpoint(networkName, activeEthAddress),
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
+    console.log(response)
+    const transactions = await response.json()
+    transactions.result
+      .slice(0)
+      .reverse()
+      .map(async (tx) => {
+        const txdata = await provider.getTransaction(tx.hash)
+        setTransactionList((prevArray) => [
+          ...prevArray,
+          Object.assign({}, tx, txdata.value),
+        ])
+      })
+    // console.log(transactions)
+  } catch (error) {
+    console.log(error)
+  }
 }

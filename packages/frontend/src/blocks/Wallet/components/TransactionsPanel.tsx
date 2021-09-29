@@ -8,6 +8,7 @@ import { useEthers } from '@usedapp/core'
 import { ethers } from '@usedapp/core/node_modules/ethers'
 import React, { useEffect, useState } from 'react'
 import { openInNewTab } from 'src/blocks/NFT/NFTTypes/BAYC'
+import { fetchTransactions } from '../utils'
 import { PanelComponent } from './AssetsPanel'
 
 interface Props {
@@ -20,25 +21,6 @@ const getTransactionRow = (tx, activeEthAddress) => {
       <Text color={'white'}>Receive: {tx.to}</Text>
     </Box>
   )
-
-  //   console.log(tx)
-  //   switch (tx) {
-  //     case tx:
-  //   return (
-  //     <Box flex={1}>
-  //       <Text color={'white'}>Receive: {tx.to}</Text>
-  //     </Box>
-  //   )
-
-  //     case tx.from == activeEthAddress:
-  //       return <Text color={'white'}>Send: {tx.to}</Text>
-  //     default:
-  //       return (
-  //         <Box flex={1}>
-  //           <Text color={'white'}>Receive: {tx.to}</Text>
-  //         </Box>
-  //       )
-  //   }
 }
 
 const TransactionsPanel = (props: Props) => {
@@ -46,46 +28,13 @@ const TransactionsPanel = (props: Props) => {
   const { colorMode } = useColorMode()
   const [transactionList, setTransactionList] = useState([])
   const { library } = useEthers()
-  async function fetchTransactions() {
-    try {
-      const response = await fetch(
-        `https://api-kovan.etherscan.io/api?module=account&action=txlist&address=${activeEthAddress}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${process.env.Etherscan}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-        }
-      )
-      const transactions = await response.json()
-      transactions.result
-        .slice(0)
-        .reverse()
-        .map(async (tx) => {
-          const txdata = await library.getTransaction(tx.hash)
-          setTransactionList((prevArray) => [
-            ...prevArray,
-            Object.assign({}, tx, txdata.value),
-          ])
-        })
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   useEffect(() => {
-    fetchTransactions()
-    console.log('running transactions')
-  }, [activeEthAddress])
+    fetchTransactions(library, setTransactionList, activeEthAddress)
+  }, [activeEthAddress, library])
   return !transactionList ? null : (
     <PanelComponent {...props}>
       {transactionList.map((tx) => {
-        // console.log(
-        //   ethers.utils.defaultAbiCoder.decode(
-        //     ['bytes', 'string'],
-        //     hexDataSlice(tx.hash, 4)
-        //   )
-        // )
-        // console.log(tx)
-        // ethers.utils.parseTransaction(tx.hash)
         if (
           tx.to.toLowerCase() === activeEthAddress.toLowerCase() &&
           tx.value !== '0'
