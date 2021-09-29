@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form'
 import { ethers } from 'ethers'
 import { Alert, AlertIcon, AlertTitle } from '@chakra-ui/alert'
 import { AlertDialogInvalidAddress } from './components/AlertDialog'
+import { useEthers } from '@usedapp/core'
 interface Props {}
 const ACTION_KEY_DEFAULT = ['Ctrl', 'Control']
 const ACTION_KEY_APPLE = ['⌘', 'Command']
@@ -31,6 +32,7 @@ export const EthAddressInput = (props: Props) => {
   const [actionKey, setActionKey] = React.useState<string[]>(ACTION_KEY_APPLE)
   const { colorMode } = useColorMode()
   const [validAddressModalOpen, setValidAddressOpenStatus] = useState(false)
+  const { account, chainId, library } = useEthers()
   // React.useEffect(() => {
   //   if (typeof navigator === 'undefined') return
   //   const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
@@ -39,9 +41,20 @@ export const EthAddressInput = (props: Props) => {
   //   }
   // }, [])
 
+  const resolveENSName = async (name, setActiveEthAddress) => {
+    const address = await library.resolveName(name)
+    setActiveEthAddress(address)
+  }
+
   const onSubmit = ({ ethAddress }) => {
-    setActiveEthAddress(ethAddress)
-    console.log(activeEthAddress)
+    console.log(ethAddress)
+    if (ethAddress.includes('.eth')) {
+      resolveENSName(ethAddress, setActiveEthAddress)
+    } else {
+      setActiveEthAddress(ethAddress)
+    }
+
+    // console.log(activeEthAddress)
   }
 
   return (
