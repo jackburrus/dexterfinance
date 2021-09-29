@@ -209,8 +209,8 @@ function HomeIndex(): JSX.Element {
           Wrong Network
         </AlertTitle>
         <AlertDescription maxWidth="sm">
-          Dexter currently works on the Kovan Test Network. Please switch
-          networks for the best experience.
+          Dexter currently works on Mainnet and the Kovan Test Network. Please
+          switch networks for the best experience.
         </AlertDescription>
       </Alert>
     </Layout>

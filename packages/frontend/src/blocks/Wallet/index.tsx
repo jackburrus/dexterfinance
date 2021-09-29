@@ -64,7 +64,8 @@ const Wallet = (props) => {
     if (activeEthAddress) {
       getEnsName(activeEthAddress)
     }
-  }, [library])
+    console.log('running')
+  }, [library, chainId])
 
   const getBal = async (address) => {
     // If account balance is 1 ETH
