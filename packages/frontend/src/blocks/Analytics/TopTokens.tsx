@@ -18,9 +18,10 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useSortBy, useTable } from 'react-table'
 
 import { formatDollarAmount } from 'src/utils/numbers'
-import { useDataClient } from './hooks/useClient'
+import { useDataClient } from './useClient'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { CryptoIcon } from '@components/CryptoIcon'
+import { TopTokenProps, TopTokensResponse } from './types'
 
 const getPercentChange = (
   valueNow: string | undefined,
@@ -56,18 +57,6 @@ const TOP_TOKENS = gql`
     }
   }
 `
-
-interface TopTokensResponse {
-  tokens: {
-    id: string
-    name: string
-    symbol: string
-  }[]
-}
-
-interface TopTokenProps {
-  selectedProtocol: string
-}
 
 const TopTokens: React.FC<TopTokenProps> = (props) => {
   const { selectedProtocol } = props

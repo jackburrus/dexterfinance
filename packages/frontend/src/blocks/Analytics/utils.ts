@@ -3,8 +3,8 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import gql from 'graphql-tag'
-import { ApolloClient, NormalizedCacheObject, useQuery } from '@apollo/client'
-import { unixToDate } from '..'
+import { unixToDate } from '.'
+import { ChartDayData } from './types'
 dayjs.extend(utc)
 dayjs.extend(weekOfYear)
 

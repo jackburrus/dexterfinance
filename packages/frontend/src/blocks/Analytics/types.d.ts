@@ -26,7 +26,7 @@ export interface BarChartProps {
   setValue: (n: string) => void
   setParsedDate: (s: string) => void
   latestPrice: number
-  setLatestPrice: () => void
+  setLatestPrice: Dispatch<SetStateAction<string | undefined>>
   selectedProtocol: string
 }
 
@@ -35,10 +35,27 @@ export type LineChartProps = {
   latestPrice: string
   setValue?: Dispatch<SetStateAction<string | undefined>>
   setParsedDate?: Dispatch<SetStateAction<string | undefined>>
+  parsedDate: string
   selectedProtocol: string
 } & React.HTMLAttributes<HTMLDivElement>
 
 export interface ProtocolDropDownTypes {
-  onProtocolChange: () => void
+  onProtocolChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   selectedProtocol: string
+}
+
+export interface TopTokensResponse {
+  tokens: {
+    id: string
+    name: string
+    symbol: string
+  }[]
+}
+
+export interface TopTokenProps {
+  selectedProtocol: string
+}
+
+export interface AnalyticsBlockTypes {
+  uuid: string
 }

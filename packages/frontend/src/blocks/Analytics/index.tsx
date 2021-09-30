@@ -1,4 +1,3 @@
-import { gql, useQuery } from '@apollo/client'
 import { Box, Flex } from '@chakra-ui/layout'
 import { Select } from '@chakra-ui/react'
 import CloseButton from '@components/CloseButton'
@@ -8,7 +7,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { useEffect, useState } from 'react'
 import { formatDollarAmount } from 'src/utils/numbers'
 import BarChart from './BarChart'
-import { useDataClient } from './hooks/useClient'
+import { useDataClient } from './useClient'
 import LineChart from './LineChart'
 import ProtocolDropDown from './ProtocolDropDown'
 import TopTokens from './TopTokens'
@@ -16,6 +15,9 @@ import { formatChartData } from './utils'
 import ValueAndDate from './ValueAndDate'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { CustomBox } from '@components/CustomBox'
+import { AnalyticsBlockTypes } from './types'
+import { SushiswapQuery, UniswapQuery } from './queries'
+import { SushiswapDataOptions, UniswapDataOptions } from './constants'
 
 export function unixToDate(unix: number, format = 'YYYY-MM-DD'): string {
   return dayjs.unix(unix).utc().format(format)
@@ -24,84 +26,9 @@ export function unixToDate(unix: number, format = 'YYYY-MM-DD'): string {
 dayjs.extend(utc)
 dayjs.extend(weekOfYear)
 
-const UniswapQuery = gql`
-  query uniswapDayDatas($startTime: Int!) {
-    uniswapDayDatas(
-      first: 1000
-      where: { date_gt: $startTime }
-      orderBy: date
-      orderDirection: asc
-    ) {
-      id
-      date
-      volumeUSD
-      tvlUSD
-    }
-  }
-`
-
-const SushiswapQuery = gql`
-  query uniswapDayDatas($startTime: Int!) {
-    uniswapDayDatas(
-      first: 1000
-      where: { date_gt: $startTime }
-      orderBy: date
-      orderDirection: asc
-    ) {
-      id
-      date
-      totalVolumeUSD
-      dailyVolumeUSD
-      dailyVolumeETH
-      totalLiquidityUSD
-      totalLiquidityETH
-    }
-  }
-`
-
 const startTimestamp = 1619170975
 
-const UniswapDataOptions = [
-  {
-    id: 0,
-    dataType: 'Total Volume Locked',
-    abbreviation: 'TVL',
-  },
-  {
-    id: 1,
-    dataType: 'Volume 24H',
-    abbreviation: 'VOL',
-  },
-  {
-    id: 2,
-    dataType: 'Top Tokens',
-    abbreviation: 'TPTK',
-  },
-]
-
-const SushiswapDataOptions = [
-  {
-    id: 0,
-    dataType: 'Liquidity',
-    abbreviation: 'LQT',
-  },
-  {
-    id: 1,
-    dataType: 'Volume 24H',
-    abbreviation: 'VOL',
-  },
-  {
-    id: 2,
-    dataType: 'Top Tokens',
-    abbreviation: 'TPTK',
-  },
-]
-
-const AnalyticsBlock = ({ uuid }) => {
-  const { loading, error, data } = useQuery(UniswapQuery, {
-    variables: { startTime: startTimestamp },
-  })
-
+const AnalyticsBlock: React.FC<AnalyticsBlockTypes> = ({ uuid }) => {
   const [chartData, setChartData] = useState(null)
   const [latestPrice, setLatestPrice] = useState(null)
   const [value, setValue] = useState<string | undefined>(
@@ -146,16 +73,17 @@ const AnalyticsBlock = ({ uuid }) => {
     }
   }
 
-  useEffect(() => {
-    const getData = async () => {
-      const result = await client.query({
-        query: selectedProtocol == 'Uniswap' ? UniswapQuery : SushiswapQuery,
-        variables: { startTime: startTimestamp },
-        fetchPolicy: 'cache-first',
-      })
+  const getData = async () => {
+    const result = await client.query({
+      query: selectedProtocol == 'Uniswap' ? UniswapQuery : SushiswapQuery,
+      variables: { startTime: startTimestamp },
+      fetchPolicy: 'cache-first',
+    })
 
-      return result
-    }
+    return result
+  }
+
+  useEffect(() => {
     getData().then((res) => {
       if (selectedProtocol === 'Uniswap') {
         const newChartData = formatChartData(res['data'], 'tvlUSD', 'volumeUSD')
@@ -173,9 +101,10 @@ const AnalyticsBlock = ({ uuid }) => {
     })
 
     changeSelectedDataTypes(selectedProtocol)
+    console.log('running')
   }, [selectedProtocol])
 
-  const handleProtocolChange = (e) => {
+  const handleProtocolChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedProtocol(e.target.value)
   }
 
