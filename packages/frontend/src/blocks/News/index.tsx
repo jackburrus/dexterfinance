@@ -1,125 +1,20 @@
-import { Box, Center, Divider, Flex, Heading, Text } from '@chakra-ui/layout'
-import React, { useState, useEffect } from 'react'
-import {
-  List,
-  ListItem,
-  ListIcon,
-  OrderedList,
-  UnorderedList,
-  Spinner,
-} from '@chakra-ui/react'
-import Image from 'next/image'
-import { openInNewTab } from '../NFT/NFTTypes/BAYC'
+import { useColorMode } from '@chakra-ui/color-mode'
+import { Box, Center, Divider, Heading } from '@chakra-ui/layout'
+import { List, Spinner } from '@chakra-ui/react'
 import CloseButton from '@components/CloseButton'
 import { CustomBox } from '@components/CustomBox'
-import { useColorMode } from '@chakra-ui/color-mode'
-interface Props {}
+import React, { useEffect, useState } from 'react'
+import { fetchNews } from './helpers'
+import { NewsArticleCard } from './NewsTitleCard'
+import { NewsBlockProps, NewsResponseType } from './types'
 
-const CryptoNewsIDs = [
-  {
-    id: 1,
-    coinID: 'ETH',
-    coinName: 'ethereum',
-  },
-  {
-    id: 2,
-    coinID: 'UNI',
-    coinName: 'uniswap',
-  },
-  {
-    id: 3,
-    coinID: 'SUSHI',
-    coinName: 'Ethereum',
-  },
-]
-
-interface NewsCardTypes {
-  title: string
-  image: string
-  categories: string
-  sourceURI: string
-}
-
-const NewsArticleCard = (props: NewsCardTypes) => {
-  const { title, image, categories, sourceURI } = props
-  const { colorMode } = useColorMode()
-  // console.log(categories)
-  // if (categories) {
-  //   const mainCategory = categories.split('|')[0]
-  //   console.log(mainCategory)
-  // }
-  const mainCategory = categories.split('|')[0]
-  return (
-    <Flex
-      style={{ cursor: 'pointer' }}
-      as={'a'}
-      mt={2}
-      mb={5}
-      onClick={() => openInNewTab(sourceURI)}
-    >
-      <Box
-        w="75px"
-        maxWidth="75px"
-        minWidth="75px"
-        h="75px"
-        mr={5}
-        position={'relative'}
-        // border={'1px solid red'}
-        display="flex"
-        borderRadius={'2xl'}
-        overflow={'hidden'}
-      >
-        <Image src={image} layout={'fill'} objectFit="contain" />
-      </Box>
-      <Box
-        // border={'1px solid red'}
-        display={'flex'}
-        flexDirection="column"
-        // alignItems="center"
-        justifyContent="center"
-      >
-        <Text
-          color={colorMode == 'light' ? 'black' : 'GrayText'}
-          fontSize="small"
-        >
-          {mainCategory}
-        </Text>
-        <Text
-          fontWeight={'semibold'}
-          color={colorMode == 'light' ? 'black' : 'GrayText'}
-        >
-          {title}
-        </Text>
-      </Box>
-    </Flex>
-  )
-}
-
-// TODO: #10 create news block with category options
-const NewsBlock = (props: Props) => {
-  const [newsFeed, setNewsFeed] = useState([])
-  const { colorMode } = useColorMode()
-
+const NewsBlock: React.FC<NewsBlockProps> = (props) => {
   const { uuid } = props
-  useEffect(() => {
-    if (CryptoNewsIDs) {
-      const url = `https://min-api.cryptocompare.com/data/v2/news/?lang=EN`
+  const [newsFeed, setNewsFeed] = useState<NewsResponseType[]>([])
+  const { colorMode } = useColorMode()
 
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          authorization: process.env.CryptoCompareKey,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log('Inside Fetch to STATUS_UPDATES: ', data)
-          const statusUpdates = data['Data']
-          setNewsFeed(statusUpdates)
-        })
-    }
+  useEffect(() => {
+    fetchNews(setNewsFeed)
   }, [])
 
   useEffect(() => {
@@ -139,14 +34,14 @@ const NewsBlock = (props: Props) => {
           Crypto News
         </Heading>
         {!newsFeed.length ? (
-          <Center flex={1}>
+          <Center flex={1} h={300}>
             <Spinner />
           </Center>
         ) : (
           <List ml={2} spacing={3}>
             {newsFeed.map((news) => {
               return (
-                <Box>
+                <Box key={news.id}>
                   <NewsArticleCard
                     title={news.title}
                     image={news.imageurl}
