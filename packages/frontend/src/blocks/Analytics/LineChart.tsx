@@ -1,4 +1,3 @@
-import { darken } from 'polished'
 import React, { Dispatch, ReactNode, SetStateAction } from 'react'
 import {
   Line,
@@ -8,7 +7,6 @@ import {
   XAxis,
 } from 'recharts'
 import { formatDollarAmount } from 'src/utils/numbers'
-const DEFAULT_HEIGHT = 300
 
 export type LineChartProps = {
   data: any[]
@@ -19,37 +17,21 @@ export type LineChartProps = {
   setValue?: Dispatch<SetStateAction<string | undefined>>
   setParsedDate?: Dispatch<SetStateAction<string | undefined>>
   setLabel?: Dispatch<SetStateAction<string | undefined>>
+  selectedProtocol: string
+  parsedDate: string
   topLeft?: ReactNode | undefined
   topRight?: ReactNode | undefined
   bottomLeft?: ReactNode | undefined
   bottomRight?: ReactNode | undefined
 } & React.HTMLAttributes<HTMLDivElement>
 
-const LineChart = ({
+const LineChart: React.FC<LineChartProps> = ({
   data,
-  color = '#56B2A4',
   latestPrice,
   setValue,
   setParsedDate,
-  setLabel,
-  topLeft,
-  topRight,
-  bottomLeft,
-  bottomRight,
-  height = DEFAULT_HEIGHT,
-  minHeight = DEFAULT_HEIGHT,
-  parsedDate,
   selectedProtocol,
-  ...rest
-}: LineChartProps): JSX.Element => {
-  const handleEnter = ({
-    isTooltipActive,
-    activePayload,
-    activeTooltipIndex,
-    activeLabel,
-  }) => {
-    // console.log(activePayload)
-  }
+}) => {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LChart
@@ -66,7 +48,7 @@ const LineChart = ({
           setValue(latestPrice)
           setParsedDate(null)
         }}
-        onMouseMove={(chartState, e) => {
+        onMouseMove={(chartState) => {
           if (chartState['isTooltipActive']) {
             const tvl = chartState['activePayload']['0']['payload']['tvlUSD']
 
@@ -77,19 +59,7 @@ const LineChart = ({
           }
         }}
       >
-        {/* <CartesianGrid strokeDasharray="3 3" /> */}
-        {/* <defs>
-        <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-          <stop
-            offset="5%"
-            stopColor={darken(0.36, '#82ca9d')}
-            stopOpacity={0.5}
-          />
-          <stop offset="100%" stopColor={'#82ca9d'} stopOpacity={0} />
-        </linearGradient>
-      </defs> */}
         <XAxis axisLine={false} tickLine={false} dataKey="parsedDay" />
-        {/* <YAxis /> */}
 
         <Tooltip cursor={false} contentStyle={{ display: 'none' }} />
 

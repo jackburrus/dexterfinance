@@ -7,7 +7,7 @@ interface Props {
   parsedDate: string
 }
 
-const ValueAndDate = (props: Props) => {
+const ValueAndDate: React.FC<Props> = (props) => {
   const { colorMode } = useColorMode()
 
   const { value, parsedDate } = props

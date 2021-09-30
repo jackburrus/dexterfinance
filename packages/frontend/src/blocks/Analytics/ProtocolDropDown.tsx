@@ -42,9 +42,7 @@ const ProtocolDropDown = ({ onProtocolChange, selectedProtocol }) => {
         fontSize="12px"
         height={30}
         variant="unstyled"
-        // placeholder={'Uniswap'}
         color={colorMode == 'light' ? 'grey' : 'white'}
-        // icon={}
       >
         <option value="Uniswap"> Uniswap</option>
 

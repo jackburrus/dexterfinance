@@ -1,24 +1,22 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import LineChart from '../LineChart'
 
 interface Props {
-  setValue: () => void
+  setValue: Dispatch<SetStateAction<string | undefined>>
   latestPrice: string
-  setParsedDate: () => void
-  parsedDate: string
+  setParsedDate: Dispatch<SetStateAction<string | undefined>>
+
   selectedProtocol: string
 }
 
 const MainChart: React.FC<Props> = (props) => {
-  const { setValue, latestPrice, setParsedDate, parsedDate, selectedProtocol } =
-    props
+  const { setValue, latestPrice, setParsedDate, selectedProtocol } = props
   return (
     <LineChart
       data={chartData['data']}
       setValue={setValue}
       latestPrice={latestPrice}
       setParsedDate={setParsedDate}
-      parsedDate={parsedDate}
       selectedProtocol={selectedProtocol}
     />
   )

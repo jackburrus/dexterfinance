@@ -20,14 +20,12 @@ import { formatDollarAmount } from 'src/utils/numbers'
 import { useDataClient } from './hooks/useClient'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { CryptoIcon } from '@components/CryptoIcon'
-// import { CryptoIcon } from '../Uniswap/CryptoIcon'
 
 const getPercentChange = (
   valueNow: string | undefined,
   value24HoursAgo: string | undefined
 ): number => {
   if (valueNow && value24HoursAgo) {
-    // console.log(valueNow, value24HoursAgo)
     const change =
       ((parseFloat(valueNow) - parseFloat(value24HoursAgo)) /
         parseFloat(value24HoursAgo)) *
@@ -56,19 +54,6 @@ const TOP_TOKENS = gql`
       }
     }
   }
-
-  #   query topPools {
-  #     tokens(
-  #       first: 50
-  #       orderBy: totalValueLockedUSD
-  #       orderDirection: desc
-  #       subgraphError: allow
-  #     ) {
-  #       id
-  #       name
-  #       symbol
-  #     }
-  #   }
 `
 
 interface TopTokensResponse {
@@ -87,7 +72,7 @@ const TopTokens = (props: Props) => {
   const { selectedProtocol } = props
   const { colorMode } = useColorMode()
   const client = useDataClient(selectedProtocol)
-  const { loading, error, data } = useQuery<TopTokensResponse>(TOP_TOKENS, {
+  const { data } = useQuery<TopTokensResponse>(TOP_TOKENS, {
     client: client,
     variables: {
       protocol:
@@ -104,12 +89,7 @@ const TopTokens = (props: Props) => {
 
         Cell: (props) => {
           return (
-            <Flex
-              // pl={2}
-              // ml={2}
-              align="flex-end"
-              justify="center"
-            >
+            <Flex align="flex-end" justify="center">
               <Text
                 fontWeight={'light'}
                 color={colorMode == 'light' ? 'black' : 'white'}
@@ -119,15 +99,12 @@ const TopTokens = (props: Props) => {
             </Flex>
           )
         },
-
-        // accessor is the "key" in the data
       },
       {
         Header: 'Name',
         accessor: 'name',
 
         Cell: (props) => {
-          // console.log(props)
           return (
             <Flex align="center" w={275}>
               <CryptoIcon iconSize={20} code={props.row.original.symbol} />
@@ -142,14 +119,13 @@ const TopTokens = (props: Props) => {
               </Text>
             </Flex>
           )
-        }, // accessor is the "key" in the data
+        },
       },
 
       {
         Header: 'Price',
         accessor: 'tokenDayData[0].priceUSD',
-        // Cell: (props) => <div>{parseInt(props.value).toFixed(2)}</div>,
-        // TODO: #3 add Chakra text component so this looks better on darkmode @jackburrus
+
         Cell: (props) => (
           <Text
             fontWeight={'light'}
@@ -162,7 +138,7 @@ const TopTokens = (props: Props) => {
       {
         Header: '% Change',
         accessor: 'tokenDayData',
-        // Cell: (props) => <div>{parseInt(props.value).toFixed(2)}</div>,
+
         Cell: (props) => {
           const percentageChange = getPercentChange(
             props.value[0].priceUSD,
@@ -189,20 +165,22 @@ const TopTokens = (props: Props) => {
       {
         Header: 'Volume',
         accessor: 'tokenDayData[0].volumeUSD',
-        // Cell: (props) => <div>{parseInt(props.value).toFixed(2)}</div>,
+
         Cell: (props) => <div>{formatDollarAmount(props.value)}</div>,
       },
       {
         Header: 'TVL',
         accessor: 'totalValueLockedUSD',
-        // Cell: (props) => <div>{parseInt(props.value).toFixed(2)}</div>,
+
         Cell: (props) => <div>{formatDollarAmount(props.value)}</div>,
       },
     ],
     [colorMode]
   )
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns: cols, data: tokens }, useSortBy)
+  const { getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
+    { columns: cols, data: tokens },
+    useSortBy
+  )
 
   useEffect(() => {
     if (data) {
@@ -218,7 +196,6 @@ const TopTokens = (props: Props) => {
     <Flex
       variant="simple"
       height={'400px'}
-      // border={'1px solid cyan'}
       overflowY="scroll"
       overflowX={'auto'}
     >
@@ -229,9 +206,7 @@ const TopTokens = (props: Props) => {
               {headerGroup.headers.map((column) => {
                 console.log(column)
                 return (
-                  // eslint-disable-next-line react/jsx-key
                   <Th
-                    // position="sticky"
                     top={0}
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     flexDirection={'row'}
@@ -267,15 +242,12 @@ const TopTokens = (props: Props) => {
         </Thead>
         <Tbody {...getTableBodyProps()}>
           {rows.map((row) => {
-            // console.log(row)
             prepareRow(row)
             return (
-              // eslint-disable-next-line react/jsx-key
               <Tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   console.log(cell)
                   return (
-                    // eslint-disable-next-line react/jsx-key
                     <Td
                       style={{
                         paddingRight: cell.column.Header === '#' ? '0px' : null,

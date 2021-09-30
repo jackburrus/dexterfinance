@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   BarChart as BChart,
   Bar,
-  Cell,
   XAxis,
-  YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts'
 import { formatDollarAmount } from 'src/utils/numbers'
