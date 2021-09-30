@@ -1,9 +1,8 @@
 import { useBlocks } from '@recoil/hooks/useBlocks'
-import { ChainId, useEthers, useSendTransaction } from '@usedapp/core'
-import { providers, utils } from 'ethers'
+import { useEthers, useSendTransaction } from '@usedapp/core'
+import { providers } from 'ethers'
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import Wallet from 'src/blocks/Wallet'
-import { YourContract as LOCAL_CONTRACT_ADDRESS } from '../artifacts/contracts/contractAddress'
 import { Layout } from '../src/components/layout/Layout'
 import {
   GridContextProvider,
@@ -102,7 +101,7 @@ const getBlockType = (block: BlockType, provided): JSX.Element => {
     case 'Uniswap':
       return <UniswapBlock provided={provided} uuid={block.uuid} />
     case 'NFTStorage':
-      return <NFTStorage />
+      return <NFTStorage uuid={block.uuid} />
 
     default:
       return null
