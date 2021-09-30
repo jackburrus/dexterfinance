@@ -18,5 +18,6 @@ module.exports = {
     ALCHEMYAPIKEY: process.env.ALCHEMYAPIKEY,
     ALCHEMYAPIKEYMAINNET: process.env.ALCHEMYAPIKEYMAINNET,
     Etherscan: process.env.Etherscan,
+    NFTStorage: process.env.NFTStorage,
   },
 }

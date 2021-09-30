@@ -14,7 +14,8 @@ export const fetchNews = async (
       'Content-Type': 'application/json',
     },
   })
-  const dataJson = data.json()['Data']
 
-  setNewsFeed(dataJson)
+  const dataJson = await data.json()
+
+  setNewsFeed(dataJson['Data'])
 }
