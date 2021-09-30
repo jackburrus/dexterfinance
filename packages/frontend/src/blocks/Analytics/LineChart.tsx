@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactNode, SetStateAction } from 'react'
+import React from 'react'
 import {
   Line,
   LineChart as LChart,
@@ -7,23 +7,7 @@ import {
   XAxis,
 } from 'recharts'
 import { formatDollarAmount } from 'src/utils/numbers'
-
-export type LineChartProps = {
-  data: any[]
-  latestPrice: string
-  color?: string | undefined
-  height?: number | undefined
-  minHeight?: number
-  setValue?: Dispatch<SetStateAction<string | undefined>>
-  setParsedDate?: Dispatch<SetStateAction<string | undefined>>
-  setLabel?: Dispatch<SetStateAction<string | undefined>>
-  selectedProtocol: string
-  parsedDate: string
-  topLeft?: ReactNode | undefined
-  topRight?: ReactNode | undefined
-  bottomLeft?: ReactNode | undefined
-  bottomRight?: ReactNode | undefined
-} & React.HTMLAttributes<HTMLDivElement>
+import { LineChartProps } from './types'
 
 const LineChart: React.FC<LineChartProps> = ({
   data,

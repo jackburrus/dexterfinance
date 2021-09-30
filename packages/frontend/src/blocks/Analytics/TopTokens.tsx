@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useSortBy, useTable } from 'react-table'
+
 import { formatDollarAmount } from 'src/utils/numbers'
 import { useDataClient } from './hooks/useClient'
 import { useColorMode } from '@chakra-ui/color-mode'
@@ -64,11 +65,11 @@ interface TopTokensResponse {
   }[]
 }
 
-interface Props {
+interface TopTokenProps {
   selectedProtocol: string
 }
 
-const TopTokens = (props: Props) => {
+const TopTokens: React.FC<TopTokenProps> = (props) => {
   const { selectedProtocol } = props
   const { colorMode } = useColorMode()
   const client = useDataClient(selectedProtocol)
@@ -203,10 +204,11 @@ const TopTokens = (props: Props) => {
         <Thead>
           {headerGroups.map((headerGroup, index) => (
             <Tr key={index} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => {
+              {headerGroup.headers.map((column, index) => {
                 console.log(column)
                 return (
                   <Th
+                    key={index}
                     top={0}
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                     flexDirection={'row'}

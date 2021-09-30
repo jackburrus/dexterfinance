@@ -248,8 +248,8 @@ const AnalyticsBlock = ({ uuid }) => {
             />
           )
         } else if (
-          (activeDataType == 'Total Volume Locked') |
-          (activeDataType == 'Liquidity')
+          activeDataType == 'Total Volume Locked' ||
+          activeDataType == 'Liquidity'
         ) {
           return (
             <LineChart

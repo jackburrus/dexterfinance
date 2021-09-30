@@ -3,8 +3,12 @@ import { Box, Flex } from '@chakra-ui/layout'
 import { Select } from '@chakra-ui/select'
 import Image from 'next/image'
 import React from 'react'
+import { ProtocolDropDownTypes } from './types'
 
-const ProtocolDropDown = ({ onProtocolChange, selectedProtocol }) => {
+const ProtocolDropDown: React.FC<ProtocolDropDownTypes> = ({
+  onProtocolChange,
+  selectedProtocol,
+}) => {
   const { colorMode } = useColorMode()
   return (
     <Box
