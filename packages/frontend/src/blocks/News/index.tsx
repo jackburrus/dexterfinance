@@ -17,9 +17,6 @@ const NewsBlock: React.FC<NewsBlockProps> = (props) => {
     fetchNews(setNewsFeed)
   }, [])
 
-  useEffect(() => {
-    console.log(newsFeed)
-  }, [newsFeed])
   return !newsFeed ? null : (
     <CustomBox>
       <Box overflowX="hidden" overflowY="scroll" padding={2}>

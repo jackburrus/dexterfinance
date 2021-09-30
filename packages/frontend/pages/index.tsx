@@ -1,22 +1,10 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Heading,
-  Input,
-  Text,
-  Flex,
-  Center,
-} from '@chakra-ui/react'
 import { useBlocks } from '@recoil/hooks/useBlocks'
 import { ChainId, useEthers, useSendTransaction } from '@usedapp/core'
-import { ethers, providers, utils } from 'ethers'
+import { providers, utils } from 'ethers'
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import Wallet from 'src/blocks/Wallet'
 import { YourContract as LOCAL_CONTRACT_ADDRESS } from '../artifacts/contracts/contractAddress'
-import YourContract from '../artifacts/contracts/YourContract.sol/YourContract.json'
 import { Layout } from '../src/components/layout/Layout'
-import { YourContract as YourContractType } from '../types/typechain'
 import {
   GridContextProvider,
   GridDropZone,
@@ -30,22 +18,13 @@ import {
   AlertDescription,
 } from '@chakra-ui/react'
 import { Size, useWindowSize } from 'src/hooks/useWindowSize'
-import process from 'process'
 import NFTBlock from 'src/blocks/NFT'
 import AnalyticsBlock from 'src/blocks/Analytics'
 import NewBlock from 'src/blocks/News'
 import UniswapBlock from 'src/blocks/Uniswap'
 import FileDropZone from '@components/FileDropZone'
 import { useDisclosure } from '@chakra-ui/hooks'
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from '@chakra-ui/react'
+import NFTStorage from 'src/blocks/NFT.Storage'
 /**
  * Constants & Helpers
  */
@@ -122,6 +101,8 @@ const getBlockType = (block: BlockType, provided): JSX.Element => {
       return <NewBlock provided={provided} uuid={block.uuid} />
     case 'Uniswap':
       return <UniswapBlock provided={provided} uuid={block.uuid} />
+    case 'NFTStorage':
+      return <NFTStorage />
 
     default:
       return null
@@ -131,22 +112,13 @@ const getBlockType = (block: BlockType, provided): JSX.Element => {
 function HomeIndex(): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState)
   const { account, chainId, library } = useEthers()
-  const [blockList, { addBlock, removeBlock, clearAllBlocks, moveBlocks }] =
-    useBlocks()
+  const [blockList, { moveBlocks }] = useBlocks()
   const [networkName, setNetworkName] = useState(null)
   const size: Size = useWindowSize()
   const { isOpen, onOpen, onClose } = useDisclosure()
   // const url = `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`
 
   // const customHttpProvider = new ethers.providers.AlchemyProvider
-
-  const isLocalChain =
-    chainId === ChainId.Localhost || chainId === ChainId.Hardhat
-
-  const CONTRACT_ADDRESS =
-    chainId === ChainId.Ropsten
-      ? ROPSTEN_CONTRACT_ADDRESS
-      : LOCAL_CONTRACT_ADDRESS
 
   // Use the localProvider as the signer to send ETH to our wallet
   const { sendTransaction } = useSendTransaction({
@@ -164,12 +136,6 @@ function HomeIndex(): JSX.Element {
     }
   }, [networkName, fetchNetworkName, library])
 
-  function sendFunds(): void {
-    sendTransaction({
-      to: account,
-      value: utils.parseEther('0.1'),
-    })
-  }
   function onChange(sourceId, sourceIndex, targetIndex, targetId) {
     const nextState = swap(blockList, sourceIndex, targetIndex)
     moveBlocks(nextState)
