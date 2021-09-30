@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client'
 import { Box, Flex } from '@chakra-ui/layout'
-import { Select, Text } from '@chakra-ui/react'
+import { Select } from '@chakra-ui/react'
 import CloseButton from '@components/CloseButton'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -97,7 +97,7 @@ const SushiswapDataOptions = [
   },
 ]
 
-const AnalyticsBlock = ({ provided, uuid }) => {
+const AnalyticsBlock = ({ uuid }) => {
   const { loading, error, data } = useQuery(UniswapQuery, {
     variables: { startTime: startTimestamp },
   })
@@ -123,12 +123,6 @@ const AnalyticsBlock = ({ provided, uuid }) => {
       )
     )
 
-    // console.log('hello')
-    // console.log(
-    //   formatDollarAmount(
-    //     newChartData['data'][newChartData['data'].length - 1]['VolumeUSD']
-    //   )
-    // )
     setLatestPrice(
       formatDollarAmount(
         newChartData['data'][newChartData['data'].length - 1]['tvlUSD']
@@ -144,7 +138,6 @@ const AnalyticsBlock = ({ provided, uuid }) => {
         setProtocolDataOptions(UniswapDataOptions)
         break
       case 'Sushiswap':
-        // console.log(SushiswapDataOptions)
         setProtocolDataOptions(SushiswapDataOptions)
         break
       default:
@@ -164,10 +157,9 @@ const AnalyticsBlock = ({ provided, uuid }) => {
       return result
     }
     getData().then((res) => {
-      // console.log(res)
       if (selectedProtocol === 'Uniswap') {
         const newChartData = formatChartData(res['data'], 'tvlUSD', 'volumeUSD')
-        // console.log(newChartData)
+
         setNewChartData(newChartData)
       } else if (selectedProtocol === 'Sushiswap') {
         const newChartData = formatChartData(
@@ -175,17 +167,13 @@ const AnalyticsBlock = ({ provided, uuid }) => {
           'totalLiquidityUSD',
           'dailyVolumeUSD'
         )
-        // console.log(newChartData)
+
         setNewChartData(newChartData)
       }
     })
 
     changeSelectedDataTypes(selectedProtocol)
   }, [selectedProtocol])
-
-  const handleChange = (e) => {
-    console.log(e)
-  }
 
   const handleProtocolChange = (e) => {
     setSelectedProtocol(e.target.value)
@@ -216,7 +204,6 @@ const AnalyticsBlock = ({ provided, uuid }) => {
         pl={15}
         borderRadius={'3xl'}
       >
-        {/* <DataTypeSelector /> */}
         <Flex ml={15}>
           <Select
             onChange={handleDataTypeChange}
@@ -280,26 +267,6 @@ const AnalyticsBlock = ({ provided, uuid }) => {
           return <div style={{ color: 'white' }}>catch all</div>
         }
       })()}
-
-      {/* {activeDataType === 'Volume 24H' ? (
-        <BarChart
-          data={chartData['data']}
-          setValue={setValue}
-          setParsedDate={setParsedDate}
-          latestPrice={latestPrice}
-          setLatestPrice={setLatestPrice}
-          selectedProtocol={selectedProtocol}
-        />
-      ) : (
-        <LineChart
-          data={chartData['data']}
-          setValue={setValue}
-          latestPrice={latestPrice}
-          setParsedDate={setParsedDate}
-          parsedDate={parsedDate}
-          selectedProtocol={selectedProtocol}
-        />
-      )} */}
     </CustomBox>
   )
 }

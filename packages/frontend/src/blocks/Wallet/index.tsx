@@ -1,38 +1,19 @@
-import { Box, Center, Flex, Text } from '@chakra-ui/layout'
+import { Box, Flex, Text } from '@chakra-ui/layout'
 import { CryptoIcon } from '@components/CryptoIcon'
 import { formatEther } from '@ethersproject/units'
-import {
-  useBlockNumber,
-  useConfig,
-  useEtherBalance,
-  useEthers,
-} from '@usedapp/core'
-import { ethers, BigNumber } from '@usedapp/core/node_modules/ethers'
-import { utils } from 'ethers'
+import { useEtherBalance, useEthers } from '@usedapp/core'
+import { ethers } from '@usedapp/core/node_modules/ethers'
 import React, { useEffect, useState } from 'react'
-import { BsDot } from 'react-icons/bs'
-import { useQuery } from 'react-query'
-import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  Spinner,
-} from '@chakra-ui/react'
+import { Tabs, TabList, TabPanels, Tab } from '@chakra-ui/react'
 import EthAddressInput from './EthAddressInput'
 import { truncateHash } from '@components/layout/Layout'
-import { getTokenMetadata } from './utils'
-import TokenAssetRow from './components/TokenAssetRow'
 import AssetsPanel from './components/AssetsPanel'
 import TransactionsPanel from './components/TransactionsPanel'
 import CloseButton from '@components/CloseButton'
 import { CustomBox } from '@components/CustomBox'
-// import hre, { ethers } from 'hardhat'
-interface Props {}
 
 const Wallet = (props) => {
-  const { provided, uuid } = props
+  const { uuid } = props
   const [walletAmount, setWalletAmount] = useState(null)
 
   const { account, chainId, library } = useEthers()
@@ -40,7 +21,6 @@ const Wallet = (props) => {
   const etherBalance = useEtherBalance(account)
   const [updatedEtherBlanace, setUpdatedEtherBalance] = useState(null)
   const [USDValue, setUSDValue] = useState(null)
-  const config = useConfig()
   const [activeEthAddress, setActiveEthAddress] = useState(null)
   const [ensName, setEnsName] = useState(null)
 
@@ -119,10 +99,11 @@ const Wallet = (props) => {
               : null}
           </Text>
         </Box>
-        <CryptoIcon code={'Eth'} />
 
+        <CryptoIcon code={'Eth'} />
+        {ensName ? <Text mt={'1'}>{ensName}</Text> : null}
         {etherBalance && (
-          <Box mt={'1'} align={'center'}>
+          <Box align={'center'}>
             <Text fontSize={'xl'}>Balance</Text>
             <Text fontSize={'2xl'}>
               {updatedEtherBlanace

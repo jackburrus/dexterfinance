@@ -9,13 +9,9 @@ const client = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {
       Token: {
-        // Singleton types that have no identifying field can use an empty
-        // array for their keyFields.
         keyFields: false,
       },
       Pool: {
-        // Singleton types that have no identifying field can use an empty
-        // array for their keyFields.
         keyFields: false,
       },
     },
@@ -37,13 +33,9 @@ export const sushiClient = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {
       Token: {
-        // Singleton types that have no identifying field can use an empty
-        // array for their keyFields.
         keyFields: false,
       },
       Pool: {
-        // Singleton types that have no identifying field can use an empty
-        // array for their keyFields.
         keyFields: false,
       },
     },
@@ -60,7 +52,6 @@ export const sushiClient = new ApolloClient({
   },
 })
 
-// get the apollo client related to the active network
 export function useDataClient(
   protocol: string
 ): ApolloClient<NormalizedCacheObject> {
