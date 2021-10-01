@@ -1243,6 +1243,11 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@dynamicss/dynamicss@^2.0.3":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@dynamicss/dynamicss/-/dynamicss-2.1.0.tgz#57dc1f101b7bb235031dde330a7979451f887c85"
+  integrity sha512-3yLQhdjAjJrd9sC/VF4FnLr6NEtPOdRJ4xz0OuFl+OpaGQDccSf4UxhC8FpY/81g3hDGA1DagIsIUYj1diGtyQ==
+
 "@emotion/babel-plugin@^11.0.0", "@emotion/babel-plugin@^11.3.0":
   version "11.3.0"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.3.0.tgz#3a16850ba04d8d9651f07f3fb674b3436a4fb9d7"
@@ -3994,6 +3999,19 @@
     "@openzeppelin/contracts" "3.4.1-solc-0.7-2"
     "@uniswap/v3-core" "1.0.0"
     "@uniswap/v3-periphery" "^1.0.1"
+
+"@unlimited-react-components/kernel@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@unlimited-react-components/kernel/-/kernel-1.0.2.tgz#e3e51f91583deae0ee41a48c7f5be40f9bd38ca0"
+  integrity sha512-yzTua10xjcLDOR/jMXdyPKjzsWDxsez6aE7QTFa16FtGqeU/jhBxzoxsopPJa+Lu3dtu4siSG6xIE52YLu7bZw==
+
+"@unlimited-react-components/material-button@^1.2.5":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@unlimited-react-components/material-button/-/material-button-1.2.6.tgz#12bdf37f7b16da905d5603c5291256599941e2b7"
+  integrity sha512-XRw844Al1Ejp20MMiOyiEzODARVyHKq6tQYGQjjQ+mQWcViq6r2Is4e2Rb/sEqplSW88ZAuCEAwDEqvJZo44JQ==
+  dependencies:
+    "@dynamicss/dynamicss" "^2.0.3"
+    "@unlimited-react-components/kernel" "^1.0.2"
 
 "@usedapp/core@^0.4.1":
   version "0.4.8"
@@ -7255,6 +7273,15 @@ downshift@^6.1.0:
     prop-types "^15.7.2"
     react-is "^17.0.2"
     tslib "^2.3.0"
+
+dropzone-ui@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/dropzone-ui/-/dropzone-ui-2.1.1.tgz#0f8b5a7a41b9eedd20897efd94063bad212b2ded"
+  integrity sha512-HrL4yEKmYOHNRTXMqwb6RpZ5Y3DaDT1Mh+qcdMZ7mTjfOZvieXtntM3Wi9EGMdVu+rSHI9sDPp6vaZ96pBeZYQ==
+  dependencies:
+    "@dynamicss/dynamicss" "^2.0.3"
+    "@unlimited-react-components/kernel" "^1.0.2"
+    "@unlimited-react-components/material-button" "^1.2.5"
 
 duplexer3@^0.1.4:
   version "0.1.4"
