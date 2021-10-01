@@ -61,13 +61,22 @@ const NFT_Storage = (props) => {
     <CustomBox>
       <CloseButton blockID={uuid} />
       <Center>
-        <Text color={'white'}>Storage</Text>
+        {/* <Text color={'white'}>Storage</Text> */}
         {/* <Image
           src={'/images/pinpie.jpeg'}
           layout={'fill'}
           objectFit="contain"
         /> */}
-        <Dropzone onChange={updateFiles} value={files}>
+        <Dropzone
+          color={'red'}
+          backgroundColor={'#181C20'}
+          style={{ border: '1px solid grey' }}
+          label={'Click or Drag a file to pin to ipfs'}
+          header={false}
+          footer={false}
+          onChange={updateFiles}
+          value={files}
+        >
           {files.map((file) => (
             <FileItem {...file} preview />
           ))}
