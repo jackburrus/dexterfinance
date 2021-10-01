@@ -71,14 +71,11 @@ const NFT_Storage = (props) => {
           backgroundColor={'#181C20'}
           color={'white'}
           style={{ borderRadius: '10px' }}
-          // style={{
-          //   backgroundImage: `url(${"data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23333' stroke-width='2' stroke-dasharray='15%2c 19' stroke-dashoffset='0' stroke-linecap='round'/%3e%3c/svg%3e"})`,
-          //   borderRadius: '10px',
-          //   padding: '20px',
-          //   display: 'inline-block',
-          // }}
-          label={'Click or Drag a file to pin to ipfs'}
-          header={false}
+          style={{
+            backgroundImage: `url(${"data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='black' stroke-width='2' stroke-dasharray='15%2c 19' stroke-dashoffset='0' stroke-linecap='round'/%3e%3c/svg%3e"})`,
+          }}
+          view={'list'}
+          // header={false}
           footer={false}
           onChange={updateFiles}
           value={files}
