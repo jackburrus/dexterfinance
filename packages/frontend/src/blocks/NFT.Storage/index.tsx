@@ -9,10 +9,12 @@ import Image from 'next/image'
 import { useColorMode } from '@chakra-ui/color-mode'
 
 import { IoFolderOpen } from 'react-icons/io5'
+import { CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons'
+import { openInNewTab } from '../NFT/NFTTypes/BAYC'
 const client = new NFTStorage({ token: process.env.NFTStorage })
 
 function shortUrl(url, l) {
-  var l = typeof l != 'undefined' ? l : 50
+  var l = typeof l != 'undefined' ? l : 35
   const chunk_l = l / 2
   var url = url.replace('http://', '').replace('https://', '')
 
@@ -73,9 +75,9 @@ const NFT_Storage = (props) => {
 
   useEffect(() => {
     // console.log(files[0]['file'])
+    setIpfsFiles([])
     if (files.length > 0) {
       files.map((file) => {
-        setIpfsFiles([])
         fetchData(file)
       })
     }
@@ -128,14 +130,39 @@ const NFT_Storage = (props) => {
       >
         {ipfsFiles.length > 0 ? (
           <List>
-            {ipfsFiles.map((file) => {
+            {ipfsFiles.map((file, index) => {
               return (
                 <Flex
-                  onClick={() => {
-                    navigator.clipboard.writeText(file.data.image.href)
-                  }}
+                  key={index}
+                  width={'400px'}
+                  justify="space-between"
+                  // border={'1px solid red'}
                 >
                   <Text>{shortUrl(file.data.image.href)}</Text>
+                  <Box
+                    width={'70px'}
+                    display={'flex'}
+                    // flex={1}
+                    alignItems="center"
+                    justifyContent="space-evenly"
+                    // border={'1px solid cyan'}
+                  >
+                    <CopyIcon
+                      as={'a'}
+                      // _hover={{
+                      //   transform: `scale(1.02)`,
+                      // }}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() =>
+                        navigator.clipboard.writeText(file.data.image.href)
+                      }
+                    />
+                    <ExternalLinkIcon
+                      as={'a'}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => openInNewTab(file.data.image.href)}
+                    />
+                  </Box>
                 </Flex>
               )
             })}
