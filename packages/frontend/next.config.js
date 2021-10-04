@@ -11,6 +11,7 @@ module.exports = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+
   images: {
     domains: ['https://ipfs.io', 'images.cryptocompare.com'],
   },

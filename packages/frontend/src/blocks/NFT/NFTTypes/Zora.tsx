@@ -3,7 +3,7 @@ import { Box, Flex, SimpleGrid } from '@chakra-ui/layout'
 import React from 'react'
 
 import { useEffect, useState } from 'react'
-import { NFTPreview, MediaConfiguration } from '@zoralabs/nft-components'
+
 import { openInNewTab } from './BAYC'
 import { Image } from '@chakra-ui/image'
 import { useNFTMetadata } from '@zoralabs/nft-hooks'
