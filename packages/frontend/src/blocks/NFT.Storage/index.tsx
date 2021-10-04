@@ -7,10 +7,11 @@ import { Dropzone, FileItem } from 'dropzone-ui'
 import { useDropzone } from 'react-dropzone'
 import Image from 'next/image'
 import { useColorMode } from '@chakra-ui/color-mode'
-
+import { Progress, Spinner } from '@chakra-ui/react'
 import { IoFolderOpen } from 'react-icons/io5'
 import { CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import { openInNewTab } from '../NFT/NFTTypes/BAYC'
+import { FaFile } from 'react-icons/fa'
 const client = new NFTStorage({ token: process.env.NFTStorage })
 
 function shortUrl(url, l) {
@@ -67,10 +68,12 @@ const NFT_Storage = (props) => {
     const metadata = await client.store({
       name: 'NFT',
       description: 'My NFT File!',
-      image: new File([file], 'mynft.jpeg', { type: 'image/jpeg' }),
+      image: new File([file], file.name, { type: file.type }),
     })
-    setIpfsFiles((oldArray) => [...oldArray, metadata])
-    console.log('metadata', metadata)
+    const newObj = Object.assign({}, metadata['data'], file)
+    console.log('newObj', newObj)
+    setIpfsFiles((oldArray) => [...oldArray, newObj])
+    // console.log('metadata', metadata)
   }
 
   useEffect(() => {
@@ -89,13 +92,69 @@ const NFT_Storage = (props) => {
     'or click to select files.',
   ]
 
+  const getFileIcon = (file) => {
+    const extension = file.path.split('.').pop()
+    switch (extension) {
+      case 'jpeg':
+        return (
+          <Box position="relative">
+            <FaFile color={'#4F96FF'} size={30}></FaFile>
+            <Text
+              position="absolute"
+              fontSize={6}
+              left={'8px'}
+              bottom={'8px'}
+              zIndex={100}
+              color="white"
+            >
+              JPEG
+            </Text>
+          </Box>
+        )
+        break
+      case 'png':
+        return (
+          <Box position="relative">
+            <FaFile color={'#FFAB01'} size={30}></FaFile>
+            <Text
+              position="absolute"
+              fontSize={6}
+              left={'8px'}
+              bottom={'8px'}
+              zIndex={100}
+              color="white"
+            >
+              PNG
+            </Text>
+          </Box>
+        )
+      default:
+        return (
+          <Box position="relative">
+            <FaFile color={'grey'} size={30}></FaFile>
+            <Text
+              position="absolute"
+              fontSize={6}
+              left={'8px'}
+              bottom={'8px'}
+              zIndex={100}
+              color="white"
+            >
+              File
+            </Text>
+          </Box>
+        )
+        break
+    }
+  }
+
   return (
     <CustomBox>
       <CloseButton blockID={uuid} />
       <Flex
         // border={'1px solid green'}
         direction={'column'}
-        justify="center"
+        // justify="center"
         align="center"
       >
         <Text
@@ -106,6 +165,7 @@ const NFT_Storage = (props) => {
         >
           Upload your files
         </Text>
+
         {/* <Image
           src={'/images/IPFS_Logo.png'}
           width={150}
@@ -116,53 +176,75 @@ const NFT_Storage = (props) => {
       <div
         {...getRootProps()}
         style={{
-          border: `1px dashed ${colorMode == 'light' ? '#5597FC' : 'white'} `,
+          border:
+            ipfsFiles.length > 0
+              ? null
+              : `1px dashed ${colorMode == 'light' ? '#5597FC' : 'white'} `,
           margin: '0 20px',
           height: '240px',
           marginLeft: '20px',
           marginRight: '20px',
           borderRadius: '20px',
+          paddingTop: '10px',
           display: 'flex',
-          alignItems: 'center',
+          alignItems:
+            ipfsFiles.length > 0 || files.length > 0 ? null : 'center',
           justifyContent: 'center',
           textAlign: 'center',
         }}
       >
+        {files.length > 0 && ipfsFiles.length == 0 ? (
+          <Center flex={1}>
+            <Spinner color={'white'} />
+          </Center>
+        ) : null}
+        {/* <Box w={300} flexDirection="column">
+          {files.length > 0 && ipfsFiles.length == 0
+            ? files.map((file) => <Progress size="sm" isIndeterminate />)
+            : null}
+        </Box> */}
         {ipfsFiles.length > 0 ? (
           <List>
             {ipfsFiles.map((file, index) => {
               return (
                 <Flex
                   key={index}
-                  width={'400px'}
-                  justify="space-between"
+                  direction="column"
                   // border={'1px solid red'}
                 >
-                  <Text>{shortUrl(file.data.image.href)}</Text>
-                  <Box
-                    width={'70px'}
-                    display={'flex'}
-                    // flex={1}
-                    alignItems="center"
-                    justifyContent="space-evenly"
-                    // border={'1px solid cyan'}
+                  <Flex
+                    width={'400px'}
+                    justify="space-between"
+                    align="flex-end"
+                    // border={'1px solid red'}
                   >
-                    <CopyIcon
-                      as={'a'}
-                      // _hover={{
-                      //   transform: `scale(1.02)`,
-                      // }}
-                      style={{ cursor: 'pointer' }}
-                      onClick={() =>
-                        navigator.clipboard.writeText(file.data.image.href)
-                      }
-                    />
-                    <ExternalLinkIcon
-                      as={'a'}
-                      style={{ cursor: 'pointer' }}
-                      onClick={() => openInNewTab(file.data.image.href)}
-                    />
-                  </Box>
+                    {getFileIcon(file)}
+                    <Text>{shortUrl(file.image.href)}</Text>
+                    <Box
+                      width={'70px'}
+                      display={'flex'}
+                      // flex={1}
+                      alignItems="center"
+                      justifyContent="space-evenly"
+                      // border={'1px solid cyan'}
+                    >
+                      <CopyIcon
+                        as={'a'}
+                        // _hover={{
+                        //   transform: `scale(1.02)`,
+                        // }}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() =>
+                          navigator.clipboard.writeText(file.data.image.href)
+                        }
+                      />
+                      <ExternalLinkIcon
+                        as={'a'}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => openInNewTab(file.data.image.href)}
+                      />
+                    </Box>
+                  </Flex>
                 </Flex>
               )
             })}
@@ -176,17 +258,21 @@ const NFT_Storage = (props) => {
             Drop the files here ...
           </Text>
         ) : (
-          <Flex direction={'column'} align={'center'}>
-            <IoFolderOpen size={50} color={'#5597FC'} />
-            <Text
-              fontFamily="Oxygen"
-              fontSize={14}
-              color={colorMode == 'light' ? 'grey' : 'white'}
-            >
-              {arr}
-            </Text>
-            {/* <p style={{color={colorMode == 'light' ? 'black' : 'white'}}} ></p> */}
-          </Flex>
+          <>
+            {files.length > 0 ? null : (
+              <Flex direction={'column'} align={'center'}>
+                <IoFolderOpen size={50} color={'#5597FC'} />
+                <Text
+                  fontFamily="Oxygen"
+                  fontSize={14}
+                  color={colorMode == 'light' ? 'grey' : 'white'}
+                >
+                  {arr}
+                </Text>
+                {/* <p style={{color={colorMode == 'light' ? 'black' : 'white'}}} ></p> */}
+              </Flex>
+            )}
+          </>
         )}
         {/* <input {...getInputProps()} /> */}
       </div>
