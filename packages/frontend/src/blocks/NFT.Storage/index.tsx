@@ -15,7 +15,7 @@ import { FaFile } from 'react-icons/fa'
 const client = new NFTStorage({ token: process.env.NFTStorage })
 
 function shortUrl(url, l) {
-  var l = typeof l != 'undefined' ? l : 35
+  var l = typeof l != 'undefined' ? l : 30
   const chunk_l = l / 2
   var url = url.replace('http://', '').replace('https://', '')
 
@@ -130,7 +130,7 @@ const NFT_Storage = (props) => {
         )
       default:
         return (
-          <Box position="relative">
+          <Box mr={2} position="relative">
             <FaFile color={'grey'} size={30}></FaFile>
             <Text
               position="absolute"
@@ -163,7 +163,7 @@ const NFT_Storage = (props) => {
           fontFamily="Oxygen"
           p={3}
         >
-          Upload your files
+          {ipfsFiles.length == 0 ? 'Upload your files' : 'Pinned to IPFS'}
         </Text>
 
         {/* <Image
@@ -211,9 +211,16 @@ const NFT_Storage = (props) => {
                   key={index}
                   direction="column"
                   // border={'1px solid red'}
+                  p={3}
+                  bgColor={colorMode == 'light' ? 'transparent' : '#1F2128'}
+                  boxShadow={
+                    colorMode == 'light' ? '2px 1px 9px -1px #b6bdca' : null
+                  }
+                  borderRadius={10}
+                  mb={2}
                 >
                   <Flex
-                    width={'400px'}
+                    width={'350px'}
                     justify="space-between"
                     align="flex-end"
                     // border={'1px solid red'}
@@ -224,6 +231,7 @@ const NFT_Storage = (props) => {
                       width={'70px'}
                       display={'flex'}
                       // flex={1}
+                      mb={1}
                       alignItems="center"
                       justifyContent="space-evenly"
                       // border={'1px solid cyan'}
@@ -235,13 +243,13 @@ const NFT_Storage = (props) => {
                         // }}
                         style={{ cursor: 'pointer' }}
                         onClick={() =>
-                          navigator.clipboard.writeText(file.data.image.href)
+                          navigator.clipboard.writeText(file.image.href)
                         }
                       />
                       <ExternalLinkIcon
                         as={'a'}
                         style={{ cursor: 'pointer' }}
-                        onClick={() => openInNewTab(file.data.image.href)}
+                        onClick={() => openInNewTab(file.image.href)}
                       />
                     </Box>
                   </Flex>
