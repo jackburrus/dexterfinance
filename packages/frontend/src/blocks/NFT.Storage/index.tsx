@@ -156,15 +156,22 @@ const NFT_Storage = (props) => {
         direction={'column'}
         // justify="center"
         align="center"
+        p={3}
       >
         <Text
           color={colorMode == 'light' ? 'black' : 'white'}
           fontSize={30}
           fontFamily="Oxygen"
-          p={3}
         >
           {ipfsFiles.length == 0 ? 'Upload your files' : 'Pinned to IPFS'}
         </Text>
+        {/* <Text
+          color={colorMode == 'light' ? 'grey' : 'grey'}
+          fontSize={14}
+          fontFamily="Oxygen"
+        >
+          {ipfsFiles.length == 0 ? 'Accepts JPEG and PNG' : null}
+        </Text> */}
 
         {/* <Image
           src={'/images/IPFS_Logo.png'}
