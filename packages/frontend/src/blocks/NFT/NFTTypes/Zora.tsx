@@ -95,8 +95,8 @@ const Zora = (props: Props) => {
       // border={'1px solid orange'}
       d={'flex'}
       mt={2}
-      ml={2}
-      mr={2}
+      // pl={1}
+      // pr={1}
       flexWrap={'wrap'}
       justifyContent={'center'}
       columns={4}
