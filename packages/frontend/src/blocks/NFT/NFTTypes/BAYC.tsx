@@ -1,8 +1,7 @@
-import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client'
-import { Box, Center, Flex, SimpleGrid, Text } from '@chakra-ui/layout'
-import { useEffect, useState } from 'react'
-import React from 'react'
+import { ApolloClient, gql, InMemoryCache, useQuery } from '@apollo/client'
+import { Center, Flex, SimpleGrid } from '@chakra-ui/layout'
 import { Spinner } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
 
 interface Props {}
 
