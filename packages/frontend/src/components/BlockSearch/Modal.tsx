@@ -15,19 +15,13 @@ import {
   Input,
 } from '@chakra-ui/react'
 import { useBlocks, uuidv4 } from '@recoil/hooks/useBlocks'
-// import searchData from "configs/search-meta.json"
-// import { matchSorter } from "match-sorter"
+
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { BlockData } from 'src/constants/BlockData'
 import { SearchButton } from '.'
 import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode'
-
-// import MultiRef from "react-multi-ref"
-// import scrollIntoView from "scroll-into-view-if-needed"
-// import { findAll } from "highlight-words-core"
-// import { SearchButton } from "./algolia-search"
 
 function OptionText(props: any) {
   const { searchWords, textToHighlight } = props
@@ -84,7 +78,7 @@ function ModalSearch() {
   const [active, setActive] = React.useState(0)
   const menu = useDisclosure()
   const modal = useDisclosure()
-  //   const [menuNodes] = React.useState(() => new MultiRef<number, HTMLElement>())
+
   const menuRef = React.useRef<HTMLDivElement>(null)
   const eventRef = React.useRef<'mouse' | 'keyboard'>(null)
   const [blockList, { addBlock, removeBlock }] = useBlocks()
@@ -117,18 +111,10 @@ function ModalSearch() {
       setDisplayBlockData(BlockData)
     }
   }, [modal.isOpen])
-  // REMOVE THIS
-  // React.useEffect(() => {
-  //   modal.onToggle()
-  //   setActive(0)
-  // }, [])
 
   const results = React.useMemo(
     function getResults() {
       if (query.length < 2) return []
-      //   return matchSorter(searchData, query, {
-      //     keys: ["hierarchy.lvl1", "hierarchy.lvl2", "hierarchy.lvl3", "content"],
-      //   }).slice(0, 20)
     },
     [query]
   )
@@ -155,11 +141,9 @@ function ModalSearch() {
         case 'Enter': {
           modal.onClose()
           console.log(DisplayBlockData)
-          // if (DisplayBlockData) {
-          //   setActive(parseInt(DisplayBlockData[0].index))
-          // }
+
           addBlock(DisplayBlockData[active])
-          //   router.push(BlockData[active].url)
+
           break
         }
       }
@@ -219,7 +203,6 @@ function ModalSearch() {
               value={query}
               onChange={(e) => {
                 const newArray = BlockData.filter((d) => {
-                  // console.log(e.target.value)
                   return (
                     d.title
                       .toLowerCase()
@@ -250,14 +233,7 @@ function ModalSearch() {
                 '.chakra-ui-dark &': { bg: 'gray.700' },
               }}
             >
-              <Box
-                as="ul"
-                role="listbox"
-                // borderTopWidth="1px"
-                pt={2}
-                pb={4}
-                borderRadius={'10px'}
-              >
+              <Box as="ul" role="listbox" pt={2} pb={4} borderRadius={'10px'}>
                 {DisplayBlockData.map((item) => {
                   const selected = parseInt(item.index) === active
 
@@ -275,19 +251,16 @@ function ModalSearch() {
                       }}
                       onClick={() => {
                         modal.onClose()
-                        // console.log(BlockData[active])
-                        // console.log(blockList)
+
                         addBlock(BlockData[active])
                       }}
-                      //   ref={menuNodes.ref(index)}
                       role="option"
-                      // bg={useColorModeValue('#DEE7F4', 'gray.700')}
                       sx={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         minH: 16,
-                        // br: '10px',
+
                         mt: 3,
                         px: 4,
                         py: 2,
