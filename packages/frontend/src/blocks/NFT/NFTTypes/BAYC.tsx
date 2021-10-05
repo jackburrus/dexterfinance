@@ -15,13 +15,9 @@ const BAYCClient = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {
       Token: {
-        // Singleton types that have no identifying field can use an empty
-        // array for their keyFields.
         keyFields: false,
       },
       Pool: {
-        // Singleton types that have no identifying field can use an empty
-        // array for their keyFields.
         keyFields: false,
       },
     },
@@ -51,12 +47,10 @@ const NFTQuery = gql`
 
 const fetchURIs = async (data) => {
   const contentURI = 'https://' + data['contentURI']
-  const ipfsData = await fetch(contentURI)
-    // const ipfsData = await fetch('https://pokeapi.co/api/v2/pokemon/ditto')
-    .then((res) => {
-      return res.json()
-    })
-  // .then((res) => console.log(res))
+  const ipfsData = await fetch(contentURI).then((res) => {
+    return res.json()
+  })
+
   return ipfsData
 }
 
@@ -66,32 +60,14 @@ export const openInNewTab = (url) => {
 }
 
 const NFTCard = ({ imageURI, id }: NFTCardTypes) => {
-  // console.log(imageURI.replace('ipfs://', 'https://ipfs.io/ipfs/'))
   return (
     <Flex
       h={'100px'}
       w={'90px'}
-      // bg={getRandomColor()}
       bg={'white'}
       borderRadius={'lg'}
       overflow={'hidden'}
-      //   style={{ cursor: 'pointer' }}
-      //   as={'a'}
-      //   _hover={{
-      //     transform: `scale(1.02)`,
-      //   }}
-      //   onClick={() =>
-      //     openInNewTab(
-      //       'https://opensea.io/assets/0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D/' +
-      //         id.toString()
-      //     )
-      //   }
     >
-      {/* <Image
-          src={imageURI.replace('ipfs://', 'https://ipfs.io/ipfs/')}
-          width={'90px'}
-          height={'100px'}
-        /> */}
       <img
         src={imageURI.replace('ipfs://', 'https://ipfs.io/ipfs/')}
         style={{ width: 100, height: 100 }}
@@ -117,18 +93,16 @@ const BAYC = (props: Props) => {
 
   useEffect(() => {
     if (data) {
-      //   console.log(data)
       data['tokens'].map(async (token) => {
         const newData = await fetchURIs(token)
         const newTokenData = { token, ...newData }
-        // console.log(newTokenData)
+
         setNFTData((oldArray) => [...oldArray, newTokenData])
       })
     }
   }, [data])
   return !NFTData ? null : (
     <SimpleGrid
-      // border={'1px solid orange'}
       d={'flex'}
       mt={2}
       flexWrap={'wrap'}
