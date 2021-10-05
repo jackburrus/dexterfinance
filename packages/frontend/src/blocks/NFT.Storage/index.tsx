@@ -13,7 +13,7 @@ import { CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import { openInNewTab } from '../NFT/NFTTypes/BAYC'
 import { FaFile } from 'react-icons/fa'
 const client = new NFTStorage({ token: process.env.NFTStorage })
-
+// Deploy again
 function shortUrl(url, l) {
   var l = typeof l != 'undefined' ? l : 30
   const chunk_l = l / 2
