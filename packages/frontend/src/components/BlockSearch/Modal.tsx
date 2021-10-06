@@ -1,27 +1,25 @@
+import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode'
 import { SearchIcon } from '@chakra-ui/icons'
 import {
   Box,
-  Text,
   Center,
   chakra,
   Flex,
+  Input,
   Modal,
   ModalBody,
   ModalContent,
   ModalOverlay,
+  Text,
   useDisclosure,
   useEventListener,
   useUpdateEffect,
-  Input,
 } from '@chakra-ui/react'
-import { useBlocks, uuidv4 } from '@recoil/hooks/useBlocks'
-
-import Link from 'next/link'
+import { useBlocks } from '@recoil/hooks/useBlocks'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { BlockData } from 'src/constants/BlockData'
 import { SearchButton } from '.'
-import { useColorMode, useColorModeValue } from '@chakra-ui/color-mode'
 
 function OptionText(props: any) {
   const { searchWords, textToHighlight } = props

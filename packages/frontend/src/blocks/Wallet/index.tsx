@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/layout'
+import { Box, Center, Flex, Text } from '@chakra-ui/layout'
 import { CryptoIcon } from '@components/CryptoIcon'
 import { formatEther } from '@ethersproject/units'
 import { useEtherBalance, useEthers } from '@usedapp/core'
@@ -39,7 +39,7 @@ const Wallet = (props) => {
   }, [])
 
   useEffect(() => {
-    if (activeEthAddress) {
+    if (activeEthAddress && library) {
       getEnsName(activeEthAddress)
     }
     console.log('running')
@@ -58,9 +58,16 @@ const Wallet = (props) => {
       getBal(activeEthAddress).then((res) => setUpdatedEtherBalance(res))
       console.log('running')
     }
-  }, [activeEthAddress])
+  }, [activeEthAddress, library])
 
-  return !activeEthAddress ? null : (
+  return !activeEthAddress || !library ? (
+    <CustomBox>
+      <CloseButton blockID={uuid} />
+      <Center flex={1}>
+        <Text>Please connect a wallet to use this block</Text>
+      </Center>
+    </CustomBox>
+  ) : (
     <CustomBox>
       <CloseButton blockID={uuid} />
       <EthAddressInput
