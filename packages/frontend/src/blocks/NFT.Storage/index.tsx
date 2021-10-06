@@ -1,18 +1,16 @@
-import { Box, Center, Flex, List, Text } from '@chakra-ui/layout'
-import { CustomBox } from '@components/CustomBox'
-import React, { useCallback, useEffect, useState } from 'react'
-import { Blob, NFTStorage, File } from 'nft.storage'
-import CloseButton from '@components/CloseButton'
-import { Dropzone, FileItem } from 'dropzone-ui'
-import { useDropzone } from 'react-dropzone'
-import Image from 'next/image'
 import { useColorMode } from '@chakra-ui/color-mode'
-import { Progress, Spinner } from '@chakra-ui/react'
-import { IoFolderOpen } from 'react-icons/io5'
 import { CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons'
-import { openInNewTab } from '../NFT/NFTTypes/BAYC'
+import { Box, Center, Flex, List, Text } from '@chakra-ui/layout'
+import { Spinner, useToast } from '@chakra-ui/react'
+import CloseButton from '@components/CloseButton'
+import { CustomBox } from '@components/CustomBox'
+import Image from 'next/image'
+import { File, NFTStorage } from 'nft.storage'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
 import { FaFile } from 'react-icons/fa'
-import { useToast } from '@chakra-ui/react'
+import { IoFolderOpen } from 'react-icons/io5'
+import { openInNewTab } from '../NFT/NFTTypes/BAYC'
 const client = new NFTStorage({ token: process.env.NFTStorage })
 
 function shortUrl(url, l) {
@@ -97,11 +95,7 @@ const NFT_Storage = (props) => {
     }
   }, [files])
 
-  const arr = [
-    'Drag & drop your files here, ',
-    <br />,
-    'or click to select files.',
-  ]
+  const arr = ['Drop your files here ', <br />, 'to save them to IPFS.']
 
   const getFileIcon = (file) => {
     const extension = file.path.split('.').pop()
@@ -162,13 +156,7 @@ const NFT_Storage = (props) => {
   return (
     <CustomBox>
       <CloseButton blockID={uuid} />
-      <Flex
-        // border={'1px solid green'}
-        direction={'column'}
-        // justify="center"
-        align="center"
-        p={3}
-      >
+      <Flex direction={'column'} align="center" p={3}>
         <Text
           color={colorMode == 'light' ? 'black' : 'white'}
           fontSize={30}
@@ -176,20 +164,6 @@ const NFT_Storage = (props) => {
         >
           {ipfsFiles.length == 0 ? 'Upload your files' : 'Pinned to IPFS'}
         </Text>
-        {/* <Text
-          color={colorMode == 'light' ? 'grey' : 'grey'}
-          fontSize={14}
-          fontFamily="Oxygen"
-        >
-          {ipfsFiles.length == 0 ? 'Accepts JPEG and PNG' : null}
-        </Text> */}
-
-        {/* <Image
-          src={'/images/IPFS_Logo.png'}
-          width={150}
-          height={50}
-          layout={'fixed'}
-        /> */}
       </Flex>
       <div
         {...getRootProps()}
@@ -305,12 +279,10 @@ const NFT_Storage = (props) => {
                 >
                   {arr}
                 </Text>
-                {/* <p style={{color={colorMode == 'light' ? 'black' : 'white'}}} ></p> */}
               </Flex>
             )}
           </>
         )}
-        {/* <input {...getInputProps()} /> */}
       </div>
     </CustomBox>
   )
