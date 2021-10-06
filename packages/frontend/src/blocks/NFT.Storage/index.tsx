@@ -12,6 +12,7 @@ import { IoFolderOpen } from 'react-icons/io5'
 import { CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons'
 import { openInNewTab } from '../NFT/NFTTypes/BAYC'
 import { FaFile } from 'react-icons/fa'
+import { useToast } from '@chakra-ui/react'
 const client = new NFTStorage({ token: process.env.NFTStorage })
 
 function shortUrl(url, l) {
@@ -56,11 +57,21 @@ const NFT_Storage = (props) => {
 
   const [title, setTitle] = useState('My NFT')
   const [description, setDescription] = useState([])
+  const toast = useToast()
 
   const onDrop = useCallback((acceptedFiles) => {
     // Do something with the files
-    console.log(acceptedFiles)
-    setFiles(acceptedFiles)
+    if (acceptedFiles.length > 10) {
+      toast({
+        title: 'Too many files',
+        description: 'Please choose fewer than 10 files for uploading',
+        status: 'warning',
+        duration: 9000,
+        isClosable: true,
+      })
+    } else {
+      setFiles(acceptedFiles)
+    }
   }, [])
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
