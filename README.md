@@ -35,10 +35,10 @@ Dexter is a DeFi dashboard that allows you to create, import and export dashboar
 Name                          |  Usage
 ----------------------------------|------------------------------------------------------------------------------------
 Alchemy            |  Primary Web3 API for fetching token metadata and balances.
-The Graph            |  Provides on chain data for analytics and nft source information.
+The Graph            |  Provides on chain data for analytics and NFT source information.
 Protocol Labs            |  NFT.Storage is used to upload images to IPFS and provide a ipfs url for NFT creation.
 ENS                |  Reverse and forward ENS resolution on the wallet provides readable address information.
-Zora                 |  Zora auctions are displayed on the NFT block
+Zora                 |  Auction images are displayed on the NFT block
 Scaffold Eth          |  The Next.js and Typescript template provided a great starter for this project.
 Chakra UI                 |  For style
 
