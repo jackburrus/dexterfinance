@@ -287,7 +287,17 @@ const NFT_Storage = (props) => {
           <>
             {files.length > 0 ? null : (
               <Flex direction={'column'} align={'center'}>
-                <IoFolderOpen size={50} color={'#5597FC'} />
+                <Box position="relative">
+                  <IoFolderOpen size={50} color={'#5597FC'} />
+                  <Box position="absolute" left={'8px'} bottom={'3px'}>
+                    <Image
+                      src={'/images/ipfs.png'}
+                      width={'34px'}
+                      height={'22px'}
+                    />
+                  </Box>
+                </Box>
+
                 <Text
                   fontFamily="Oxygen"
                   fontSize={14}
