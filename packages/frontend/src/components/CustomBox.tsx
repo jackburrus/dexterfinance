@@ -12,6 +12,7 @@ export const CustomBox = ({ children }) => {
       d="flex"
       margin={'10'}
       justifyContent="flex-start"
+      border={'1px solid orange'}
       flexDirection="column"
       bg={colorMode == 'light' ? 'white' : '#181C20'}
       boxShadow={colorMode == 'light' ? '1px 0 15px 2px #b6bdca' : null}
@@ -19,6 +20,14 @@ export const CustomBox = ({ children }) => {
       position="relative"
       overflow={'scroll'}
       p={2}
+      overflowY="auto"
+      css={{
+        '&::-webkit-scrollbar': {
+          width: 0 /* Remove scrollbar space */,
+          background:
+            'transparent' /* Optional: just make scrollbar invisible */,
+        },
+      }}
     >
       {children}
     </Box>

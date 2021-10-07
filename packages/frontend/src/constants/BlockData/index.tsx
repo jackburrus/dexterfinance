@@ -1,10 +1,15 @@
-import {
-  AnalyticsBlock,
-  NewsBlock,
-  NFTBlock,
-  NFT_Storage,
-  Wallet,
-} from 'src/blocks/index'
+import AnalyticsBlock from 'src/blocks/Analytics'
+import NewsBlock from 'src/blocks/News'
+import NFTBlock from 'src/blocks/NFT'
+import NFT_Storage from 'src/blocks/NFT.Storage'
+import Wallet from 'src/blocks/Wallet'
+// import {
+//   AnalyticsBlock,
+//   NewsBlock,
+//   NFTBlock,
+//   NFT_Storage,
+//   Wallet,
+// } from 'src/blocks'
 
 export const BlockData = [
   { index: '0', title: 'Analytics', protocol: 'Analytics' },
@@ -24,6 +29,7 @@ export const getBlockType = (block: BlockType, provided): JSX.Element => {
       return <AnalyticsBlock provided={provided} uuid={block.uuid} />
     case 'News':
       return <NewsBlock provided={provided} uuid={block.uuid} />
+
     case 'NFTStorage':
       return <NFT_Storage uuid={block.uuid} />
 

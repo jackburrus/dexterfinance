@@ -6,9 +6,9 @@
     "dev": "yarn workspace dexterfinance dev",
     "build": "yarn workspace dexterfinance build",
     "start": "yarn workspace dexterfinance start",
-    "chain": "yarn workspace dexterfinance chain",
-    "deploy": "yarn workspace dexterfinance deploy",
-    "compile": "yarn workspace dexterfinance compile"
+    "chain": "yarn workspace dexterfinance-backend chain",
+    "deploy": "yarn workspace dexterfinance-backend deploy",
+    "compile": "yarn workspace dexterfinance-backend compile"
   },
   "workspaces": {
     "packages": [
