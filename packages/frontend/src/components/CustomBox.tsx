@@ -20,7 +20,7 @@ export const CustomBox = ({ children }) => {
       position="relative"
       overflow={'hidden'}
       p={2}
-      overflowY="auto"
+      // overflowY="auto"
       css={{
         '&::-webkit-scrollbar': {
           display: 'none',
@@ -29,6 +29,7 @@ export const CustomBox = ({ children }) => {
             'transparent' /* Optional: just make scrollbar invisible */,
         },
         '&::-ms-overflow-style': 'none',
+        // overflowY: 'hidden',
       }}
     >
       {children}
