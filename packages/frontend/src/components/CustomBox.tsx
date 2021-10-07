@@ -18,7 +18,7 @@ export const CustomBox = ({ children }) => {
       boxShadow={colorMode == 'light' ? '1px 0 15px 2px #b6bdca' : null}
       borderRadius={'3xl'}
       position="relative"
-      overflow={'scroll'}
+      overflow={'hidden'}
       p={2}
       overflowY="auto"
       css={{
