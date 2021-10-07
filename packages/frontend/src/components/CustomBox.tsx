@@ -23,10 +23,12 @@ export const CustomBox = ({ children }) => {
       overflowY="auto"
       css={{
         '&::-webkit-scrollbar': {
+          display: 'none',
           width: 0 /* Remove scrollbar space */,
           background:
             'transparent' /* Optional: just make scrollbar invisible */,
         },
+        '&::-ms-overflow-style': 'none',
       }}
     >
       {children}
