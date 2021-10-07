@@ -8,12 +8,8 @@ interface Props {}
 const ACTION_KEY_APPLE = ['⌘', 'Command']
 export const EthAddressInput = (props: Props) => {
   const { register, handleSubmit } = useForm()
-
-  const { setActiveEthAddress } = props
-  const [actionKey, setActionKey] = React.useState<string[]>(ACTION_KEY_APPLE)
-  const { colorMode } = useColorMode()
-  const [validAddressModalOpen, setValidAddressOpenStatus] = useState(false)
   const { library } = useEthers()
+  const { setActiveEthAddress } = props
 
   const resolveENSName = async (name, setActiveEthAddress) => {
     const address = await library.resolveName(name)
@@ -36,6 +32,8 @@ export const EthAddressInput = (props: Props) => {
       h={'6'}
       w="30%"
       minWidth={'20%'}
+      ml={2}
+      mt={1}
       position={'absolute'}
       bg={useColorModeValue('white', 'gray.700')}
       whiteSpace="nowrap"
@@ -53,27 +51,6 @@ export const EthAddressInput = (props: Props) => {
     >
       <SearchIcon w={3} h={3} color={'grey'} />
       <HStack w="full" ml="3" spacing="4px">
-        {/* <Text
-
-          textAlign="left"
-          flex="1"
-          fontSize="8"
-          color={'grey'}
-        >
-          ETH Address
-        </Text> */}
-        {/* {validAddressModalOpen ? (
-          <Portal>
-            <Alert status="error">
-              <AlertIcon />
-              <AlertTitle mr={2}>Your browser is outdated!</AlertTitle>
-            </Alert>
-          </Portal>
-        ) :
-
-
-        null} */}
-
         <form
           style={{
             display: 'flex',

@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/layout'
+import { Box, Center, Flex, Text } from '@chakra-ui/layout'
 import { CryptoIcon } from '@components/CryptoIcon'
 import { formatEther } from '@ethersproject/units'
 import { useEtherBalance, useEthers } from '@usedapp/core'
@@ -14,13 +14,12 @@ import { CustomBox } from '@components/CustomBox'
 
 const Wallet = (props) => {
   const { uuid } = props
-  const [walletAmount, setWalletAmount] = useState(null)
 
   const { account, chainId, library } = useEthers()
 
   const etherBalance = useEtherBalance(account)
   const [updatedEtherBlanace, setUpdatedEtherBalance] = useState(null)
-  const [USDValue, setUSDValue] = useState(null)
+
   const [activeEthAddress, setActiveEthAddress] = useState(null)
   const [ensName, setEnsName] = useState(null)
 
@@ -37,40 +36,38 @@ const Wallet = (props) => {
 
   useEffect(() => {
     setActiveEthAddress(account)
-    // setActiveEthAddress('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266')
   }, [])
 
   useEffect(() => {
-    if (activeEthAddress) {
+    if (activeEthAddress && library) {
       getEnsName(activeEthAddress)
     }
     console.log('running')
   }, [library, chainId, activeEthAddress])
 
   const getBal = async (address) => {
-    // If account balance is 1 ETH
     const balance = await library.getBalance(address)
-    // prints 100000000000... 18 zeros
 
     const stringBalance = balance.toString()
-    // console.log(ethers.utils.formatEther(stringBalance))
-    // to format the value in a readable format
-    return ethers.utils.formatEther(stringBalance) // prints 1.0
+
+    return ethers.utils.formatEther(stringBalance)
   }
 
   useEffect(() => {
     if (library && activeEthAddress) {
-      // async function getBalance() {
-      //   const bal = await getBal(activeEthAddress)
-      //   setUpdatedEtherBalance(bal)
-      // }
-      // getBalance()
       getBal(activeEthAddress).then((res) => setUpdatedEtherBalance(res))
       console.log('running')
     }
-  }, [activeEthAddress])
+  }, [activeEthAddress, library])
 
-  return !activeEthAddress ? null : (
+  return !activeEthAddress || !library ? (
+    <CustomBox>
+      <CloseButton blockID={uuid} />
+      <Center flex={1}>
+        <Text>Please connect a wallet to use this block</Text>
+      </Center>
+    </CustomBox>
+  ) : (
     <CustomBox>
       <CloseButton blockID={uuid} />
       <EthAddressInput
@@ -111,10 +108,6 @@ const Wallet = (props) => {
                 : formatEther(etherBalance).substring(0, 5)}{' '}
               ETH
             </Text>
-
-            {/* <Text color={'grey'} opacity={'0.5'}>
-              ${USDValue.toFixed(2)} USD
-            </Text> */}
           </Box>
         )}
       </Flex>
@@ -123,7 +116,6 @@ const Wallet = (props) => {
           <TabList>
             <Tab>Assets</Tab>
             <Tab>Activity</Tab>
-            {/* <Tab>NFT</Tab> */}
           </TabList>
 
           <TabPanels>
@@ -132,9 +124,6 @@ const Wallet = (props) => {
               activeEthAddress={activeEthAddress}
             />
             <TransactionsPanel activeEthAddress={activeEthAddress} />
-            {/* <TabPanel>
-              <p>three!</p>
-            </TabPanel> */}
           </TabPanels>
         </Tabs>
       </Flex>

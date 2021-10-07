@@ -1,26 +1,13 @@
-// Sample card from Airbnb
-import { useEffect, useState } from 'react'
-import { DragHandleIcon, StarIcon } from '@chakra-ui/icons'
-import Image from 'next/image'
-import {
-  Badge,
-  Box,
-  BoxProps,
-  Center,
-  Flex,
-  SimpleGrid,
-  Text,
-} from '@chakra-ui/layout'
-import { Select } from '@chakra-ui/react'
-import PopoverOnBlock from '@components/Popover'
-import { ApolloClient, InMemoryCache, useQuery, gql } from '@apollo/client'
 import { useColorMode } from '@chakra-ui/color-mode'
-
+import { Box, BoxProps, Flex } from '@chakra-ui/layout'
+import { Select } from '@chakra-ui/react'
+import CloseButton from '@components/CloseButton'
+import { CustomBox } from '@components/CustomBox'
+import Image from 'next/image'
+import { useState } from 'react'
 import BAYC from './NFTTypes/BAYC'
 import NiftyInk from './NFTTypes/NiftyInk'
-import CloseButton from '@components/CloseButton'
 import Zora from './NFTTypes/Zora'
-import { CustomBox } from '@components/CustomBox'
 
 const NFTBlock = (props): BoxProps => {
   const [NFTName, setNFTName] = useState<'BAYC' | 'NiftyInk' | 'Zora'>('BAYC')
@@ -50,7 +37,6 @@ const NFTBlock = (props): BoxProps => {
               <Flex mr={'8px'}>
                 <Image
                   src={require(`./assets/NiftyInk.png`)}
-                  // src={require(`../../../../../node_modules/cryptocurrency-icons/svg/color/uni.svg`)}
                   width={20}
                   height={20}
                   alt="crypto-icon"
@@ -60,7 +46,6 @@ const NFTBlock = (props): BoxProps => {
               <Flex mr={'8px'}>
                 <Image
                   src={require(`./assets/bayc.png`)}
-                  // src={require(`../../../../../node_modules/cryptocurrency-icons/svg/color/uni.svg`)}
                   width={20}
                   height={20}
                   alt="crypto-icon"
@@ -74,9 +59,7 @@ const NFTBlock = (props): BoxProps => {
               fontSize="12px"
               height={30}
               variant="unstyled"
-              // placeholder={'Uniswap'}
               color={colorMode == 'light' ? 'grey' : 'white'}
-              // icon={}
             >
               <option value="BAYC">BAYC</option>
               <option value="NiftyInk">Nifty Ink</option>
@@ -84,14 +67,7 @@ const NFTBlock = (props): BoxProps => {
             </Select>
           </Box>
         </Flex>
-        <Flex
-          // border={'1px solid cyan'}
-          // display={'flex'}
-          // flex={1}
-          // h={'250px'}
-          align="center"
-          justify="center"
-        >
+        <Flex align="center" justify="center">
           {NFTName == 'BAYC' && <BAYC />}
           {NFTName == 'NiftyInk' && <NiftyInk />}
           {NFTName == 'Zora' && <Zora />}

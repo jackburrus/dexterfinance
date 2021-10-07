@@ -102,7 +102,7 @@ export const fetchTransactions = async (
         headers: { 'Content-Type': 'application/json' },
       }
     )
-    console.log(response)
+
     const transactions = await response.json()
     transactions.result
       .slice(0)
@@ -114,7 +114,6 @@ export const fetchTransactions = async (
           Object.assign({}, tx, txdata.value),
         ])
       })
-    // console.log(transactions)
   } catch (error) {
     console.log(error)
   }

@@ -1,8 +1,6 @@
-import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client'
+import { ApolloClient, gql, InMemoryCache, useQuery } from '@apollo/client'
 import { Flex, SimpleGrid } from '@chakra-ui/layout'
-import React from 'react'
-import { getRandomColor } from './BAYC'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface Props {}
 
@@ -17,13 +15,9 @@ const NiftyInkClient = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {
       Token: {
-        // Singleton types that have no identifying field can use an empty
-        // array for their keyFields.
         keyFields: false,
       },
       Pool: {
-        // Singleton types that have no identifying field can use an empty
-        // array for their keyFields.
         keyFields: false,
       },
     },
@@ -52,12 +46,10 @@ const NFTInkQuery = gql`
 
 const fetchURIs = async (data) => {
   const contentURI = 'https://ipfs.io/ipfs/' + data['jsonUrl']
-  const ipfsData = await fetch(contentURI)
-    // const ipfsData = await fetch('https://pokeapi.co/api/v2/pokemon/ditto')
-    .then((res) => {
-      return res.json()
-    })
-  // .then((res) => console.log(res))
+  const ipfsData = await fetch(contentURI).then((res) => {
+    return res.json()
+  })
+
   return ipfsData
 }
 
@@ -67,7 +59,6 @@ const openInNewTab = (url) => {
 }
 
 const NFTCard = ({ imageURI, name, content }: NFTCardTypes) => {
-  // console.log(imageURI.replace('ipfs://', 'https://ipfs.io/ipfs/'))
   return (
     <Flex
       h={'100px'}
@@ -101,11 +92,10 @@ const NiftyInk = (props: Props) => {
       const shuffled = data['inks'].sort(() => 0.5 - Math.random())
       const selected = shuffled.slice(0, 50)
       selected.map(async (ink) => {
-        // console.log(ink)
         const newData = await fetchURIs(ink)
 
         const newTokenData = { ink, ...newData }
-        // console.log(newTokenData)
+
         setNFTData((oldArray) => [...oldArray, newTokenData])
       })
     }
@@ -113,7 +103,6 @@ const NiftyInk = (props: Props) => {
 
   return (
     <SimpleGrid
-      // border={'1px solid orange'}
       d={'flex'}
       mt={2}
       flexWrap={'wrap'}
@@ -122,14 +111,7 @@ const NiftyInk = (props: Props) => {
       spacing={5}
     >
       {NFTData.map((card, index) => {
-        return (
-          <NFTCard
-            key={index}
-            // name={card.name}
-            content={card}
-            imageURI={card.image}
-          />
-        )
+        return <NFTCard key={index} content={card} imageURI={card.image} />
       })}
     </SimpleGrid>
   )

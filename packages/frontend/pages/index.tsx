@@ -20,7 +20,7 @@ import { Size, useWindowSize } from 'src/hooks/useWindowSize'
 import NFTBlock from 'src/blocks/NFT'
 import AnalyticsBlock from 'src/blocks/Analytics'
 import NewBlock from 'src/blocks/News'
-import UniswapBlock from 'src/blocks/Uniswap'
+
 import FileDropZone from '@components/FileDropZone'
 import { useDisclosure } from '@chakra-ui/hooks'
 import NFTStorage from 'src/blocks/NFT.Storage'
