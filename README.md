@@ -58,7 +58,7 @@ import React from 'react'
 import { CustomBox } from '@components/CustomBox'
 import {Text} from '@chakra-ui/layout'
 
-export const AwesomeBlock = (props: Props) => {
+export const AwesomeBlock = () => {
   return (
     <CustomBlock>
       <Text>My awesome DeFi block for Dexter</Text>
