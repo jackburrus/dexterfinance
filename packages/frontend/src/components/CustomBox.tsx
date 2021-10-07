@@ -12,7 +12,6 @@ export const CustomBox = ({ children }) => {
       d="flex"
       margin={'10'}
       justifyContent="flex-start"
-      // border={'1px solid orange'}
       flexDirection="column"
       bg={colorMode == 'light' ? 'white' : '#181C20'}
       boxShadow={colorMode == 'light' ? '1px 0 15px 2px #b6bdca' : null}
@@ -20,7 +19,6 @@ export const CustomBox = ({ children }) => {
       position="relative"
       overflow={'hidden'}
       p={2}
-      // overflowY="auto"
       css={{
         '&::-webkit-scrollbar': {
           display: 'none',
@@ -29,7 +27,6 @@ export const CustomBox = ({ children }) => {
             'transparent' /* Optional: just make scrollbar invisible */,
         },
         '&::-ms-overflow-style': 'none',
-        // overflowY: 'hidden',
       }}
     >
       {children}

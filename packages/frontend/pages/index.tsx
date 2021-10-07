@@ -1,30 +1,25 @@
+import { useDisclosure } from '@chakra-ui/hooks'
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+} from '@chakra-ui/react'
+import FileDropZone from '@components/FileDropZone'
 import { useBlocks } from '@recoil/hooks/useBlocks'
 import { useEthers, useSendTransaction } from '@usedapp/core'
 import { providers } from 'ethers'
-import React, { useCallback, useEffect, useReducer, useState } from 'react'
-import Wallet from 'src/blocks/Wallet'
-import { Layout } from '../src/components/layout/Layout'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   GridContextProvider,
   GridDropZone,
   GridItem,
   swap,
 } from 'react-grid-dnd'
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-} from '@chakra-ui/react'
-import { Size, useWindowSize } from 'src/hooks/useWindowSize'
-import NFTBlock from 'src/blocks/NFT'
-import AnalyticsBlock from 'src/blocks/Analytics'
-import NewBlock from 'src/blocks/News'
-
-import FileDropZone from '@components/FileDropZone'
-import { useDisclosure } from '@chakra-ui/hooks'
-import NFTStorage from 'src/blocks/NFT.Storage'
 import { getBlockType } from 'src/constants/BlockData'
+import { Size, useWindowSize } from 'src/hooks/useWindowSize'
+import { Layout } from '../src/components/layout/Layout'
+
 /**
  * Constants & Helpers
  */
@@ -41,9 +36,6 @@ function HomeIndex(): JSX.Element {
   const [networkName, setNetworkName] = useState(null)
   const size: Size = useWindowSize()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  // const url = `https://eth-kovan.alchemyapi.io/v2/${process.env.ALCHEMYAPIKEY}`
-
-  // const customHttpProvider = new ethers.providers.AlchemyProvider
 
   // Use the localProvider as the signer to send ETH to our wallet
   const { sendTransaction } = useSendTransaction({
@@ -100,17 +92,9 @@ function HomeIndex(): JSX.Element {
             id="items"
             boxesPerRow={size.width > 1900 ? 3 : 2}
             rowHeight={400}
-            // rowWidth={200}
             style={{
-              // border: '1px solid cyan',
-              // position: 'relative',
-              // height: 'auto',
               height: '90vh',
               width: '80vw',
-              // display: 'flex',
-              // flex: 1,
-              // justifyContent: 'center',
-              // alignItems: 'center',
             }}
           >
             {blockList.map((block) => (
