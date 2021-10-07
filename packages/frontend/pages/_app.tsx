@@ -6,6 +6,8 @@ import {
   DAppProvider,
   MULTICALL_ADDRESSES,
 } from '@usedapp/core'
+import { ColorModeScript } from '@chakra-ui/react'
+
 import type { AppProps } from 'next/app'
 import React from 'react'
 import { MulticallContract } from '../artifacts/contracts/contractAddress'
@@ -64,6 +66,9 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
         <DAppProvider config={config}>
           <RecoilRoot>
             <ChakraProvider theme={theme}>
+              <ColorModeScript
+                initialColorMode={theme.config.initialColorMode}
+              />
               <Component {...pageProps} />
             </ChakraProvider>
           </RecoilRoot>

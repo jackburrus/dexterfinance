@@ -1,14 +1,8 @@
-import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client'
-import { Box, Flex, SimpleGrid } from '@chakra-ui/layout'
-import React from 'react'
-
-import { useEffect, useState } from 'react'
-
-import { openInNewTab } from './BAYC'
+import { ApolloClient, gql, InMemoryCache, useQuery } from '@apollo/client'
 import { Image } from '@chakra-ui/image'
 import { Box, SimpleGrid } from '@chakra-ui/layout'
 import { useNFTMetadata } from '@zoralabs/nft-hooks'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { openInNewTab } from './BAYC'
 
 interface Props {}
