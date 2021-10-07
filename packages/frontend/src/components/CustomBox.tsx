@@ -12,7 +12,7 @@ export const CustomBox = ({ children }) => {
       d="flex"
       margin={'10'}
       justifyContent="flex-start"
-      border={'1px solid orange'}
+      // border={'1px solid orange'}
       flexDirection="column"
       bg={colorMode == 'light' ? 'white' : '#181C20'}
       boxShadow={colorMode == 'light' ? '1px 0 15px 2px #b6bdca' : null}
