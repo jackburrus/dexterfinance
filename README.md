@@ -45,21 +45,34 @@ Chakra UI                 |  For style
 
 
 ## Creating Blocks
-```sh
-usage: fast-copy.py [-h HELP] source destination [-d DELETE] [-s SYNC] [-r REPLACE]
+- Step 1: Create your new block folder in the `/blocks` folder.
 
-optional arguments:
-  -h --help            show this help message and exit
-  source                the drive you are copying from
-  destination           the drive you are copying to
-  -d --delete           delete the source files after copy
-  -s --sync             delete files in destination if not found in source (do not use, if using with rsync)
-  -r --replace          replace files if they exist
-  -t --thread           set the amount of parallel threads used
-  -l --size-limit       set max size of files copied (supports gb, mb, kb) eg 1.5gb
 ```
-The `source` and `destination` fields are required. Everything else is optional.
+src
+└── blocks
+    └── YourAwesomeBlock.tsx
+```
+- Step 2: Write your component and wrap it in the `<CustomBlock/>` component.
+```typescript
+import React from 'react'
+import { CustomBox } from '@components/CustomBox'
+import {Text} from '@chakra-ui/layout'
 
+export const AwesomeBlock = (props: Props) => {
+  return (
+    <CustomBlock>
+      <Text>My awesome DeFi block for Dexter</Text>
+    </CustomBlock>
+  )
+}
+```
+- Step 3: Add the custom block to the `/BlockData` folder.
+```
+src
+└── constants
+    └── BlockData
+```
+- Done 🎉
 
 ## Credits
 - Created by Jack Burrus

@@ -24,6 +24,7 @@ import NewBlock from 'src/blocks/News'
 import FileDropZone from '@components/FileDropZone'
 import { useDisclosure } from '@chakra-ui/hooks'
 import NFTStorage from 'src/blocks/NFT.Storage'
+import { getBlockType } from 'src/constants/BlockData'
 /**
  * Constants & Helpers
  */
@@ -34,82 +35,7 @@ const localProvider = new providers.StaticJsonRpcProvider(
 
 const ROPSTEN_CONTRACT_ADDRESS = '0x6b61a52b1EA15f4b8dB186126e980208E1E18864'
 
-/**
- * Prop Types
- */
-type StateType = {
-  greeting: string
-  inputValue: string
-  isLoading: boolean
-}
-type ActionType =
-  | {
-      type: 'SET_GREETING'
-      greeting: StateType['greeting']
-    }
-  | {
-      type: 'SET_INPUT_VALUE'
-      inputValue: StateType['inputValue']
-    }
-  | {
-      type: 'SET_LOADING'
-      isLoading: StateType['isLoading']
-    }
-
-/**
- * Component
- */
-const initialState: StateType = {
-  greeting: '',
-  inputValue: '',
-  isLoading: false,
-}
-
-function reducer(state: StateType, action: ActionType): StateType {
-  switch (action.type) {
-    // Track the greeting from the blockchain
-    case 'SET_GREETING':
-      return {
-        ...state,
-        greeting: action.greeting,
-      }
-    case 'SET_INPUT_VALUE':
-      return {
-        ...state,
-        inputValue: action.inputValue,
-      }
-    case 'SET_LOADING':
-      return {
-        ...state,
-        isLoading: action.isLoading,
-      }
-    default:
-      throw new Error()
-  }
-}
-
-const getBlockType = (block: BlockType, provided): JSX.Element => {
-  switch (block.title) {
-    case 'Wallet':
-      return <Wallet provided={provided} uuid={block.uuid} />
-    case 'NFT':
-      return <NFTBlock provided={provided} uuid={block.uuid} />
-    case 'Analytics':
-      return <AnalyticsBlock provided={provided} uuid={block.uuid} />
-    case 'News':
-      return <NewBlock provided={provided} uuid={block.uuid} />
-    case 'Uniswap':
-      return <UniswapBlock provided={provided} uuid={block.uuid} />
-    case 'NFTStorage':
-      return <NFTStorage uuid={block.uuid} />
-
-    default:
-      return null
-  }
-}
-
 function HomeIndex(): JSX.Element {
-  const [state, dispatch] = useReducer(reducer, initialState)
   const { account, chainId, library } = useEthers()
   const [blockList, { moveBlocks }] = useBlocks()
   const [networkName, setNetworkName] = useState(null)
@@ -139,21 +65,6 @@ function HomeIndex(): JSX.Element {
     const nextState = swap(blockList, sourceIndex, targetIndex)
     moveBlocks(nextState)
   }
-
-  // useEffect(() => {
-  //   if (library) {
-  //     console.log(library)
-  //   }
-
-  //   // addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
-  // }, [library])
-  // useEffect(() => {
-  //   if (networkName) {
-  //     console.log(networkName)
-  //   }
-
-  //   // addBlock({ index: '4', title: 'Wallet', protocol: 'Analytics' })
-  // }, [networkName])
 
   return networkName &&
     networkName !== 'kovan' &&
