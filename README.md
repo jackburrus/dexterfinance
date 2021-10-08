@@ -77,7 +77,7 @@ In the `BlockData` array, add your component.
 ```typescript
 const BlockData = [
   ...OtherData,
-  { index: '12', title: 'AwesomeBlock', protocol: 'Etherum' },
+  { index: '12', title: 'AwesomeBlock', protocol: 'Ethereum' },
 ]
 ```
 
