@@ -2,7 +2,7 @@ import { ApolloClient, gql, InMemoryCache, useQuery } from '@apollo/client'
 import { Center, Flex, SimpleGrid } from '@chakra-ui/layout'
 import { Spinner } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-
+import axios from 'axios'
 interface Props {}
 
 interface NFTCardTypes {
@@ -10,7 +10,8 @@ interface NFTCardTypes {
 }
 
 const BAYCClient = new ApolloClient({
-  uri: 'https://api.thegraph.com/subgraphs/name/dabit3/boredapeyachtclub',
+  // uri: 'https://api.thegraph.com/subgraphs/name/dabit3/boredapeyachtclub',
+  uri: 'https://api.thegraph.com/subgraphs/name/l3xcodes/bayc-subgraph',
   cache: new InMemoryCache({
     typePolicies: {
       Token: {
@@ -36,21 +37,36 @@ const BAYCClient = new ApolloClient({
 const NFTQuery = gql`
   query nftQuery {
     tokens(first: 50) {
-      id
-      tokenID
-      contentURI
-      baseURI
+      uri
     }
   }
 `
+// const NFTQuery = gql`
+//   query nftQuery {
+//     tokens(first: 50) {
+//       id
+//       tokenID
+//       contentURI
+//       baseURI
+//     }
+//   }
+// `
 
 const fetchURIs = async (data) => {
-  const contentURI = 'https://' + data['contentURI']
-  const ipfsData = await fetch(contentURI).then((res) => {
-    return res.json()
-  })
+  // const contentURI = 'https://' + data['contentURI']
+  const contentURI = 'https://' + data['uri']
+  // console.log(contentURI)
+  try {
+    const ipfsData = await fetch(data['uri'], {
+      headers: { 'Content-Type': 'application/json' },
+    }).then((res) => {
+      return res.json()
+    })
 
-  return ipfsData
+    return ipfsData
+  } catch (error) {
+    console.warn(error)
+  }
 }
 
 export const openInNewTab = (url) => {
@@ -67,10 +83,12 @@ const NFTCard = ({ imageURI, id }: NFTCardTypes) => {
       borderRadius={'lg'}
       overflow={'hidden'}
     >
-      <img
-        src={imageURI.replace('ipfs://', 'https://ipfs.io/ipfs/')}
-        style={{ width: 100, height: 100 }}
-      />
+      {imageURI ? (
+        <img
+          src={imageURI.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+          style={{ width: 100, height: 100 }}
+        />
+      ) : null}
     </Flex>
   )
 }
@@ -94,8 +112,9 @@ const BAYC = (props: Props) => {
     if (data) {
       data['tokens'].map(async (token) => {
         const newData = await fetchURIs(token)
+        // console.log(newData)
         const newTokenData = { token, ...newData }
-
+        // console.log(newTokenData)
         setNFTData((oldArray) => [...oldArray, newTokenData])
       })
     }

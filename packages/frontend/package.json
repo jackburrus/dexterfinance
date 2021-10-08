@@ -36,7 +36,7 @@
     "@usedapp/core": "^0.4.1",
     "@web3-react/walletconnect-connector": "^6.2.0",
     "@zoralabs/nft-hooks": "^0.5.1",
-    "axios": "^0.21.4",
+    "axios": "^0.22.0",
     "blockies-ts": "^1.0.0",
     "chakra-ui-select": "^1.0.5",
     "cryptocurrency-icons": "^0.18.0",
