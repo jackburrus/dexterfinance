@@ -72,6 +72,25 @@ src
 └── constants
     └── BlockData
 ```
+
+In the `BlockData` array, add your component.
+```typescript
+const BlockData = [
+  ...OtherData,
+  { index: '12', title: 'AwesomeBlock', protocol: 'Etherum' },
+]
+```
+
+In the `getBlockType` function, add your component to the switch statement.
+```typescript
+export const getBlockType = (block: BlockType, provided): JSX.Element => {
+  switch (block.title) {
+    case "AwesomeBlock":
+      return <AwesomeBlock/>
+  }
+```
+
+
 - Done 🎉
 
 ## Credits
