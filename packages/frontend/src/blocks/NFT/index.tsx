@@ -62,14 +62,14 @@ const NFTBlock = (props): BoxProps => {
               color={colorMode == 'light' ? 'grey' : 'white'}
             >
               <option value="BAYC">BAYC</option>
-              <option value="NiftyInk">Nifty Ink</option>
+              {/* <option value="NiftyInk">Nifty Ink</option> */}
               <option value="Zora">Zora</option>
             </Select>
           </Box>
         </Flex>
         <Flex align="center" justify="center">
           {NFTName == 'BAYC' && <BAYC />}
-          {NFTName == 'NiftyInk' && <NiftyInk />}
+          {/* {NFTName == 'NiftyInk' && <NiftyInk />} */}
           {NFTName == 'Zora' && <Zora />}
         </Flex>
       </Box>
