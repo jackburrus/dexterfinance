@@ -36,7 +36,7 @@ const NiftyInkClient = new ApolloClient({
 
 const NFTInkQuery = gql`
   query nftInkQuery {
-    inks(first: 500) {
+    inks(first: 1000) {
       id
       inkNumber
       jsonUrl
@@ -46,11 +46,15 @@ const NFTInkQuery = gql`
 
 const fetchURIs = async (data) => {
   const contentURI = 'https://ipfs.io/ipfs/' + data['jsonUrl']
-  const ipfsData = await fetch(contentURI).then((res) => {
-    return res.json()
-  })
+  try {
+    const ipfsData = await fetch(contentURI).then((res) => {
+      return res.json()
+    })
 
-  return ipfsData
+    return ipfsData
+  } catch (error) {
+    console.warn(error)
+  }
 }
 
 const openInNewTab = (url) => {
@@ -90,13 +94,14 @@ const NiftyInk = (props: Props) => {
   useEffect(() => {
     if (data) {
       const shuffled = data['inks'].sort(() => 0.5 - Math.random())
-      const selected = shuffled.slice(0, 50)
+      const selected = shuffled.slice(0, 300)
       selected.map(async (ink) => {
         const newData = await fetchURIs(ink)
 
         const newTokenData = { ink, ...newData }
-
-        setNFTData((oldArray) => [...oldArray, newTokenData])
+        if (newTokenData.image) {
+          setNFTData((oldArray) => [...oldArray, newTokenData])
+        }
       })
     }
   }, [data])
